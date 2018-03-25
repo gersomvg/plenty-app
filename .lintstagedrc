@@ -1,0 +1,11 @@
+{
+    "*.{json,md}": [
+        "prettier --write",
+        "git add"
+    ],
+    "*.js": [
+        "jest --bail --findRelatedTests",
+        "prettier --write",
+        "git add"
+    ]
+}
