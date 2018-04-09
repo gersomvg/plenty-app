@@ -1,0 +1,10 @@
+export default {
+    COLOR_BRAND_PRIMARY: '#FB5758',
+
+    COLOR_TEXT_DEFAULT: '#1E2126',
+    COLOR_TEXT_LIGHTER: '#67696C',
+
+    COLOR_BG_LIGHT: '#F9F9F9',
+
+    FONT_FAMILY_BRAND: 'ClearSans-Bold',
+};
