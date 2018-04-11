@@ -32,7 +32,7 @@ Text.defaultProps = {
     align: 'center',
 };
 
-const styles = RN.StyleSheet.create({
+export const styles = RN.StyleSheet.create({
     'font-default': {
         fontFamily: 'System',
     },

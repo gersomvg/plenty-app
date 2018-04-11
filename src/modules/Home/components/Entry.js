@@ -1,10 +1,16 @@
 import React from 'react';
 import RN from 'react-native';
+import PT from 'prop-types';
 
 import Text from 'common/Text';
 import Spacing from 'common/Spacing';
+import SearchInput from 'common/SearchInput';
 
-export default class Entry extends React.Component {
+export default class Entry extends React.PureComponent {
+    static propTypes = {
+        onPressSearch: PT.func.isRequired,
+    };
+
     render() {
         return (
             <RN.View>
@@ -16,6 +22,12 @@ export default class Entry extends React.Component {
                     Plantaardige weelde
                 </Text>
                 <Spacing size="l" />
+                <SearchInput
+                    placeholder="Zoek"
+                    overlayTouchable
+                    onPress={this.props.onPressSearch}
+                    primaryColor
+                />
             </RN.View>
         );
     }

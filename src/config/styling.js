@@ -5,6 +5,8 @@ export default {
     COLOR_TEXT_LIGHTER: '#67696C',
 
     COLOR_BG_LIGHT: '#F9F9F9',
+    COLOR_BG_LIGHT_PRIMARY: '#FEEDED',
+    COLOR_BG_LIGHT_SECONDARY: '#E4F2F7',
 
     FONT_FAMILY_BRAND: 'ClearSans-Bold',
 };

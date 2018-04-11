@@ -5,19 +5,19 @@ import {NavigationActions} from 'react-navigation';
 import Root from 'common/Root';
 import Box from 'common/Box';
 import Separator from 'common/Separator';
-import Entry from './components/Entry';
+import SearchAndFilters from './components/SearchAndFilters';
 
 export default class Home extends React.Component {
-    handleOnPressSearch = () => {
-        const goToSearch = NavigationActions.navigate({routeName: 'Search'});
-        this.props.navigation.dispatch(goToSearch);
+    handleOnPressBack = () => {
+        const goBack = NavigationActions.back();
+        this.props.navigation.dispatch(goBack);
     };
 
     render() {
         return (
             <Root>
-                <Box safeTop spacing="bigger">
-                    <Entry onPressSearch={this.handleOnPressSearch} />
+                <Box safeTop left="none" right="bigger">
+                    <SearchAndFilters onPressBack={this.handleOnPressBack} />
                 </Box>
                 <Separator />
             </Root>
