@@ -8,9 +8,11 @@ import Spacing from 'common/Spacing';
 import BackButton from 'common/BackButton';
 import SearchInput from 'common/SearchInput';
 
-export default class Entry extends React.PureComponent {
+export default class SearchAndFilters extends React.PureComponent {
     static propTypes = {
         onPressBack: PT.func.isRequired,
+        onSearch: PT.func.isRequired,
+        searchValue: PT.string,
     };
 
     render() {
@@ -19,7 +21,12 @@ export default class Entry extends React.PureComponent {
                 <Row>
                     <BackButton onPress={this.props.onPressBack} />
                     <Row.Fill>
-                        <SearchInput placeholder="Zoek" autoFocus />
+                        <SearchInput
+                            placeholder="Zoek"
+                            autoFocus
+                            onChangeText={this.props.onSearch}
+                            value={this.props.searchValue}
+                        />
                     </Row.Fill>
                 </Row>
             </RN.View>

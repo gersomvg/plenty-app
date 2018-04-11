@@ -21,7 +21,6 @@ const Box = props => {
             props.right !== 'none' && styles[`right-${props.right}`],
         ];
     }
-    console.log(props.spacing);
     const boxStyles = [styles.box, props.safeTop && styles.safeTop, ...spacingStyles];
 
     return <RN.View style={boxStyles}>{props.children}</RN.View>;
