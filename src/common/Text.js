@@ -2,16 +2,16 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import C from 'config';
+import styling from 'config/styling';
 
-const Text = props => {
-    const fontStyle = styles[`font-${props.font}`];
-    const sizeStyle = styles[`size-${props.size}`];
-    const colorStyle = styles[`color-${props.color}`];
-    const alignStyle = styles[`align-${props.align}`];
+const Text = ({font, size, color, align, style, children, ...textProps}) => {
+    const fontStyle = styles[`font-${font}`];
+    const sizeStyle = styles[`size-${size}`];
+    const colorStyle = styles[`color-${color}`];
+    const alignStyle = styles[`align-${align}`];
     return (
-        <RN.Text style={[fontStyle, sizeStyle, colorStyle, alignStyle, props.style]}>
-            {props.children}
+        <RN.Text {...textProps} style={[fontStyle, sizeStyle, colorStyle, alignStyle, style]}>
+            {children}
         </RN.Text>
     );
 };
@@ -37,7 +37,7 @@ export const styles = RN.StyleSheet.create({
         fontFamily: 'System',
     },
     'font-brand': {
-        fontFamily: C.styling.FONT_FAMILY_BRAND,
+        fontFamily: styling.FONT_FAMILY_BRAND,
         letterSpacing: 0.65,
     },
 
@@ -52,13 +52,13 @@ export const styles = RN.StyleSheet.create({
     },
 
     'color-default': {
-        color: C.styling.COLOR_TEXT_DEFAULT,
+        color: styling.COLOR_TEXT_DEFAULT,
     },
     'color-brand': {
-        color: C.styling.COLOR_BRAND_PRIMARY,
+        color: styling.COLOR_BRAND_PRIMARY,
     },
     'color-lighter': {
-        color: C.styling.COLOR_TEXT_LIGHTER,
+        color: styling.COLOR_TEXT_LIGHTER,
     },
 
     'align-left': {

@@ -1,38 +1,47 @@
 import React from 'react';
 import RN from 'react-native';
-import {NavigationActions} from 'react-navigation';
 
 import Root from 'common/Root';
 import Box from 'common/Box';
 import Separator from 'common/Separator';
-import SearchAndFilters from './components/SearchAndFilters';
-import Results from './components/Results';
+import ProductsFiltering from './components/ProductsFiltering';
+import Products from './components/Products';
 
-export default class Home extends React.Component {
-    state = {searchValue: ''};
-
-    handleOnPressBack = () => {
-        const goBack = NavigationActions.back();
-        this.props.navigation.dispatch(goBack);
+export default class Search extends React.PureComponent {
+    handleOnPressProduct = () => {
+        RN.Keyboard.dismiss();
     };
-
-    handleOnSearch = searchValue => this.setState({searchValue});
 
     render() {
         return (
             <Root>
-                <Box safeTop left="none" right="bigger">
-                    <SearchAndFilters
-                        onPressBack={this.handleOnPressBack}
-                        onSearch={this.handleOnSearch}
-                        searchValue={this.state.searchValue}
-                    />
-                </Box>
+                {this.renderFiltering()}
                 <Separator />
-                <Box spacing="bigger">
-                    <Results />
-                </Box>
+                {this.renderProducts()}
             </Root>
         );
     }
+
+    renderFiltering = () => {
+        return (
+            <Box safeTop left="none">
+                <ProductsFiltering
+                    onPressBack={this.props.onPressBack}
+                    onSearch={this.props.onSearch}
+                    searchValue={this.props.searchValue}
+                />
+            </Box>
+        );
+    };
+
+    renderProducts = () => {
+        return (
+            <Products
+                products={this.props.products}
+                fetchStatus={this.props.fetchStatus}
+                fetchMoreStatus={this.props.fetchMoreStatus}
+                onPressProduct={this.handleOnPressProduct}
+            />
+        );
+    };
 }

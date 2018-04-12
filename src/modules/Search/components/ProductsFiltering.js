@@ -8,7 +8,7 @@ import Spacing from 'common/Spacing';
 import BackButton from 'common/BackButton';
 import SearchInput from 'common/SearchInput';
 
-export default class SearchAndFilters extends React.PureComponent {
+export default class ProductsFiltering extends React.PureComponent {
     static propTypes = {
         onPressBack: PT.func.isRequired,
         onSearch: PT.func.isRequired,

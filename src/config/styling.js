@@ -8,5 +8,7 @@ export default {
     COLOR_BG_LIGHT_PRIMARY: '#FEEDED',
     COLOR_BG_LIGHT_SECONDARY: '#E4F2F7',
 
+    COLOR_BORDER_LIGHT: '#ECECEC',
+
     FONT_FAMILY_BRAND: 'ClearSans-Bold',
 };

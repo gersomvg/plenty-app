@@ -1,7 +1,7 @@
 import {StackNavigator} from 'react-navigation';
 
 import Home from './modules/Home/Home';
-import Search from './modules/Search/Search';
+import SearchContainer from './modules/Search/SearchContainer';
 
 export default StackNavigator(
     {
@@ -9,7 +9,7 @@ export default StackNavigator(
             screen: Home,
         },
         Search: {
-            screen: Search,
+            screen: SearchContainer,
         },
     },
     {

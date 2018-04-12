@@ -2,10 +2,21 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-const Root = props => <RN.View style={styles.root}>{props.children}</RN.View>;
+const Root = ({useComponent: ViewComponent, children, ...viewProps}) => {
+    return (
+        <ViewComponent style={styles.root} {...viewProps}>
+            {children}
+        </ViewComponent>
+    );
+};
 
 Root.propTypes = {
     children: PT.any,
+    useComponent: PT.oneOfType([PT.func, PT.element]).isRequired,
+};
+
+Root.defaultProps = {
+    useComponent: RN.View,
 };
 
 const styles = RN.StyleSheet.create({

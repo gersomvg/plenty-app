@@ -29,11 +29,11 @@ const Box = props => {
 Box.propTypes = {
     children: PT.oneOfType([PT.arrayOf(PT.node), PT.node]),
     safeTop: PT.bool.isRequired,
-    left: PT.oneOf(['none', 'default', 'bigger']).isRequired,
-    right: PT.oneOf(['none', 'default', 'bigger']).isRequired,
-    top: PT.oneOf(['none', 'default', 'bigger']).isRequired,
-    bottom: PT.oneOf(['none', 'default', 'bigger']).isRequired,
-    spacing: PT.oneOf(['default', 'bigger']),
+    left: PT.oneOf(['none', 'default', 'smaller', 'bigger']).isRequired,
+    right: PT.oneOf(['none', 'default', 'smaller', 'bigger']).isRequired,
+    top: PT.oneOf(['none', 'default', 'smaller', 'bigger']).isRequired,
+    bottom: PT.oneOf(['none', 'default', 'smaller', 'bigger']).isRequired,
+    spacing: PT.oneOf(['default', 'smaller', 'bigger']),
 };
 
 Box.defaultProps = {
@@ -45,29 +45,41 @@ Box.defaultProps = {
 };
 
 const styles = RN.StyleSheet.create({
+    'top-smaller': {
+        paddingTop: 8,
+    },
     'top-default': {
-        paddingTop: 24,
+        paddingTop: 16,
     },
     'top-bigger': {
-        paddingTop: 36,
+        paddingTop: 32,
+    },
+    'bottom-smaller': {
+        paddingBottom: 8,
     },
     'bottom-default': {
-        paddingBottom: 24,
+        paddingBottom: 16,
     },
     'bottom-bigger': {
-        paddingBottom: 36,
+        paddingBottom: 32,
+    },
+    'left-smaller': {
+        paddingLeft: 8,
     },
     'left-default': {
         paddingLeft: 16,
     },
     'left-bigger': {
-        paddingLeft: 24,
+        paddingLeft: 32,
+    },
+    'right-smaller': {
+        paddingRight: 8,
     },
     'right-default': {
         paddingRight: 16,
     },
     'right-bigger': {
-        paddingRight: 24,
+        paddingRight: 32,
     },
     safeTop: {
         borderTopWidth: getStatusBarHeight(),

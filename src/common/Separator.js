@@ -1,6 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
-import C from 'config';
+import styling from 'config/styling';
 
 const Separator = props => (
     <RN.View style={styles.separator}>
@@ -11,7 +11,7 @@ const Separator = props => (
 const styles = RN.StyleSheet.create({
     separator: {
         height: 15,
-        backgroundColor: C.styling.COLOR_BG_LIGHT,
+        backgroundColor: styling.COLOR_BG_LIGHT,
     },
     shadow: {
         height: 15,

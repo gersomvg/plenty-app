@@ -15,8 +15,8 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <Root>
-                <Box safeTop spacing="bigger">
+            <Root useComponent={RN.ScrollView} alwaysBounceVertical={false}>
+                <Box safeTop top="bigger" bottom="bigger">
                     <Entry onPressSearch={this.handleOnPressSearch} />
                 </Box>
                 <Separator />

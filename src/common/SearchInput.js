@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import C from 'config';
+import styling from 'config/styling';
 import getStatusBarHeight from 'utils/getStatusBarHeight';
 import {styles as textStyles} from 'common/Text';
 
@@ -117,12 +117,12 @@ const styles = RN.StyleSheet.create({
     input: {
         height: 48,
         borderRadius: 6,
-        backgroundColor: C.styling.COLOR_BG_LIGHT,
+        backgroundColor: styling.COLOR_BG_LIGHT,
         paddingHorizontal: 48,
         zIndex: 1,
     },
     inputPrimaryColor: {
-        backgroundColor: C.styling.COLOR_BG_LIGHT_PRIMARY,
+        backgroundColor: styling.COLOR_BG_LIGHT_PRIMARY,
     },
     icon: {
         position: 'absolute',
