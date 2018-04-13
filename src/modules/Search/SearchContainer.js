@@ -7,9 +7,9 @@ import Search from './Search';
 import productsApi from 'api/products';
 import makeCancelable from 'utils/makeCancelable';
 
-export default class SearchContainer extends React.PureComponent {
+export default class SearchContainer extends React.Component {
     state = {
-        searchValue: '',
+        searchValue: null,
         fetchStatus: 'initial',
         fetchMoreStatus: 'initial',
         products: [],
@@ -26,18 +26,43 @@ export default class SearchContainer extends React.PureComponent {
     }
 
     componentWillUnmount() {
-        if (this.request) this.request.cancel();
+        if (this.fetch) this.fetch.cancel();
+        if (this.fetchMore) this.fetchMore.cancel();
     }
 
     loadProducts = async () => {
+        if (this.state.fetchStatus === 'loading') return;
+
         try {
             this.setState({fetchStatus: 'loading'});
-            this.request = makeCancelable(productsApi.get());
-            const data = await this.request.promise;
-            this.setState({fetchStatus: 'loaded', products: data.items});
+            this.fetch = makeCancelable(productsApi.get({limit: 5, name: this.state.searchValue}));
+            const data = await this.fetch.promise;
+            this.setState({fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink});
         } catch (e) {
             if (e.isCanceled) return;
             this.setState({fetchStatus: 'error'});
+        }
+    };
+
+    loadMoreProducts = async ({retryAfterError = false} = {}) => {
+        const {fetchStatus, fetchMoreStatus, nextLink} = this.state;
+        const blockedOnLoading = fetchStatus !== 'loaded' || fetchMoreStatus === 'loading';
+        const blockedOnError = fetchMoreStatus === 'error' && !retryAfterError;
+        if (blockedOnLoading || blockedOnError || !nextLink) return;
+
+        try {
+            this.setState({fetchMoreStatus: 'loading'});
+            this.fetchMore = makeCancelable(productsApi.get({nextLink: nextLink}));
+            const data = await this.fetchMore.promise;
+            this.setState(state => ({
+                ...state,
+                fetchMoreStatus: 'loaded',
+                products: _.uniqBy(state.products.concat(data.items), item => item.id),
+                nextLink: data.nextLink,
+            }));
+        } catch (e) {
+            if (e.isCanceled) return;
+            this.setState({fetchMoreStatus: 'error'});
         }
     };
 
@@ -48,6 +73,7 @@ export default class SearchContainer extends React.PureComponent {
 
     handleOnSearch = searchValue => {
         this.setState({searchValue});
+        this.loadProductsDebounced();
     };
 
     render() {
@@ -56,6 +82,8 @@ export default class SearchContainer extends React.PureComponent {
                 {...this.state}
                 onPressBack={this.handleOnPressBack}
                 onSearch={this.handleOnSearch}
+                onLoad={this.loadProducts}
+                onLoadMore={this.loadMoreProducts}
             />
         );
     }

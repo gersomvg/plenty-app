@@ -2,6 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
+import Box from 'common/Box';
+import RetryLoading from 'common/RetryLoading';
 import Product from './Product';
 
 import getBottomSafeHeight from 'utils/getBottomSafeHeight';
@@ -9,7 +11,11 @@ import getBottomSafeHeight from 'utils/getBottomSafeHeight';
 export default class Products extends React.PureComponent {
     static propTypes = {
         products: PT.array.isRequired,
+        fetchStatus: PT.string.isRequired,
+        fetchMoreStatus: PT.string.isRequired,
         onPressProduct: PT.func.isRequired,
+        onLoad: PT.func.isRequired,
+        onLoadMore: PT.func.isRequired,
     };
 
     keyExtractor = item => item.id.toString();
@@ -26,10 +32,13 @@ export default class Products extends React.PureComponent {
                 contentContainerStyle={styles.contentContainer}
                 data={this.props.products}
                 renderItem={this.renderItem}
+                ListFooterComponent={this.renderFooter}
                 getItemLayout={this.getItemLayout}
                 keyExtractor={this.keyExtractor}
                 windowSize={3}
                 keyboardShouldPersistTaps="handled"
+                extraData={`${this.props.fetchStatus}${this.props.fetchMoreStatus}`}
+                onEndReached={this.props.onLoadMore}
             />
         );
     }
@@ -37,6 +46,40 @@ export default class Products extends React.PureComponent {
     renderItem = ({item}) => {
         const onPress = () => this.props.onPressProduct(item);
         return <Product product={item} onPress={onPress} />;
+    };
+
+    renderFooter = () => {
+        const isAnyLoading =
+            this.props.fetchStatus === 'loading' || this.props.fetchMoreStatus === 'loading';
+        if (isAnyLoading) {
+            return this.renderLoading();
+        }
+        const isAnyError =
+            this.props.fetchStatus === 'error' || this.props.fetchMoreStatus === 'error';
+        if (isAnyError) {
+            return this.renderRetry();
+        }
+        return null;
+    };
+
+    renderLoading = () => {
+        return (
+            <Box>
+                <RN.ActivityIndicator />
+            </Box>
+        );
+    };
+
+    renderRetry = () => {
+        const onPress =
+            this.props.fetchStatus === 'error'
+                ? this.props.onLoad
+                : () => this.props.onLoadMore({retryAfterError: true});
+        return (
+            <Box>
+                <RetryLoading onPress={onPress} />
+            </Box>
+        );
     };
 }
 

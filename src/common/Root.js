@@ -5,7 +5,9 @@ import PT from 'prop-types';
 const Root = ({useComponent: ViewComponent, children, ...viewProps}) => {
     return (
         <ViewComponent style={styles.root} {...viewProps}>
-            {children}
+            <RN.KeyboardAvoidingView style={styles.subroot} behavior="padding">
+                {children}
+            </RN.KeyboardAvoidingView>
         </ViewComponent>
     );
 };
@@ -23,6 +25,9 @@ const styles = RN.StyleSheet.create({
     root: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    subroot: {
+        flex: 1,
     },
 });
 

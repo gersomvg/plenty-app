@@ -41,6 +41,8 @@ export default class Search extends React.PureComponent {
                 fetchStatus={this.props.fetchStatus}
                 fetchMoreStatus={this.props.fetchMoreStatus}
                 onPressProduct={this.handleOnPressProduct}
+                onLoad={this.props.onLoad}
+                onLoadMore={this.props.onLoadMore}
             />
         );
     };
