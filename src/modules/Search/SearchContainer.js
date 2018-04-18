@@ -35,7 +35,7 @@ export default class SearchContainer extends React.Component {
 
         try {
             this.setState({fetchStatus: 'loading'});
-            this.fetch = makeCancelable(productsApi.get({limit: 5, name: this.state.searchValue}));
+            this.fetch = makeCancelable(productsApi.get({name: this.state.searchValue}));
             const data = await this.fetch.promise;
             this.setState({fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink});
         } catch (e) {

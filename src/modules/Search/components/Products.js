@@ -4,6 +4,7 @@ import PT from 'prop-types';
 
 import Box from 'common/Box';
 import RetryLoading from 'common/RetryLoading';
+import Text from 'common/Text';
 import Product from './Product';
 
 import getBottomSafeHeight from 'utils/getBottomSafeHeight';
@@ -32,6 +33,7 @@ export default class Products extends React.PureComponent {
                 contentContainerStyle={styles.contentContainer}
                 data={this.props.products}
                 renderItem={this.renderItem}
+                ListEmptyComponent={this.renderEmpty}
                 ListFooterComponent={this.renderFooter}
                 getItemLayout={this.getItemLayout}
                 keyExtractor={this.keyExtractor}
@@ -78,6 +80,15 @@ export default class Products extends React.PureComponent {
         return (
             <Box>
                 <RetryLoading onPress={onPress} />
+            </Box>
+        );
+    };
+
+    renderEmpty = () => {
+        if (this.props.fetchStatus !== 'loaded') return null;
+        return (
+            <Box>
+                <Text>Geen producten gevonden</Text>
             </Box>
         );
     };
