@@ -12,6 +12,13 @@ const get = async ({limit, offset, name, nextLink} = {}) => {
     return await response.json();
 };
 
+const getOne = async ({id}) => {
+    const url = `${config.API_ENDPOINT}/product/${id}`;
+    const response = await fetch(url);
+    return await response.json();
+};
+
 export default {
     get,
+    getOne,
 };

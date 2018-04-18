@@ -2,6 +2,7 @@ import {StackNavigator} from 'react-navigation';
 
 import Home from './modules/Home/Home';
 import SearchContainer from './modules/Search/SearchContainer';
+import ProductContainer from './modules/Product/ProductContainer';
 
 export default StackNavigator(
     {
@@ -10,6 +11,9 @@ export default StackNavigator(
         },
         Search: {
             screen: SearchContainer,
+        },
+        Product: {
+            screen: ProductContainer,
         },
     },
     {

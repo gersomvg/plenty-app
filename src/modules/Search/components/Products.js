@@ -46,7 +46,7 @@ export default class Products extends React.PureComponent {
     }
 
     renderItem = ({item}) => {
-        const onPress = () => this.props.onPressProduct(item);
+        const onPress = () => this.props.onPressProduct({product: item});
         return <Product product={item} onPress={onPress} />;
     };
 

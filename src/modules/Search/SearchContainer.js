@@ -66,6 +66,14 @@ export default class SearchContainer extends React.Component {
         }
     };
 
+    handleOnPressProduct = ({product}) => {
+        const goToProduct = NavigationActions.navigate({
+            routeName: 'Product',
+            params: {productId: product.id},
+        });
+        this.props.navigation.dispatch(goToProduct);
+    };
+
     handleOnPressBack = () => {
         const goBack = NavigationActions.back();
         this.props.navigation.dispatch(goBack);
@@ -80,6 +88,7 @@ export default class SearchContainer extends React.Component {
         return (
             <Search
                 {...this.state}
+                onPressProduct={this.handleOnPressProduct}
                 onPressBack={this.handleOnPressBack}
                 onSearch={this.handleOnSearch}
                 onLoad={this.loadProducts}

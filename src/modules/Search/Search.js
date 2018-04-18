@@ -8,8 +8,9 @@ import ProductsFiltering from './components/ProductsFiltering';
 import Products from './components/Products';
 
 export default class Search extends React.PureComponent {
-    handleOnPressProduct = () => {
+    handleOnPressProduct = ({product}) => {
         RN.Keyboard.dismiss();
+        this.props.onPressProduct({product});
     };
 
     render() {
