@@ -7,14 +7,16 @@ import Search from './Search';
 import productsApi from 'api/products';
 import makeCancelable from 'utils/makeCancelable';
 
+const initialState = {
+    searchValue: null,
+    fetchStatus: 'initial',
+    fetchMoreStatus: 'initial',
+    products: [],
+    nextLink: null,
+};
+
 export default class SearchContainer extends React.Component {
-    state = {
-        searchValue: null,
-        fetchStatus: 'initial',
-        fetchMoreStatus: 'initial',
-        products: [],
-        nextLink: null,
-    };
+    state = initialState;
 
     constructor() {
         super();
@@ -34,7 +36,12 @@ export default class SearchContainer extends React.Component {
         if (this.state.fetchStatus === 'loading') return;
 
         try {
-            this.setState({fetchStatus: 'loading'});
+            if (this.fetchMore) this.fetchMore.cancel();
+            this.setState(state => ({
+                ...initialState,
+                fetchStatus: 'loading',
+                searchValue: state.searchValue,
+            }));
             this.fetch = makeCancelable(productsApi.get({name: this.state.searchValue}));
             const data = await this.fetch.promise;
             this.setState({fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink});
