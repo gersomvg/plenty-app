@@ -1,5 +1,7 @@
-import isIphoneX from './isIphoneX';
+import {isIphoneX} from './isIphoneX';
 
-export default () => {
+const getBottomSafeHeight = () => {
     return isIphoneX() ? 16 : 0;
 };
+
+export {getBottomSafeHeight};

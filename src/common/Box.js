@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import getStatusBarHeight from 'utils/getStatusBarHeight';
+import {getStatusBarHeight} from 'utils';
 
 const Box = props => {
     let spacingStyles;
@@ -21,9 +21,14 @@ const Box = props => {
             props.right !== 'none' && styles[`right-${props.right}`],
         ];
     }
-    const boxStyles = [styles.box, props.safeTop && styles.safeTop, ...spacingStyles];
+    const boxStyles = [styles.box, ...spacingStyles];
 
-    return <RN.View style={boxStyles}>{props.children}</RN.View>;
+    return (
+        <RN.View style={boxStyles}>
+            {props.safeTop && <RN.View style={styles.safeTop} />}
+            {props.children}
+        </RN.View>
+    );
 };
 
 Box.propTypes = {
@@ -82,9 +87,8 @@ const styles = RN.StyleSheet.create({
         paddingRight: 32,
     },
     safeTop: {
-        borderTopWidth: getStatusBarHeight(),
-        borderColor: 'transparent',
+        height: getStatusBarHeight(),
     },
 });
 
-export default Box;
+export {Box};

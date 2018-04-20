@@ -1,4 +1,4 @@
-export default {
+const styling = {
     COLOR_BRAND_PRIMARY: '#FB5758',
 
     COLOR_TEXT_DEFAULT: '#1E2126',
@@ -13,3 +13,5 @@ export default {
 
     FONT_FAMILY_BRAND: 'ClearSans-Bold',
 };
+
+export {styling};

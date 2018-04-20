@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import styling from 'config/styling';
+import {styling} from 'config';
 
 const Text = ({font, size, color, align, style, children, ...textProps}) => {
     const fontStyle = styles[`font-${font}`];
@@ -72,4 +72,4 @@ export const styles = RN.StyleSheet.create({
     },
 });
 
-export default Text;
+export {Text};

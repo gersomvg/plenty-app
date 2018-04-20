@@ -1,5 +1,7 @@
-import qs from 'qs';
+import $qs from 'qs';
 
-const stringify = params => qs.stringify(params, {addQueryPrefix: true, skipNulls: true});
+const qs = {
+    stringify: params => $qs.stringify(params, {addQueryPrefix: true, skipNulls: true}),
+};
 
-export default {stringify};
+export {qs};

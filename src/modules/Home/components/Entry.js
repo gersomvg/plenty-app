@@ -2,9 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import Text from 'common/Text';
-import Spacing from 'common/Spacing';
-import SearchInput from 'common/SearchInput';
+import {Text, Spacing, SearchInput} from 'common';
 
 export default class Entry extends React.PureComponent {
     static propTypes = {

@@ -2,8 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import styling from 'config/styling';
-import getStatusBarHeight from 'utils/getStatusBarHeight';
+import {styling} from 'config';
+import {getStatusBarHeight} from 'utils';
 import {styles as textStyles} from 'common/Text';
 
 class SearchInput extends React.PureComponent {
@@ -160,4 +160,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export default SearchInput;
+export {SearchInput};

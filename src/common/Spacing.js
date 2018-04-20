@@ -2,13 +2,13 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-const Box = props => <RN.View style={styles[props.size]} />;
+const Spacing = props => <RN.View style={styles[props.size]} />;
 
-Box.propTypes = {
+Spacing.propTypes = {
     size: PT.oneOf(['s', 'm', 'l']).isRequired,
 };
 
-Box.defaultProps = {
+Spacing.defaultProps = {
     size: 'm',
 };
 
@@ -27,4 +27,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export default Box;
+export {Spacing};

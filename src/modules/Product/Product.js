@@ -1,16 +1,25 @@
 import React from 'react';
 import RN from 'react-native';
 
-import Root from 'common/Root';
-import Text from 'common/Text';
+import {Root, Box, Separator, Text, BackButton} from 'common';
+import {getStatusBarHeight} from 'utils';
+import Header from './components/Header';
 
-export default class Product extends React.PureComponent {
+class Product extends React.PureComponent {
     render() {
         return (
             <Root>
-                <RN.Button title="Back" onPress={this.props.onPressBack} />
-                <Text>{this.props.product.name}</Text>
+                {this.renderHeader()}
+                <Separator />
             </Root>
         );
     }
+
+    renderHeader = () => {
+        return <Header product={this.props.product} onPressBack={this.props.onPressBack} />;
+    };
 }
+
+const styles = RN.StyleSheet.create({});
+
+export default Product;

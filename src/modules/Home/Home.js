@@ -2,9 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import {NavigationActions} from 'react-navigation';
 
-import Root from 'common/Root';
-import Box from 'common/Box';
-import Separator from 'common/Separator';
+import {Root, Box, Separator} from 'common';
 import Entry from './components/Entry';
 
 export default class Home extends React.Component {

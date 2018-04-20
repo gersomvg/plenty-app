@@ -3,9 +3,8 @@ import {NavigationActions} from 'react-navigation';
 import _ from 'lodash';
 
 import Search from './Search';
-
 import productsApi from 'api/products';
-import makeCancelable from 'utils/makeCancelable';
+import {makeCancelable} from 'utils';
 
 const initialState = {
     searchValue: null,

@@ -3,7 +3,11 @@ import RN from 'react-native';
 import PT from 'prop-types';
 
 const BackButton = props => (
-    <RN.TouchableOpacity style={styles.button} activeOpacity={0.5} onPress={props.onPress}>
+    <RN.TouchableOpacity
+        style={[styles.button, props.style]}
+        activeOpacity={0.5}
+        onPress={props.onPress}
+    >
         <RN.Image style={styles.icon} source={require('assets/ui/back-button.png')} />
     </RN.TouchableOpacity>
 );
@@ -26,4 +30,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export default BackButton;
+export {BackButton};

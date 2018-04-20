@@ -1,4 +1,4 @@
-export default {
+const logger = {
     log: (...logStatements) => {
         if (__DEV__) {
             console.log(...logStatements);
@@ -19,3 +19,5 @@ export default {
         }
     },
 };
+
+export {logger};

@@ -2,11 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import Text from 'common/Text';
-import Row from 'common/Row';
-import Spacing from 'common/Spacing';
-import BackButton from 'common/BackButton';
-import SearchInput from 'common/SearchInput';
+import {Box, Row, BackButton, SearchInput} from 'common';
 
 export default class ProductsFiltering extends React.PureComponent {
     static propTypes = {
@@ -17,7 +13,7 @@ export default class ProductsFiltering extends React.PureComponent {
 
     render() {
         return (
-            <RN.View>
+            <Box safeTop left="none">
                 <Row>
                     <BackButton onPress={this.props.onPressBack} />
                     <Row.Fill>
@@ -29,7 +25,7 @@ export default class ProductsFiltering extends React.PureComponent {
                         />
                     </Row.Fill>
                 </Row>
-            </RN.View>
+            </Box>
         );
     }
 }

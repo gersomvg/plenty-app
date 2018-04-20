@@ -2,9 +2,9 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import styling from 'config/styling';
-import Text from 'common/Text';
-import getStatusBarHeight from 'utils/getStatusBarHeight';
+import {styling} from 'config';
+import {Text} from './Text';
+import {getStatusBarHeight} from 'utils';
 
 const RetryLoading = props => {
     return (
@@ -34,4 +34,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export default RetryLoading;
+export {RetryLoading};

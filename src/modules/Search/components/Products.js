@@ -2,12 +2,9 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import Box from 'common/Box';
-import RetryLoading from 'common/RetryLoading';
-import Text from 'common/Text';
+import {Box, Text, RetryLoading} from 'common';
+import {getBottomSafeHeight} from 'utils';
 import Product from './Product';
-
-import getBottomSafeHeight from 'utils/getBottomSafeHeight';
 
 export default class Products extends React.PureComponent {
     static propTypes = {

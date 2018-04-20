@@ -1,6 +1,7 @@
 import React from 'react';
 import RN from 'react-native';
-import styling from 'config/styling';
+
+import {styling} from 'config';
 
 const Separator = props => (
     <RN.View style={styles.separator}>
@@ -20,4 +21,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export default Separator;
+export {Separator};

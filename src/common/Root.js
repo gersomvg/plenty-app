@@ -31,4 +31,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export default Root;
+export {Root};

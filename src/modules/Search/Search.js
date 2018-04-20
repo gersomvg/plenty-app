@@ -1,9 +1,7 @@
 import React from 'react';
 import RN from 'react-native';
 
-import Root from 'common/Root';
-import Box from 'common/Box';
-import Separator from 'common/Separator';
+import {Root, Separator} from 'common';
 import ProductsFiltering from './components/ProductsFiltering';
 import Products from './components/Products';
 
@@ -25,13 +23,11 @@ export default class Search extends React.PureComponent {
 
     renderFiltering = () => {
         return (
-            <Box safeTop left="none">
-                <ProductsFiltering
-                    onPressBack={this.props.onPressBack}
-                    onSearch={this.props.onSearch}
-                    searchValue={this.props.searchValue}
-                />
-            </Box>
+            <ProductsFiltering
+                onPressBack={this.props.onPressBack}
+                onSearch={this.props.onSearch}
+                searchValue={this.props.searchValue}
+            />
         );
     };
 

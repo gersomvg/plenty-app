@@ -2,9 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import Text from 'common/Text';
-
-import styling from 'config/styling';
+import {Text} from 'common';
+import {styling} from 'config';
 
 export default class Product extends React.PureComponent {
     static propTypes = {

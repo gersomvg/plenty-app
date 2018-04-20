@@ -1,4 +1,4 @@
-export default promise => {
+const makeCancelable = promise => {
     let hasCanceled_ = false;
 
     const wrappedPromise = new Promise((resolve, reject) => {
@@ -15,3 +15,5 @@ export default promise => {
         },
     };
 };
+
+export {makeCancelable};

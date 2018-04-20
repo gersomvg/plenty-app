@@ -22,4 +22,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export default Row;
+export {Row};

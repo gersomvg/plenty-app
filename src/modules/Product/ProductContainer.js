@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Product from './Product';
 
 import productsApi from 'api/products';
-import makeCancelable from 'utils/makeCancelable';
+import {makeCancelable} from 'utils';
 
 export default class ProductContainer extends React.Component {
     state = {
