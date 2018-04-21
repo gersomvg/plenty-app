@@ -4,13 +4,17 @@ import PT from 'prop-types';
 
 import {styling} from 'config';
 
-const Text = ({font, size, color, align, style, children, ...textProps}) => {
+const Text = ({font, size, color, align, weight, style, children, ...textProps}) => {
     const fontStyle = styles[`font-${font}`];
     const sizeStyle = styles[`size-${size}`];
     const colorStyle = styles[`color-${color}`];
     const alignStyle = styles[`align-${align}`];
+    const weightStyle = styles[`weight-${weight}`];
     return (
-        <RN.Text {...textProps} style={[fontStyle, sizeStyle, colorStyle, alignStyle, style]}>
+        <RN.Text
+            {...textProps}
+            style={[fontStyle, sizeStyle, colorStyle, alignStyle, weightStyle, style]}
+        >
             {children}
         </RN.Text>
     );
@@ -23,6 +27,7 @@ Text.propTypes = {
     size: PT.oneOf(['smaller', 'default', 'bigger']),
     color: PT.oneOf(['default', 'brand', 'lighter']),
     align: PT.oneOf(['left', 'center', 'right']),
+    weight: PT.oneOf(['default', 'heavier']),
 };
 
 Text.defaultProps = {
@@ -30,6 +35,7 @@ Text.defaultProps = {
     font: 'default',
     color: 'default',
     align: 'center',
+    weight: 'default',
 };
 
 export const styles = RN.StyleSheet.create({
@@ -69,6 +75,11 @@ export const styles = RN.StyleSheet.create({
     },
     'align-right': {
         textAlign: 'right',
+    },
+
+    'weight-default': {},
+    'weight-heavier': {
+        fontWeight: '600',
     },
 });
 

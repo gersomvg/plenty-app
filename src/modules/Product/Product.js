@@ -4,20 +4,19 @@ import RN from 'react-native';
 import {Root, Box, Separator, Text, BackButton} from 'common';
 import {getStatusBarHeight} from 'utils';
 import Header from './components/Header';
+import Classification from './components/Classification';
 
 class Product extends React.PureComponent {
     render() {
         return (
             <Root>
-                {this.renderHeader()}
+                <Header product={this.props.product} onPressBack={this.props.onPressBack} />
+                <Separator />
+                <Classification product={this.props.product} />
                 <Separator />
             </Root>
         );
     }
-
-    renderHeader = () => {
-        return <Header product={this.props.product} onPressBack={this.props.onPressBack} />;
-    };
 }
 
 const styles = RN.StyleSheet.create({});

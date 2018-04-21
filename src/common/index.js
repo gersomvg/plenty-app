@@ -7,3 +7,4 @@ export * from './SearchInput';
 export * from './Separator';
 export * from './Spacing';
 export * from './Text';
+export * from './Emoji';
