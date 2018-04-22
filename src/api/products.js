@@ -1,4 +1,4 @@
-import {qs, logger} from 'utils';
+import {qs, logger, fetcher} from 'utils';
 import {API_ENDPOINT} from 'config';
 
 const get = async ({limit, offset, name, nextLink} = {}) => {
@@ -7,14 +7,12 @@ const get = async ({limit, offset, name, nextLink} = {}) => {
         const params = qs.stringify({limit, offset, name});
         url = `${API_ENDPOINT}/product${params}`;
     }
-    const response = await fetch(url);
-    return await response.json();
+    return await fetcher(url);
 };
 
 const getOne = async ({id}) => {
     const url = `${API_ENDPOINT}/product/${id}`;
-    const response = await fetch(url);
-    return await response.json();
+    return await fetcher(url);
 };
 
 export default {

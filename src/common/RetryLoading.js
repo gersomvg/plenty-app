@@ -4,12 +4,16 @@ import PT from 'prop-types';
 
 import {styling} from 'config';
 import {Text} from './Text';
+import {Emoji} from './Emoji';
 import {getStatusBarHeight} from 'utils';
 
 const RetryLoading = props => {
     return (
         <RN.View>
-            <Text>Laden is niet gelukt 💩</Text>
+            <RN.View style={styles.message}>
+                <Text>Laden is niet gelukt </Text>
+                <Emoji type="POO" />
+            </RN.View>
             <RN.TouchableOpacity activeOpacity={0.5} onPress={props.onPress} style={styles.button}>
                 <Text>Probeer opnieuw</Text>
             </RN.TouchableOpacity>
@@ -22,6 +26,10 @@ RetryLoading.propTypes = {
 };
 
 const styles = RN.StyleSheet.create({
+    message: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
     button: {
         marginTop: 16,
         paddingHorizontal: 16,
