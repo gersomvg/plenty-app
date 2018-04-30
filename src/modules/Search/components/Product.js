@@ -79,6 +79,6 @@ const styles = RN.StyleSheet.create({
         flex: 1,
     },
     name: {
-        marginBottom: 4,
+        marginBottom: 2,
     },
 });

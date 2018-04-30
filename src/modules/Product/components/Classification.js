@@ -28,7 +28,7 @@ export default class Classification extends React.PureComponent {
         const adverb = {
             YES: '100%',
             MAYBE: 'Misschien',
-            NO: 'Nee',
+            NO: 'Niet',
         }[this.props.product.classification];
         const arrowStyle = this.state.expanded && {transform: [{rotate: '180deg'}]};
 
@@ -38,10 +38,10 @@ export default class Classification extends React.PureComponent {
                 activeOpacity={0.5}
                 onPress={this.handleBarPress}
             >
-                <Text>Veganistisch:</Text>
-                <Text weight="heavier" color="brand" style={styles.adverb}>
+                <Text weight="heavier" color="brand">
                     {adverb}
                 </Text>
+                <Text style={styles.veganLabel}>Veganistisch</Text>
                 <Emoji type={this.props.product.classification} />
                 <RN.View style={styles.flex} />
                 <RN.Image
@@ -70,9 +70,9 @@ const styles = RN.StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 16,
     },
-    adverb: {
-        paddingLeft: 8,
-        paddingRight: 4,
+    veganLabel: {
+        marginLeft: 6,
+        marginRight: 4,
     },
     explanation: {
         paddingHorizontal: 16,

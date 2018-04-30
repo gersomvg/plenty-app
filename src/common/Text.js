@@ -49,12 +49,15 @@ export const styles = RN.StyleSheet.create({
 
     'size-smaller': {
         fontSize: 16,
+        lineHeight: 16 * 1.3,
     },
     'size-default': {
         fontSize: 18,
+        lineHeight: 18 * 1.3,
     },
     'size-bigger': {
         fontSize: 20,
+        lineHeight: 20 * 1.3,
     },
 
     'color-default': {

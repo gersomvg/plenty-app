@@ -5,6 +5,7 @@ import {Root, Box, Separator, Text, BackButton} from 'common';
 import {getStatusBarHeight} from 'utils';
 import Header from './components/Header';
 import Classification from './components/Classification';
+import Shops from './components/Shops';
 
 class Product extends React.PureComponent {
     render() {
@@ -14,6 +15,7 @@ class Product extends React.PureComponent {
                 <Separator />
                 <Classification product={this.props.product} />
                 <Separator />
+                <Shops product={this.props.product} />
             </Root>
         );
     }

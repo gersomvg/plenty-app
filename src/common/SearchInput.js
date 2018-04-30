@@ -99,10 +99,10 @@ class SearchInput extends React.PureComponent {
     renderPlaceholder = () => {
         if (!this.state.isFocused && !this.props.value) {
             const placeholderStyles = [
-                styles.placeholder,
                 textStyles['font-default'],
                 textStyles['size-default'],
                 textStyles['color-default'],
+                styles.placeholder,
             ];
             return (
                 <RN.Text style={placeholderStyles} numberOfLines={1} pointerEvents="none">
