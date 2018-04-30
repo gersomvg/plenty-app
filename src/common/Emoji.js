@@ -5,8 +5,7 @@ import PT from 'prop-types';
 const Emoji = props => {
     const emojis = {
         YES: require('assets/emoji/YES.png'),
-        LIKELY: require('assets/emoji/LIKELY.png'),
-        UNLIKELY: require('assets/emoji/UNLIKELY.png'),
+        MAYBE: require('assets/emoji/MAYBE.png'),
         NO: require('assets/emoji/NO.png'),
         POO: require('assets/emoji/POO.png'),
     };
@@ -14,7 +13,7 @@ const Emoji = props => {
 };
 
 Emoji.propTypes = {
-    type: PT.oneOf(['YES', 'NO', 'LIKELY', 'UNLIKELY', 'POO']),
+    type: PT.oneOf(['YES', 'NO', 'MAYBE', 'POO']),
 };
 
 const styles = RN.StyleSheet.create({

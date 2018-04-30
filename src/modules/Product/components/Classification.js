@@ -2,9 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Box, Text, BackButton, Emoji} from 'common';
-import {getStatusBarHeight} from 'utils';
-import {styling} from 'config';
+import {Text, Emoji} from 'common';
 
 export default class Classification extends React.PureComponent {
     static propTypes = {
@@ -29,8 +27,7 @@ export default class Classification extends React.PureComponent {
     renderTappableBar = () => {
         const adverb = {
             YES: '100%',
-            LIKELY: 'Waarschijnlijk',
-            UNLIKELY: 'Kleine kans',
+            MAYBE: 'Misschien',
             NO: 'Nee',
         }[this.props.product.classification];
         const arrowStyle = this.state.expanded && {transform: [{rotate: '180deg'}]};
