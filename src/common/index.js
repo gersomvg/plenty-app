@@ -1,7 +1,6 @@
 export * from './BackButton';
 export * from './Box';
 export * from './RetryLoading';
-export * from './Root';
 export * from './Row';
 export * from './SearchInput';
 export * from './Separator';

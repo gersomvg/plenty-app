@@ -1,5 +1,4 @@
 import React from 'react';
-import RN from 'react-native';
 import AppNavigation from './AppNavigation';
 
 export default class App extends React.Component {
@@ -7,5 +6,3 @@ export default class App extends React.Component {
         return <AppNavigation />;
     }
 }
-
-const styles = RN.StyleSheet.create({});

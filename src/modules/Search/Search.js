@@ -1,7 +1,8 @@
 import React from 'react';
 import RN from 'react-native';
 
-import {Root, Separator} from 'common';
+import {Separator} from 'common';
+import {styling} from 'config';
 import ProductsFiltering from './components/ProductsFiltering';
 import Products from './components/Products';
 
@@ -13,11 +14,11 @@ export default class Search extends React.PureComponent {
 
     render() {
         return (
-            <Root>
+            <RN.KeyboardAvoidingView behaviour="padding" style={styling.flexWhite}>
                 {this.renderFiltering()}
                 <Separator />
                 {this.renderProducts()}
-            </Root>
+            </RN.KeyboardAvoidingView>
         );
     }
 

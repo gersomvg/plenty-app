@@ -12,6 +12,8 @@ const styling = {
     COLOR_BORDER_LIGHT: '#ECECEC',
 
     FONT_FAMILY_BRAND: 'ClearSans-Bold',
+
+    flexWhite: {flex: 1, backgroundColor: 'white'},
 };
 
 export {styling};
