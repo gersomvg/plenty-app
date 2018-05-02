@@ -4,7 +4,7 @@ import PT from 'prop-types';
 
 import {Text} from 'common';
 
-export default class Shops extends React.PureComponent {
+class Shops extends React.PureComponent {
     static propTypes = {
         product: PT.object.isRequired,
     };
@@ -12,7 +12,9 @@ export default class Shops extends React.PureComponent {
     render() {
         return (
             <RN.View style={styles.container}>
-                <Text>Winkels</Text>
+                <Text weight="heavier" size="smaller">
+                    WINKELS
+                </Text>
                 {this.renderShops()}
                 {this.renderScope()}
             </RN.View>
@@ -71,3 +73,5 @@ const styles = RN.StyleSheet.create({
         paddingHorizontal: 16,
     },
 });
+
+export {Shops};

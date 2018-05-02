@@ -3,7 +3,6 @@ import RN from 'react-native';
 import PT from 'prop-types';
 
 import {styling} from 'config';
-import {getStatusBarHeight} from 'utils';
 import {styles as textStyles} from 'common/Text';
 
 class SearchInput extends React.PureComponent {
@@ -63,7 +62,7 @@ class SearchInput extends React.PureComponent {
         const inputPointerEvents = overlayTouchable ? 'none' : 'auto';
 
         return (
-            <RN.View>
+            <RN.View style={this.props.style}>
                 <RN.TextInput
                     {...inputProps}
                     style={inputStyles}

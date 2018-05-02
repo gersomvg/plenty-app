@@ -22,7 +22,6 @@ const Text = ({font, size, color, align, weight, style, children, ...textProps})
 
 Text.propTypes = {
     children: PT.oneOfType([PT.string, PT.number]).isRequired,
-    style: PT.any,
     font: PT.oneOf(['default', 'brand']),
     size: PT.oneOf(['smaller', 'default', 'bigger']),
     color: PT.oneOf(['default', 'brand', 'lighter']),

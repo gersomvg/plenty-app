@@ -2,8 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Box, Text, RetryLoading} from 'common';
-import {getBottomSafeHeight} from 'utils';
+import {Text, RetryLoading} from 'common';
+import {getSafeBottomHeight} from 'utils';
 import Product from './Product';
 
 export default class Products extends React.PureComponent {
@@ -63,9 +63,9 @@ export default class Products extends React.PureComponent {
 
     renderLoading = () => {
         return (
-            <Box>
+            <RN.View style={styles.row}>
                 <RN.ActivityIndicator />
-            </Box>
+            </RN.View>
         );
     };
 
@@ -75,18 +75,18 @@ export default class Products extends React.PureComponent {
                 ? this.props.onLoad
                 : () => this.props.onLoadMore({retryAfterError: true});
         return (
-            <Box>
+            <RN.View style={styles.row}>
                 <RetryLoading onPress={onPress} />
-            </Box>
+            </RN.View>
         );
     };
 
     renderEmpty = () => {
         if (this.props.fetchStatus !== 'loaded') return null;
         return (
-            <Box>
+            <RN.View style={styles.row}>
                 <Text>Geen producten gevonden</Text>
-            </Box>
+            </RN.View>
         );
     };
 }
@@ -94,6 +94,9 @@ export default class Products extends React.PureComponent {
 const styles = RN.StyleSheet.create({
     contentContainer: {
         paddingTop: 8,
-        paddingBottom: 8 + getBottomSafeHeight(),
+        paddingBottom: 8 + getSafeBottomHeight(),
+    },
+    row: {
+        padding: 16,
     },
 });

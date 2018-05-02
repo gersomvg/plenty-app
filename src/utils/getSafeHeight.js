@@ -1,7 +1,7 @@
 import RN from 'react-native';
 import {isIphoneX} from './isIphoneX';
 
-const getStatusBarHeight = ({skipAndroid = true} = {}) => {
+const getSafeTopHeight = ({skipAndroid = true} = {}) => {
     if (RN.Platform.OS === 'ios') {
         return isIphoneX() ? 44 : 20;
     }
@@ -13,4 +13,8 @@ const getStatusBarHeight = ({skipAndroid = true} = {}) => {
     return RN.StatusBar.currentHeight;
 };
 
-export {getStatusBarHeight};
+const getSafeBottomHeight = () => {
+    return isIphoneX() ? 16 : 0;
+};
+
+export {getSafeTopHeight, getSafeBottomHeight};

@@ -5,7 +5,6 @@ import PT from 'prop-types';
 import {styling} from 'config';
 import {Text} from './Text';
 import {Emoji} from './Emoji';
-import {getStatusBarHeight} from 'utils';
 
 const RetryLoading = props => {
     return (

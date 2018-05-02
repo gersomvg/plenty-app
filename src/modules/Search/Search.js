@@ -1,8 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
 
-import {Separator} from 'common';
-import {styling} from 'config';
 import ProductsFiltering from './components/ProductsFiltering';
 import Products from './components/Products';
 
@@ -14,9 +12,8 @@ export default class Search extends React.PureComponent {
 
     render() {
         return (
-            <RN.KeyboardAvoidingView behaviour="padding" style={styling.flexWhite}>
+            <RN.KeyboardAvoidingView behaviour="padding" style={styles.screen}>
                 {this.renderFiltering()}
-                <Separator />
                 {this.renderProducts()}
             </RN.KeyboardAvoidingView>
         );
@@ -45,3 +42,10 @@ export default class Search extends React.PureComponent {
         );
     };
 }
+
+const styles = RN.StyleSheet.create({
+    screen: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
+});

@@ -2,23 +2,16 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Box, Text, BackButton} from 'common';
-import {getStatusBarHeight} from 'utils';
-import {styling} from 'config';
+import {Text} from 'common';
 
-export default class Header extends React.PureComponent {
+class Header extends React.PureComponent {
     static propTypes = {
         product: PT.object.isRequired,
-        onPressBack: PT.func.isRequired,
     };
 
     render() {
         return (
-            <Box safeTop bottom="bigger">
-                <RN.Image
-                    style={styles.gradient}
-                    source={require('assets/ui/product-gradient-background.png')}
-                />
+            <RN.View style={styles.container}>
                 <RN.View style={styles.imageContainer}>
                     <RN.Image
                         style={styles.imageShadow}
@@ -37,13 +30,17 @@ export default class Header extends React.PureComponent {
                 <Text style={styles.brandName} color="lighter">
                     {this.props.product.brand.name}
                 </Text>
-                <BackButton style={styles.backButton} onPress={this.props.onPressBack} />
-            </Box>
+            </RN.View>
         );
     }
 }
 
 const styles = RN.StyleSheet.create({
+    container: {
+        paddingHorizontal: 16,
+        paddingTop: 16,
+        paddingBottom: 32,
+    },
     gradient: {
         position: 'absolute',
         top: 0,
@@ -78,8 +75,6 @@ const styles = RN.StyleSheet.create({
     brandName: {
         marginTop: 8,
     },
-    backButton: {
-        position: 'absolute',
-        top: 16 + getStatusBarHeight(),
-    },
 });
+
+export {Header};

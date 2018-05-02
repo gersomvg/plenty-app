@@ -2,9 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import {NavigationActions} from 'react-navigation';
 
-import {Box, Separator} from 'common';
-import {styling} from 'config';
-import Entry from './components/Entry';
+import {getSafeTopHeight, getSafeBottomHeight} from 'utils';
+import {Entry} from './components';
 
 export default class Home extends React.Component {
     handleOnPressSearch = () => {
@@ -14,12 +13,19 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <RN.ScrollView alwaysBounceVertical={false} style={styling.flexWhite}>
-                <Box safeTop top="bigger" bottom="bigger">
-                    <Entry onPressSearch={this.handleOnPressSearch} />
-                </Box>
-                <Separator />
+            <RN.ScrollView alwaysBounceVertical={false} style={styles.screen}>
+                <Entry onPressSearch={this.handleOnPressSearch} />
             </RN.ScrollView>
         );
     }
 }
+
+const styles = RN.StyleSheet.create({
+    screen: {
+        flex: 1,
+        backgroundColor: 'white',
+        paddingTop: 32 + getSafeTopHeight(),
+        paddingBottom: 32 + getSafeBottomHeight(),
+        paddingHorizontal: 16,
+    },
+});

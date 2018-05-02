@@ -4,16 +4,14 @@ const styling = {
     COLOR_TEXT_DEFAULT: '#1E2126',
     COLOR_TEXT_LIGHTER: '#777A7D',
 
-    COLOR_BG_SUBTLE: '#F9F9F9',
     COLOR_BG_LIGHT: '#F1F1F1',
     COLOR_BG_LIGHT_PRIMARY: '#FEEDED',
     COLOR_BG_LIGHT_SECONDARY: '#E4F2F7',
+    COLOR_BG_SUBTLE_SECONDARY: '#E4F2F760',
 
     COLOR_BORDER_LIGHT: '#ECECEC',
 
     FONT_FAMILY_BRAND: 'ClearSans-Bold',
-
-    flexWhite: {flex: 1, backgroundColor: 'white'},
 };
 
 export {styling};

@@ -4,7 +4,7 @@ import PT from 'prop-types';
 
 import {Text, Spacing, SearchInput} from 'common';
 
-export default class Entry extends React.PureComponent {
+class Entry extends React.PureComponent {
     static propTypes = {
         onPressSearch: PT.func.isRequired,
     };
@@ -15,11 +15,9 @@ export default class Entry extends React.PureComponent {
                 <Text size="bigger" color="brand" font="brand" align="center">
                     PLENTY
                 </Text>
-                <Spacing size="s" />
-                <Text color="lighter" align="center">
+                <Text color="lighter" align="center" style={styles.tagline}>
                     Plantaardige weelde
                 </Text>
-                <Spacing size="l" />
                 <SearchInput
                     placeholder="Zoek"
                     overlayTouchable
@@ -31,4 +29,11 @@ export default class Entry extends React.PureComponent {
     }
 }
 
-const styles = RN.StyleSheet.create({});
+const styles = RN.StyleSheet.create({
+    tagline: {
+        marginTop: 8,
+        marginBottom: 32,
+    },
+});
+
+export {Entry};

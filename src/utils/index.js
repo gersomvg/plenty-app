@@ -1,5 +1,4 @@
-export * from './getBottomSafeHeight';
-export * from './getStatusBarHeight';
+export * from './getSafeHeight';
 export * from './isIphoneX';
 export * from './logger';
 export * from './makeCancelable';

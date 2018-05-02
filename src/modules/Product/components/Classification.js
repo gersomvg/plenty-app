@@ -3,8 +3,9 @@ import RN from 'react-native';
 import PT from 'prop-types';
 
 import {Text, Emoji} from 'common';
+import {styling} from 'config';
 
-export default class Classification extends React.PureComponent {
+class Classification extends React.PureComponent {
     static propTypes = {
         product: PT.object.isRequired,
     };
@@ -17,7 +18,7 @@ export default class Classification extends React.PureComponent {
 
     render() {
         return (
-            <RN.View>
+            <RN.View style={[styles.container, this.props.style]}>
                 {this.renderTappableBar()}
                 {this.renderExplanation()}
             </RN.View>
@@ -41,7 +42,7 @@ export default class Classification extends React.PureComponent {
                 <Text weight="heavier" color="brand">
                     {adverb}
                 </Text>
-                <Text style={styles.veganLabel}>Veganistisch</Text>
+                <Text style={styles.veganLabel}>veganistisch</Text>
                 <Emoji type={this.props.product.classification} />
                 <RN.View style={styles.flex} />
                 <RN.Image
@@ -64,6 +65,9 @@ export default class Classification extends React.PureComponent {
 }
 
 const styles = RN.StyleSheet.create({
+    container: {
+        backgroundColor: styling.COLOR_BG_SUBTLE_SECONDARY,
+    },
     bar: {
         height: 64,
         flexDirection: 'row',
@@ -88,3 +92,5 @@ const styles = RN.StyleSheet.create({
         resizeMode: 'contain',
     },
 });
+
+export {Classification};
