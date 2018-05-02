@@ -12,7 +12,7 @@ export default class Search extends React.PureComponent {
 
     render() {
         return (
-            <RN.KeyboardAvoidingView behaviour="padding" style={styles.screen}>
+            <RN.KeyboardAvoidingView behavior="padding" style={styles.screen}>
                 {this.renderFiltering()}
                 {this.renderProducts()}
             </RN.KeyboardAvoidingView>

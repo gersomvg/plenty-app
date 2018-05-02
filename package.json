@@ -1,5 +1,5 @@
 {
-  "name": "plenty-app",
+  "name": "plenty",
   "version": "1.0.0",
   "description": "Plenty app. Scan products to see if they are vegan (Dutch).",
   "author": "Gersom van Ginkel <opensource@gersom.nl>",
@@ -14,9 +14,9 @@
   "dependencies": {
     "prop-types": "^15.6.1",
     "qs": "^6.5.1",
-    "react": "^16.3.0-alpha.1",
-    "react-native": "0.54.2",
-    "react-navigation": "^1.5.8"
+    "react": "^16.3.2",
+    "react-native": "^0.55.3",
+    "react-navigation": "^1.5.11"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",
@@ -24,9 +24,9 @@
     "babel-preset-react-native": "4.0.0",
     "husky": "^0.14.3",
     "jest": "22.4.3",
-    "lint-staged": "^7.0.4",
-    "prettier": "^1.11.1",
-    "react-test-renderer": "^16.3.0-alpha.1"
+    "lint-staged": "^7.0.5",
+    "prettier": "^1.12.1",
+    "react-test-renderer": "^16.3.2"
   },
   "rnpm": {
     "assets": [

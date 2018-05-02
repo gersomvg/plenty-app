@@ -35,31 +35,23 @@ class Header extends React.PureComponent {
     }
 }
 
+const shadowSize = 10;
 const styles = RN.StyleSheet.create({
     container: {
         paddingHorizontal: 16,
-        paddingTop: 16,
+        paddingTop: 32 - shadowSize,
         paddingBottom: 32,
     },
-    gradient: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        width: 'auto',
-        height: 128,
-        resizeMode: 'stretch',
-    },
     imageContainer: {
-        width: 148,
-        height: 148,
-        padding: 10,
+        width: 128 + 2 * shadowSize,
+        height: 128 + 2 * shadowSize,
+        padding: shadowSize,
         alignSelf: 'center',
     },
     imageShadow: {
         position: 'absolute',
-        width: 148,
-        height: 148,
+        width: 128 + 2 * shadowSize,
+        height: 128 + 2 * shadowSize,
     },
     imageClipper: {
         borderRadius: 6,

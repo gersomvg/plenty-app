@@ -13,10 +13,9 @@ class Shops extends React.PureComponent {
         return (
             <RN.View style={styles.container}>
                 <Text weight="heavier" size="smaller">
-                    WINKELS
+                    VERKOOPPUNTEN
                 </Text>
                 {this.renderShops()}
-                {this.renderScope()}
             </RN.View>
         );
     }
@@ -34,19 +33,12 @@ class Shops extends React.PureComponent {
             </RN.View>
         );
     };
-
-    renderScope = () => {
-        return (
-            <Text color="lighter" size="smaller" style={styles.scope}>
-                De volgende winkels worden momenteel meegenomen in de winkelinformatie:
-            </Text>
-        );
-    };
 }
 
 const styles = RN.StyleSheet.create({
     container: {
-        paddingVertical: 32,
+        paddingTop: 32,
+        paddingBottom: 16,
     },
     shops: {
         paddingHorizontal: 8,
@@ -68,9 +60,6 @@ const styles = RN.StyleSheet.create({
         height: 60,
         width: 80,
         resizeMode: 'contain',
-    },
-    scope: {
-        paddingHorizontal: 16,
     },
 });
 

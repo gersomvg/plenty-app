@@ -19,7 +19,6 @@ class Product extends React.PureComponent {
                     style={styles.scroller}
                     onScroll={this.onScrollEvent}
                     scrollEventThrottle={1}
-                    alwaysBounceVertical={false}
                 >
                     <Header product={this.props.product} />
                     <Classification product={this.props.product} style={styles.classification} />
