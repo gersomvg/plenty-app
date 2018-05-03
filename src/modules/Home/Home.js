@@ -3,18 +3,26 @@ import RN from 'react-native';
 import {NavigationActions} from 'react-navigation';
 
 import {getSafeTopHeight, getSafeBottomHeight} from 'utils';
-import {Entry} from './components';
+import {SearchAndScan} from './components';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
     handleOnPressSearch = () => {
         const goToSearch = NavigationActions.navigate({routeName: 'Search'});
         this.props.navigation.dispatch(goToSearch);
     };
 
+    handleOnPressScan = () => {
+        const goToScan = NavigationActions.navigate({routeName: 'Scan'});
+        this.props.navigation.dispatch(goToScan);
+    };
+
     render() {
         return (
             <RN.ScrollView alwaysBounceVertical={false} style={styles.screen}>
-                <Entry onPressSearch={this.handleOnPressSearch} />
+                <SearchAndScan
+                    onPressSearch={this.handleOnPressSearch}
+                    onPressScan={this.handleOnPressScan}
+                />
             </RN.ScrollView>
         );
     }
@@ -29,3 +37,5 @@ const styles = RN.StyleSheet.create({
         paddingHorizontal: 16,
     },
 });
+
+export {Home};

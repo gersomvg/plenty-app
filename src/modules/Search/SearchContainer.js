@@ -14,7 +14,7 @@ const initialState = {
     nextLink: null,
 };
 
-export default class SearchContainer extends React.Component {
+class SearchContainer extends React.Component {
     state = initialState;
 
     constructor() {
@@ -103,3 +103,5 @@ export default class SearchContainer extends React.Component {
         );
     }
 }
+
+export {SearchContainer};

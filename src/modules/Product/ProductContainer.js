@@ -7,7 +7,7 @@ import Product from './Product';
 import productsApi from 'api/products';
 import {makeCancelable} from 'utils';
 
-export default class ProductContainer extends React.Component {
+class ProductContainer extends React.Component {
     state = {
         fetchStatus: 'initial',
         product: null,
@@ -47,3 +47,5 @@ export default class ProductContainer extends React.Component {
         return <Product {...this.state} onPressBack={this.handleOnPressBack} />;
     }
 }
+
+export {ProductContainer};

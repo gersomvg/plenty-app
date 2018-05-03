@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>ClearSans-Bold.ttf</string>
@@ -47,8 +47,6 @@
 		<string>ClearSans-MediumItalic.ttf</string>
 		<string>ClearSans-Regular.ttf</string>
 		<string>ClearSans-Thin.ttf</string>
-		<string>emojione-android.ttf</string>
-		<string>emojione-apple.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -62,5 +60,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Om barcodes te kunnen scannen is toegang tot de camera nodig</string>
 </dict>
 </plist>
