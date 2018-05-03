@@ -3,6 +3,7 @@ import RN from 'react-native';
 
 import {ElevatedHeader} from 'common';
 import {ProductsFiltering, Products} from './components';
+import {getSafeTopHeight} from 'utils';
 
 export default class Search extends React.PureComponent {
     handleOnPressProduct = ({product}) => {
@@ -44,6 +45,6 @@ const styles = RN.StyleSheet.create({
     },
     products: {
         zIndex: 1,
-        marginTop: ProductsFiltering.HEIGHT,
+        marginTop: ProductsFiltering.HEIGHT + getSafeTopHeight(),
     },
 });

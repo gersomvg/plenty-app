@@ -4,7 +4,7 @@ import PT from 'prop-types';
 
 import {Text} from 'common';
 
-class Header extends React.PureComponent {
+class ProductInfo extends React.PureComponent {
     static propTypes = {
         product: PT.object.isRequired,
     };
@@ -69,4 +69,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {Header};
+export {ProductInfo};

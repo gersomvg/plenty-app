@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text, BackButton} from 'common';
+import {Text, ElevatedHeader, BackButton} from 'common';
 import {getSafeTopHeight} from 'utils';
 
 class DynamicHeaderBar extends React.PureComponent {
@@ -10,27 +10,52 @@ class DynamicHeaderBar extends React.PureComponent {
         product: PT.object.isRequired,
         onPressBack: PT.func.isRequired,
         scrollY: PT.object.isRequired,
+        appearAfter: PT.number.isRequired,
     };
 
     constructor(props) {
         super(props);
-        this.gradientY = props.scrollY.interpolate({
-            inputRange: [-1, 0],
-            outputRange: [-1, 0],
-            extrapolateRight: 'clamp',
+        const opacity = props.scrollY.interpolate({
+            inputRange: [props.appearAfter, props.appearAfter + 10],
+            outputRange: [0, 1],
+            extrapolate: 'clamp',
         });
-        this.gradientStyle = {transform: [{translateY: this.gradientY}]};
+        this.opacityStyle = {opacity};
     }
 
     render() {
-        return <BackButton style={styles.backButton} onPress={this.props.onPressBack} />;
+        return [
+            <RN.Animated.View
+                style={[styles.wrapper, this.opacityStyle]}
+                key="bar"
+                pointerEvents="none"
+            >
+                <ElevatedHeader>
+                    <Text style={styles.name} numberOfLines={1}>
+                        {this.props.product.name}
+                    </Text>
+                </ElevatedHeader>
+            </RN.Animated.View>,
+            <BackButton style={styles.back} key="back" onPress={this.props.onPressBack} />,
+        ];
     }
 }
 
 const styles = RN.StyleSheet.create({
-    backButton: {
+    wrapper: {
+        ...RN.StyleSheet.absoluteFillObject,
+    },
+    name: {
+        paddingVertical: 16,
+        height: 48 + 2 * 16,
+        lineHeight: 48,
+        paddingHorizontal: 48,
+        marginLeft: 8,
+    },
+    back: {
         position: 'absolute',
-        top: 16 + getSafeTopHeight(),
+        left: 0,
+        top: getSafeTopHeight() + 16,
     },
 });
 

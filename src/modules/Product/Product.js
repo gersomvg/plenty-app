@@ -3,7 +3,7 @@ import RN from 'react-native';
 
 import {Text, BackButton} from 'common';
 import {styling} from 'config';
-import {Header, DynamicHeaderBar, Classification, Shops} from './components';
+import {ProductInfo, DynamicHeaderBar, Classification, Shops} from './components';
 import {getSafeTopHeight, getSafeBottomHeight} from 'utils';
 
 class Product extends React.PureComponent {
@@ -18,9 +18,9 @@ class Product extends React.PureComponent {
                 <RN.Animated.ScrollView
                     style={styles.scroller}
                     onScroll={this.onScrollEvent}
-                    scrollEventThrottle={1}
+                    scrollEventThrottle={16}
                 >
-                    <Header product={this.props.product} />
+                    <ProductInfo product={this.props.product} />
                     <Classification product={this.props.product} style={styles.classification} />
                     <Shops product={this.props.product} />
                 </RN.Animated.ScrollView>
@@ -28,6 +28,7 @@ class Product extends React.PureComponent {
                     product={this.props.product}
                     onPressBack={this.props.onPressBack}
                     scrollY={this.scrollY}
+                    appearAfter={120}
                 />
             </RN.View>
         );

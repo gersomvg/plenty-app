@@ -1,4 +1,4 @@
 export * from './Classification';
 export * from './DynamicHeaderBar';
-export * from './Header';
+export * from './ProductInfo';
 export * from './Shops';

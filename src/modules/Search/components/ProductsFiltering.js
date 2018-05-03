@@ -12,7 +12,7 @@ class ProductsFiltering extends React.PureComponent {
         searchValue: PT.string,
     };
 
-    static HEIGHT = SearchInput.HEIGHT + 16 * 2 + getSafeTopHeight();
+    static HEIGHT = SearchInput.HEIGHT + 16 * 2;
 
     render() {
         return (
@@ -32,8 +32,7 @@ class ProductsFiltering extends React.PureComponent {
 
 const styles = RN.StyleSheet.create({
     container: {
-        paddingTop: 16 + getSafeTopHeight(),
-        paddingBottom: 16,
+        paddingVertical: 16,
         paddingRight: 16,
         flexDirection: 'row',
         alignItems: 'center',

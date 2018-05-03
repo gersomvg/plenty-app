@@ -2,10 +2,16 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
+import {getSafeTopHeight} from 'utils';
+
 const ElevatedHeader = props => (
     <RN.View style={[props.style, styles.wrapper]}>
-        <RN.View styles={styles.bar}>{props.children}</RN.View>
-        <RN.Image style={styles.shadow} source={require('assets/ui/header-shadow.png')} />
+        <RN.View style={styles.bar}>{props.children}</RN.View>
+        <RN.Image
+            style={styles.shadow}
+            source={require('assets/ui/header-shadow.png')}
+            pointerEvents="none"
+        />
     </RN.View>
 );
 
@@ -23,6 +29,12 @@ const styles = RN.StyleSheet.create({
         top: 0,
         left: 0,
         width: '100%',
+        alignItems: 'stretch',
+    },
+    bar: {
+        backgroundColor: 'white',
+        borderTopWidth: getSafeTopHeight(),
+        borderColor: 'white',
     },
     shadow: {
         position: 'absolute',
