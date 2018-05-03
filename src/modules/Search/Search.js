@@ -1,8 +1,8 @@
 import React from 'react';
 import RN from 'react-native';
 
-import ProductsFiltering from './components/ProductsFiltering';
-import Products from './components/Products';
+import {ElevatedHeader} from 'common';
+import {ProductsFiltering, Products} from './components';
 
 export default class Search extends React.PureComponent {
     handleOnPressProduct = ({product}) => {
@@ -13,39 +13,37 @@ export default class Search extends React.PureComponent {
     render() {
         return (
             <RN.KeyboardAvoidingView behavior="padding" style={styles.screen}>
-                {this.renderFiltering()}
-                {this.renderProducts()}
+                <ElevatedHeader style={styles.header}>
+                    <ProductsFiltering
+                        onPressBack={this.props.onPressBack}
+                        onSearch={this.props.onSearch}
+                        searchValue={this.props.searchValue}
+                    />
+                </ElevatedHeader>
+                <Products
+                    style={styles.products}
+                    products={this.props.products}
+                    fetchStatus={this.props.fetchStatus}
+                    fetchMoreStatus={this.props.fetchMoreStatus}
+                    onPressProduct={this.handleOnPressProduct}
+                    onLoad={this.props.onLoad}
+                    onLoadMore={this.props.onLoadMore}
+                />
             </RN.KeyboardAvoidingView>
         );
     }
-
-    renderFiltering = () => {
-        return (
-            <ProductsFiltering
-                onPressBack={this.props.onPressBack}
-                onSearch={this.props.onSearch}
-                searchValue={this.props.searchValue}
-            />
-        );
-    };
-
-    renderProducts = () => {
-        return (
-            <Products
-                products={this.props.products}
-                fetchStatus={this.props.fetchStatus}
-                fetchMoreStatus={this.props.fetchMoreStatus}
-                onPressProduct={this.handleOnPressProduct}
-                onLoad={this.props.onLoad}
-                onLoadMore={this.props.onLoadMore}
-            />
-        );
-    };
 }
 
 const styles = RN.StyleSheet.create({
     screen: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    header: {
+        zIndex: 2,
+    },
+    products: {
+        zIndex: 1,
+        marginTop: ProductsFiltering.HEIGHT,
     },
 });

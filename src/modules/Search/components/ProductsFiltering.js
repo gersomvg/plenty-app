@@ -5,12 +5,14 @@ import PT from 'prop-types';
 import {BackButton, SearchInput} from 'common';
 import {getSafeTopHeight} from 'utils';
 
-export default class ProductsFiltering extends React.PureComponent {
+class ProductsFiltering extends React.PureComponent {
     static propTypes = {
         onPressBack: PT.func.isRequired,
         onSearch: PT.func.isRequired,
         searchValue: PT.string,
     };
+
+    static HEIGHT = SearchInput.HEIGHT + 16 * 2 + getSafeTopHeight();
 
     render() {
         return (
@@ -40,3 +42,5 @@ const styles = RN.StyleSheet.create({
         flex: 1,
     },
 });
+
+export {ProductsFiltering};

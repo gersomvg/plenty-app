@@ -19,6 +19,8 @@ class SearchInput extends React.PureComponent {
         overlayTouchable: false,
     };
 
+    static HEIGHT = 48;
+
     state = {isFocused: false};
 
     handleInputRef = c => (this.inputRef = c);
@@ -114,7 +116,7 @@ class SearchInput extends React.PureComponent {
 
 const styles = RN.StyleSheet.create({
     input: {
-        height: 48,
+        height: SearchInput.HEIGHT,
         borderRadius: 6,
         backgroundColor: styling.COLOR_BG_LIGHT,
         paddingHorizontal: 48,

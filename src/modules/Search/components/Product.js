@@ -5,7 +5,7 @@ import PT from 'prop-types';
 import {Text} from 'common';
 import {styling} from 'config';
 
-export default class Product extends React.PureComponent {
+class Product extends React.PureComponent {
     static propTypes = {
         product: PT.object.isRequired,
         onPress: PT.func.isRequired,
@@ -82,3 +82,5 @@ const styles = RN.StyleSheet.create({
         marginBottom: 2,
     },
 });
+
+export {Product};

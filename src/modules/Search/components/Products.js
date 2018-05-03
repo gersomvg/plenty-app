@@ -4,9 +4,9 @@ import PT from 'prop-types';
 
 import {Text, RetryLoading} from 'common';
 import {getSafeBottomHeight} from 'utils';
-import Product from './Product';
+import {Product} from './Product';
 
-export default class Products extends React.PureComponent {
+class Products extends React.PureComponent {
     static propTypes = {
         products: PT.array.isRequired,
         fetchStatus: PT.string.isRequired,
@@ -14,6 +14,7 @@ export default class Products extends React.PureComponent {
         onPressProduct: PT.func.isRequired,
         onLoad: PT.func.isRequired,
         onLoadMore: PT.func.isRequired,
+        style: PT.any,
     };
 
     keyExtractor = item => item.id.toString();
@@ -27,6 +28,7 @@ export default class Products extends React.PureComponent {
     render() {
         return (
             <RN.FlatList
+                style={this.props.style}
                 contentContainerStyle={styles.contentContainer}
                 data={this.props.products}
                 renderItem={this.renderItem}
@@ -100,3 +102,5 @@ const styles = RN.StyleSheet.create({
         padding: 16,
     },
 });
+
+export {Products};
