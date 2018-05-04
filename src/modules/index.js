@@ -1,4 +1,4 @@
 export * from './Home/Home';
 export * from './Search/SearchContainer';
 export * from './Product/ProductContainer';
-export * from './Scan/Scan';
+export * from './Scan/ScanContainer';

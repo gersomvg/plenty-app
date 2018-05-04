@@ -1,6 +1,6 @@
 import {StackNavigator} from 'react-navigation';
 
-import {Home, SearchContainer, ProductContainer, Scan} from './modules';
+import {Home, SearchContainer, ProductContainer, ScanContainer} from './modules';
 
 export default StackNavigator(
     {
@@ -11,7 +11,7 @@ export default StackNavigator(
             screen: SearchContainer,
         },
         Scan: {
-            screen: Scan,
+            screen: ScanContainer,
         },
         Product: {
             screen: ProductContainer,

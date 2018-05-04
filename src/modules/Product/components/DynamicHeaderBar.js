@@ -31,7 +31,7 @@ class DynamicHeaderBar extends React.PureComponent {
                 pointerEvents="none"
             >
                 <ElevatedHeader>
-                    <Text style={styles.name} numberOfLines={1}>
+                    <Text style={styles.name} numberOfLines={1} size="bigger" weight="heavier">
                         {this.props.product.name}
                     </Text>
                 </ElevatedHeader>

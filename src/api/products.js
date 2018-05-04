@@ -15,7 +15,13 @@ const getOne = async ({id}) => {
     return await fetcher(url);
 };
 
+const getOneByBarcode = async ({barcode}) => {
+    const url = `${API_ENDPOINT}/product/barcode/${barcode}`;
+    return await fetcher(url);
+};
+
 export default {
     get,
     getOne,
+    getOneByBarcode,
 };

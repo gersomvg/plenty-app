@@ -26,9 +26,15 @@ class ProductContainer extends React.Component {
 
         try {
             this.setState({fetchStatus: 'loading'});
-            this.fetch = makeCancelable(
-                productsApi.getOne({id: this.props.navigation.state.params.productId}),
-            );
+            let request;
+            if (this.props.navigation.state.params.productId) {
+                request = productsApi.getOne({id: this.props.navigation.state.params.productId});
+            } else {
+                request = productsApi.getOneByBarcode({
+                    barcode: this.props.navigation.state.params.barcode,
+                });
+            }
+            this.fetch = makeCancelable(request);
             const data = await this.fetch.promise;
             this.setState({fetchStatus: 'loaded', product: data});
         } catch (e) {

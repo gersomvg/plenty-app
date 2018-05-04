@@ -21,7 +21,7 @@ class Products extends React.PureComponent {
 
     getItemLayout = (data, index) => ({
         length: Product.height,
-        offset: index * Product.height + 8,
+        offset: index * Product.height + 16,
         index,
     });
 
@@ -95,8 +95,8 @@ class Products extends React.PureComponent {
 
 const styles = RN.StyleSheet.create({
     contentContainer: {
-        paddingTop: 8,
-        paddingBottom: 8 + getSafeBottomHeight(),
+        paddingTop: 16,
+        paddingBottom: 16 + getSafeBottomHeight(),
     },
     row: {
         padding: 16,

@@ -8,7 +8,7 @@ import {Emoji} from './Emoji';
 
 const RetryLoading = props => {
     return (
-        <RN.View>
+        <RN.View style={styles.wrapper}>
             <RN.View style={styles.message}>
                 <Text>Laden is niet gelukt </Text>
                 <Emoji type="POO" />
@@ -25,6 +25,10 @@ RetryLoading.propTypes = {
 };
 
 const styles = RN.StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        justifyContent: 'center',
+    },
     message: {
         flexDirection: 'row',
         justifyContent: 'center',
