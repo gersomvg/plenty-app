@@ -2,8 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text, ElevatedHeader, BackButton} from 'common';
-import {getSafeTopHeight} from 'utils';
+import {Text, ElevatedHeader} from 'common';
 
 class DynamicHeaderBar extends React.PureComponent {
     static propTypes = {
@@ -24,20 +23,15 @@ class DynamicHeaderBar extends React.PureComponent {
     }
 
     render() {
-        return [
-            <RN.Animated.View
-                style={[styles.wrapper, this.opacityStyle]}
-                key="bar"
-                pointerEvents="none"
-            >
+        return (
+            <RN.Animated.View style={[styles.wrapper, this.opacityStyle]} pointerEvents="none">
                 <ElevatedHeader>
                     <Text style={styles.name} numberOfLines={1} size="bigger" weight="heavier">
                         {this.props.product.name}
                     </Text>
                 </ElevatedHeader>
-            </RN.Animated.View>,
-            <BackButton style={styles.back} key="back" onPress={this.props.onPressBack} />,
-        ];
+            </RN.Animated.View>
+        );
     }
 }
 
@@ -51,11 +45,6 @@ const styles = RN.StyleSheet.create({
         lineHeight: 48,
         paddingHorizontal: 48,
         marginLeft: 8,
-    },
-    back: {
-        position: 'absolute',
-        left: 0,
-        top: getSafeTopHeight() + 16,
     },
 });
 

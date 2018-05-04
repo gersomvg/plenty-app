@@ -6,22 +6,24 @@ import {styling} from 'config';
 import {Text} from './Text';
 import {Emoji} from './Emoji';
 
-const RetryLoading = props => {
+const ErrorMessageWithButton = props => {
     return (
         <RN.View style={styles.wrapper}>
             <RN.View style={styles.message}>
-                <Text>Laden is niet gelukt </Text>
+                <Text>{props.message} </Text>
                 <Emoji type="POO" />
             </RN.View>
             <RN.TouchableOpacity activeOpacity={0.5} onPress={props.onPress} style={styles.button}>
-                <Text>Probeer opnieuw</Text>
+                <Text>{props.buttonLabel}</Text>
             </RN.TouchableOpacity>
         </RN.View>
     );
 };
 
-RetryLoading.propTypes = {
+ErrorMessageWithButton.propTypes = {
     onPress: PT.func.isRequired,
+    message: PT.string.isRequired,
+    buttonLabel: PT.string.isRequired,
 };
 
 const styles = RN.StyleSheet.create({
@@ -45,4 +47,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {RetryLoading};
+export {ErrorMessageWithButton};

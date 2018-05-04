@@ -39,7 +39,8 @@ class ProductContainer extends React.Component {
             this.setState({fetchStatus: 'loaded', product: data});
         } catch (e) {
             if (e.isCanceled) return;
-            this.setState({fetchStatus: 'error'});
+            const fetchStatus = e.status === 404 ? 'notfound' : 'error';
+            this.setState({fetchStatus});
         }
     };
 
@@ -49,8 +50,13 @@ class ProductContainer extends React.Component {
     };
 
     render() {
-        if (!this.state.product) return null;
-        return <Product {...this.state} onPressBack={this.handleOnPressBack} />;
+        return (
+            <Product
+                {...this.state}
+                onPressBack={this.handleOnPressBack}
+                onReload={this.loadProduct}
+            />
+        );
     }
 }
 

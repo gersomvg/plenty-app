@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text, RetryLoading} from 'common';
+import {Text, ErrorMessageWithButton} from 'common';
 import {getSafeBottomHeight} from 'utils';
 import {Product} from './Product';
 
@@ -76,9 +76,15 @@ class Products extends React.PureComponent {
             this.props.fetchStatus === 'error'
                 ? this.props.onLoad
                 : () => this.props.onLoadMore({retryAfterError: true});
+        const message = 'Laden is niet gelukt';
+        const buttonLabel = 'Probeer opnieuw';
         return (
             <RN.View style={styles.row}>
-                <RetryLoading onPress={onPress} />
+                <ErrorMessageWithButton
+                    onPress={onPress}
+                    message={message}
+                    buttonLabel={buttonLabel}
+                />
             </RN.View>
         );
     };

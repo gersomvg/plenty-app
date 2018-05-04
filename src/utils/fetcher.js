@@ -26,7 +26,7 @@ const fetcher = async (...params) => {
         const timeoutPromise = timeout.set(timeoutMS);
         const response = await Promise.race([fetchPromise, timeoutPromise]);
 
-        if (!response.ok) throw new Error(response);
+        if (!response.ok) throw response;
 
         return await response.json();
     } catch (e) {

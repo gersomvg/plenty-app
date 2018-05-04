@@ -1,5 +1,5 @@
 export * from './BackButton';
-export * from './RetryLoading';
+export * from './ErrorMessageWithButton';
 export * from './SearchInput';
 export * from './Text';
 export * from './Emoji';

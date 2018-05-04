@@ -14,7 +14,7 @@ class SearchAndScan extends React.PureComponent {
     render() {
         return (
             <RN.View>
-                <Text size="bigger" color="brand" font="brand" align="center">
+                <Text size="huge" font="brand" align="center">
                     PLENTY
                 </Text>
                 <Text color="lighter" align="center" style={styles.tagline}>
