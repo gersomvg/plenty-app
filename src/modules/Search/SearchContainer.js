@@ -32,9 +32,8 @@ class SearchContainer extends React.Component {
     }
 
     loadProducts = async () => {
-        if (this.state.fetchStatus === 'loading') return;
-
         try {
+            if (this.fetch) this.fetch.cancel();
             if (this.fetchMore) this.fetchMore.cancel();
             this.setState(state => ({
                 ...initialState,

@@ -4,9 +4,13 @@ import {RNCamera} from 'react-native-camera';
 
 import {BackButton, ElevatedHeader, Text} from 'common';
 import {getSafeTopHeight} from 'utils';
+import {styling} from 'config';
 
 class Scan extends React.PureComponent {
-    state = {didRead: false};
+    state = {
+        didRead: false,
+        lineAnimation: new RN.Animated.Value(1),
+    };
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (prevState.didRead && !nextProps.isFocused) {
@@ -14,6 +18,44 @@ class Scan extends React.PureComponent {
         }
         return null;
     }
+
+    componentDidMount() {
+        this.startAnimation();
+    }
+
+    componentDidUpdate(prevProps) {
+        const becomesFocused = !prevProps.isFocused && this.props.isFocused;
+        const becomesBlurred = prevProps.isFocused && !this.props.isFocused;
+        if (becomesFocused) {
+            this.startAnimation();
+        } else if (becomesBlurred) {
+            this.stopAnimation();
+        }
+    }
+
+    startAnimation = () => {
+        this.animationLoop = RN.Animated.loop(
+            RN.Animated.sequence([
+                RN.Animated.timing(this.state.lineAnimation, {
+                    toValue: 0.97,
+                    duration: 500,
+                    isInteraction: false,
+                    useNativeDriver: true,
+                }),
+                RN.Animated.timing(this.state.lineAnimation, {
+                    toValue: 1,
+                    duration: 500,
+                    isInteraction: false,
+                    useNativeDriver: true,
+                }),
+            ]),
+        );
+        this.animationLoop.start();
+    };
+
+    stopAnimation = () => {
+        if (this.animationLoop) this.animationLoop.stop();
+    };
 
     handleBarCodeRead = ({data}) => {
         if (this.state.didRead) return;
@@ -42,17 +84,29 @@ class Scan extends React.PureComponent {
                         onBarCodeRead={this.handleBarCodeRead}
                     />
                 )}
-                <ElevatedHeader>
-                    <RN.View style={styles.bar}>
-                        <BackButton onPress={this.handleOnPressBack} />
-                        <Text style={styles.title} size="bigger" weight="heavier">
-                            Scan een barcode
-                        </Text>
-                    </RN.View>
-                </ElevatedHeader>
+                {this.renderHeader()}
+                {this.renderAnimatedLine()}
             </RN.View>
         );
     }
+
+    renderHeader = () => (
+        <ElevatedHeader>
+            <RN.View style={styles.bar}>
+                <BackButton onPress={this.handleOnPressBack} />
+                <Text style={styles.title} size="bigger" weight="heavier">
+                    Scan een barcode
+                </Text>
+            </RN.View>
+        </ElevatedHeader>
+    );
+
+    renderAnimatedLine = () => {
+        const scaleStyle = {
+            transform: [{scale: this.state.lineAnimation}],
+        };
+        return <RN.Animated.View style={[styles.line, scaleStyle]} />;
+    };
 }
 
 const styles = RN.StyleSheet.create({
@@ -71,6 +125,17 @@ const styles = RN.StyleSheet.create({
     },
     title: {
         flex: 1,
+    },
+    line: {
+        position: 'absolute',
+        marginTop: (80 + getSafeTopHeight()) / 2 - 100, // Compensate for header bar
+        width: '88%',
+        height: 200,
+        left: '6%',
+        top: '50%',
+        borderWidth: 2,
+        borderColor: styling.COLOR_BRAND_PRIMARY,
+        borderRadius: 12,
     },
 });
 
