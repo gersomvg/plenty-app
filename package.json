@@ -12,12 +12,15 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "@rematch/core": "^0.6.0",
+    "@rematch/immer": "^0.1.0",
+    "immer": "^1.3.0",
     "prop-types": "^15.6.1",
-    "qs": "^6.5.1",
-    "react": "^16.3.2",
-    "react-native": "^0.55.3",
-    "react-native-camera": "^1.1.2",
-    "react-navigation": "^1.5.11"
+    "qs": "^6.5.2",
+    "react": "^16.4.0",
+    "react-native": "^0.55.4",
+    "react-native-camera": "^1.1.4",
+    "react-navigation": "^1.5.12"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",
@@ -25,9 +28,9 @@
     "babel-preset-react-native": "4.0.0",
     "husky": "^0.14.3",
     "jest": "22.4.3",
-    "lint-staged": "^7.0.5",
+    "lint-staged": "^7.1.2",
     "prettier": "^1.12.1",
-    "react-test-renderer": "^16.3.2"
+    "react-test-renderer": "^16.4.0"
   },
   "rnpm": {
     "assets": [
