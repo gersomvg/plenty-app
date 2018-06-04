@@ -1,10 +1,10 @@
 import React from 'react';
 import RN from 'react-native';
-import {RNCamera} from 'react-native-camera';
+import { Camera, Haptic } from 'expo';
 
-import {BackButton, ElevatedHeader, Text} from 'common';
-import {getSafeTopHeight} from 'utils';
-import {styling} from 'config';
+import { BackButton, ElevatedHeader, Text } from 'common';
+import { getSafeTopHeight } from 'utils';
+import { styling } from 'config';
 
 class Scan extends React.PureComponent {
     state = {
@@ -14,7 +14,7 @@ class Scan extends React.PureComponent {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (prevState.didRead && !nextProps.isFocused) {
-            return {didRead: false};
+            return { didRead: false };
         }
         return null;
     }
@@ -57,10 +57,11 @@ class Scan extends React.PureComponent {
         if (this.animationLoop) this.animationLoop.stop();
     };
 
-    handleBarCodeRead = ({data}) => {
+    handleBarCodeRead = ({ data }) => {
         if (this.state.didRead) return;
-        this.setState({didRead: true});
-        const goToProduct = this.props.navigation.push('Product', {barcode: data});
+        this.setState({ didRead: true });
+        const goToProduct = this.props.navigation.push('Product', { barcode: data });
+        Haptic.notification(Haptic.NotificationTypes.Success);
     };
 
     handleOnPressBack = () => {
@@ -71,12 +72,12 @@ class Scan extends React.PureComponent {
         return (
             <RN.View style={styles.wrapper}>
                 {this.props.isFocused && (
-                    <RNCamera
+                    <Camera
                         ref={ref => {
                             this.camera = ref;
                         }}
                         style={styles.preview}
-                        type={RNCamera.Constants.Type.back}
+                        type={Camera.Constants.Type.back}
                         permissionDialogTitle={'Scannen van barcodes'}
                         permissionDialogMessage={
                             'Om barcodes te kunnen scannen is toegang tot de camera nodig'
@@ -103,7 +104,7 @@ class Scan extends React.PureComponent {
 
     renderAnimatedLine = () => {
         const scaleStyle = {
-            transform: [{scale: this.state.lineAnimation}],
+            transform: [{ scale: this.state.lineAnimation }],
         };
         return <RN.Animated.View style={[styles.line, scaleStyle]} />;
     };
@@ -139,4 +140,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {Scan};
+export { Scan };

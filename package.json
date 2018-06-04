@@ -4,33 +4,40 @@
   "description": "Plenty app. Scan products to see if they are vegan (Dutch).",
   "author": "Gersom van Ginkel <opensource@gersom.nl>",
   "private": true,
-  "main": "index.js",
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
-    "start": "react-native start --reset-cache",
-    "ios": "react-native run-ios",
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
     "test": "jest",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "postinstall": "rndebugger-open --expo"
   },
   "dependencies": {
-    "@rematch/core": "^0.6.0",
-    "@rematch/immer": "^0.1.0",
-    "immer": "^1.3.0",
+    "@rematch/core": "^1.0.0-alpha.5",
+    "@rematch/immer": "^1.0.2",
+    "@rematch/persist": "^1.0.2",
+    "expo": "^27.0.2",
+    "immer": "^1.3.1",
     "prop-types": "^15.6.1",
     "qs": "^6.5.2",
-    "react": "^16.4.0",
-    "react-native": "^0.55.4",
+    "react": "16.3.1",
+    "react-native": "~0.55.2",
     "react-native-camera": "^1.1.4",
-    "react-navigation": "^1.5.12"
+    "react-navigation": "^2.0.4",
+    "react-redux": "^5.0.7",
+    "redux-persist": "^5.9.1"
   },
   "devDependencies": {
-    "babel-jest": "22.4.3",
     "babel-plugin-module-resolver": "^3.1.1",
-    "babel-preset-react-native": "4.0.0",
     "husky": "^0.14.3",
-    "jest": "22.4.3",
+    "jest-expo": "~27.0.1",
     "lint-staged": "^7.1.2",
     "prettier": "^1.12.1",
-    "react-test-renderer": "^16.4.0"
+    "react-native-debugger-open": "^0.3.17",
+    "react-native-scripts": "1.14.0",
+    "react-test-renderer": "16.3.1"
   },
   "rnpm": {
     "assets": [

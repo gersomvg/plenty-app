@@ -2,17 +2,15 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {styling} from 'config';
-import {Text} from './Text';
-import {Emoji} from './Emoji';
+import { styling } from 'config';
+import { Text } from './Text';
+import { Emoji } from './Emoji';
 
 const ErrorMessageWithButton = props => {
     return (
         <RN.View style={styles.wrapper}>
-            <RN.View style={styles.message}>
-                <Text>{props.message} </Text>
-                <Emoji type="POO" />
-            </RN.View>
+            <Emoji type="POO" />
+            <Text style={styles.message}>{props.message}</Text>
             <RN.TouchableOpacity activeOpacity={0.5} onPress={props.onPress} style={styles.button}>
                 <Text>{props.buttonLabel}</Text>
             </RN.TouchableOpacity>
@@ -30,10 +28,11 @@ const styles = RN.StyleSheet.create({
     wrapper: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
     },
     message: {
-        flexDirection: 'row',
-        justifyContent: 'center',
+        marginTop: 8,
+        paddingHorizontal: 16,
     },
     button: {
         marginTop: 16,
@@ -42,9 +41,8 @@ const styles = RN.StyleSheet.create({
         borderRadius: 6,
         overflow: 'hidden',
         justifyContent: 'center',
-        alignSelf: 'center',
         backgroundColor: styling.COLOR_BG_LIGHT,
     },
 });
 
-export {ErrorMessageWithButton};
+export { ErrorMessageWithButton };

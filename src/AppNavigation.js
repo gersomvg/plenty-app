@@ -1,8 +1,8 @@
-import {StackNavigator} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
-import {Home, SearchContainer, ProductContainer, ScanContainer} from './modules';
+import { Home, SearchContainer, ProductContainer, ScanContainer } from './modules';
 
-export default StackNavigator(
+export default createStackNavigator(
     {
         Home: {
             screen: Home,
