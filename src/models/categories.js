@@ -1,4 +1,4 @@
-import categoriesApi from 'api/shops';
+import categoriesApi from 'api/categories';
 import produce from 'immer';
 
 const categories = {
@@ -27,7 +27,7 @@ const categories = {
             try {
                 this.loadInitiated();
                 const categories = await categoriesApi.get();
-                this.loaded(categories);
+                this.loaded(categories.items);
             } catch (e) {
                 this.loadedError();
             }

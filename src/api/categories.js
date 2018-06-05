@@ -1,4 +1,4 @@
-import { qs, logger, fetcher } from 'utils';
+import { fetcher } from 'utils';
 import { API_ENDPOINT } from 'config';
 
 const get = async () => {

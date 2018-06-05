@@ -2,8 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text, Spacing, SearchInput} from 'common';
-import {styling} from 'config';
+import { Text, SearchInput } from 'common';
+import { styling } from 'config';
 
 class SearchAndScan extends React.PureComponent {
     static propTypes = {
@@ -13,7 +13,7 @@ class SearchAndScan extends React.PureComponent {
 
     render() {
         return (
-            <RN.View>
+            <RN.View style={this.props.style}>
                 <Text size="huge" font="brand" align="center">
                     PLENTY
                 </Text>
@@ -70,4 +70,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {SearchAndScan};
+export { SearchAndScan };

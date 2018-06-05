@@ -9,9 +9,10 @@ const styling = {
     COLOR_BG_LIGHT_SECONDARY: '#E4F2F7',
     COLOR_BG_SUBTLE_SECONDARY: '#E4F2F760',
 
+    COLOR_BORDER_LIGHTEST: '#F5F5F5',
     COLOR_BORDER_LIGHT: '#ECECEC',
 
     FONT_FAMILY_BRAND: 'ClearSans-Bold',
 };
 
-export {styling};
+export { styling };

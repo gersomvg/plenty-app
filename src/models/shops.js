@@ -27,7 +27,7 @@ const shops = {
             try {
                 this.loadInitiated();
                 const shops = await shopsApi.get();
-                this.loaded(shops);
+                this.loaded(shops.items);
             } catch (e) {
                 this.loadedError();
             }

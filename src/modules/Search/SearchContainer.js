@@ -1,10 +1,10 @@
 import React from 'react';
-import {NavigationActions} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
 
 import Search from './Search';
 import productsApi from 'api/products';
-import {makeCancelable} from 'utils';
+import { makeCancelable } from 'utils';
 
 const initialState = {
     searchValue: null,
@@ -40,24 +40,24 @@ class SearchContainer extends React.Component {
                 fetchStatus: 'loading',
                 searchValue: state.searchValue,
             }));
-            this.fetch = makeCancelable(productsApi.get({name: this.state.searchValue}));
+            this.fetch = makeCancelable(productsApi.get({ name: this.state.searchValue }));
             const data = await this.fetch.promise;
-            this.setState({fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink});
+            this.setState({ fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink });
         } catch (e) {
             if (e.isCanceled) return;
-            this.setState({fetchStatus: 'error'});
+            this.setState({ fetchStatus: 'error' });
         }
     };
 
-    loadMoreProducts = async ({retryAfterError = false} = {}) => {
-        const {fetchStatus, fetchMoreStatus, nextLink} = this.state;
+    loadMoreProducts = async ({ retryAfterError = false } = {}) => {
+        const { fetchStatus, fetchMoreStatus, nextLink } = this.state;
         const blockedOnLoading = fetchStatus !== 'loaded' || fetchMoreStatus === 'loading';
         const blockedOnError = fetchMoreStatus === 'error' && !retryAfterError;
         if (blockedOnLoading || blockedOnError || !nextLink) return;
 
         try {
-            this.setState({fetchMoreStatus: 'loading'});
-            this.fetchMore = makeCancelable(productsApi.get({nextLink: nextLink}));
+            this.setState({ fetchMoreStatus: 'loading' });
+            this.fetchMore = makeCancelable(productsApi.get({ nextLink: nextLink }));
             const data = await this.fetchMore.promise;
             this.setState(state => ({
                 ...state,
@@ -67,14 +67,14 @@ class SearchContainer extends React.Component {
             }));
         } catch (e) {
             if (e.isCanceled) return;
-            this.setState({fetchMoreStatus: 'error'});
+            this.setState({ fetchMoreStatus: 'error' });
         }
     };
 
-    handleOnPressProduct = ({product}) => {
+    handleOnPressProduct = ({ product }) => {
         const goToProduct = NavigationActions.navigate({
             routeName: 'Product',
-            params: {productId: product.id},
+            params: { productId: product.id },
         });
         this.props.navigation.dispatch(goToProduct);
     };
@@ -85,7 +85,7 @@ class SearchContainer extends React.Component {
     };
 
     handleOnSearch = searchValue => {
-        this.setState({searchValue});
+        this.setState({ searchValue });
         this.loadProductsDebounced();
     };
 
@@ -98,9 +98,10 @@ class SearchContainer extends React.Component {
                 onSearch={this.handleOnSearch}
                 onLoad={this.loadProducts}
                 onLoadMore={this.loadMoreProducts}
+                autoFocus={!!_.get(this.props.navigation.state, 'params.autoFocus')}
             />
         );
     }
 }
 
-export {SearchContainer};
+export { SearchContainer };

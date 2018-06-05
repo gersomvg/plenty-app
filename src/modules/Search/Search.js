@@ -1,14 +1,14 @@
 import React from 'react';
 import RN from 'react-native';
 
-import {ElevatedHeader} from 'common';
-import {ProductsFiltering, Products} from './components';
-import {getSafeTopHeight} from 'utils';
+import { ElevatedHeader } from 'common';
+import { ProductsFiltering, Products } from './components';
+import { getSafeTopHeight } from 'utils';
 
 export default class Search extends React.PureComponent {
-    handleOnPressProduct = ({product}) => {
+    handleOnPressProduct = ({ product }) => {
         RN.Keyboard.dismiss();
-        this.props.onPressProduct({product});
+        this.props.onPressProduct({ product });
     };
 
     render() {
@@ -19,6 +19,7 @@ export default class Search extends React.PureComponent {
                         onPressBack={this.props.onPressBack}
                         onSearch={this.props.onSearch}
                         searchValue={this.props.searchValue}
+                        autoFocus={this.props.autoFocus}
                     />
                 </ElevatedHeader>
                 <Products

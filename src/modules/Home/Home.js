@@ -1,19 +1,27 @@
 import React from 'react';
 import RN from 'react-native';
-import {NavigationActions} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
-import {getSafeTopHeight, getSafeBottomHeight} from 'utils';
-import {SearchAndScan} from './components';
+import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
+import { SearchAndScan, Categories } from './components';
 
 class Home extends React.Component {
     handleOnPressSearch = () => {
-        const goToSearch = NavigationActions.navigate({routeName: 'Search'});
+        const goToSearch = NavigationActions.navigate({
+            routeName: 'Search',
+            params: { autoFocus: true },
+        });
         this.props.navigation.dispatch(goToSearch);
     };
 
     handleOnPressScan = () => {
-        const goToScan = NavigationActions.navigate({routeName: 'Scan'});
+        const goToScan = NavigationActions.navigate({ routeName: 'Scan' });
         this.props.navigation.dispatch(goToScan);
+    };
+
+    handleOnPressCategory = () => {
+        const goToSearch = NavigationActions.navigate({ routeName: 'Search' });
+        this.props.navigation.dispatch(goToSearch);
     };
 
     render() {
@@ -22,7 +30,9 @@ class Home extends React.Component {
                 <SearchAndScan
                     onPressSearch={this.handleOnPressSearch}
                     onPressScan={this.handleOnPressScan}
+                    style={styles.searchAndScan}
                 />
+                <Categories onPress={this.handleOnPressCategory} />
             </RN.ScrollView>
         );
     }
@@ -34,8 +44,11 @@ const styles = RN.StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: 32 + getSafeTopHeight(),
         paddingBottom: 32 + getSafeBottomHeight(),
+    },
+    searchAndScan: {
         paddingHorizontal: 16,
+        marginBottom: 48,
     },
 });
 
-export {Home};
+export { Home };

@@ -2,14 +2,15 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {BackButton, SearchInput} from 'common';
-import {getSafeTopHeight} from 'utils';
+import { BackButton, SearchInput } from 'common';
+import { getSafeTopHeight } from 'utils';
 
 class ProductsFiltering extends React.PureComponent {
     static propTypes = {
         onPressBack: PT.func.isRequired,
         onSearch: PT.func.isRequired,
         searchValue: PT.string,
+        autoFocus: PT.bool,
     };
 
     static HEIGHT = SearchInput.HEIGHT + 16 * 2;
@@ -21,7 +22,7 @@ class ProductsFiltering extends React.PureComponent {
                 <SearchInput
                     style={styles.input}
                     placeholder="Zoek"
-                    autoFocus
+                    autoFocus={this.props.autoFocus}
                     onChangeText={this.props.onSearch}
                     value={this.props.searchValue}
                 />
@@ -42,4 +43,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {ProductsFiltering};
+export { ProductsFiltering };
