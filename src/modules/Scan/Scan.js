@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import { Camera, Haptic } from 'expo';
 
-import { BackButton, ElevatedHeader, Text } from 'common';
+import { IconButton, ElevatedHeader, Text } from 'common';
 import { getSafeTopHeight } from 'utils';
 import { styling } from 'config';
 
@@ -94,7 +94,7 @@ class Scan extends React.PureComponent {
     renderHeader = () => (
         <ElevatedHeader>
             <RN.View style={styles.bar}>
-                <BackButton onPress={this.handleOnPressBack} />
+                <IconButton onPress={this.handleOnPressBack} icon="back" />
                 <Text style={styles.title} size="bigger" weight="heavier">
                     Scan een barcode
                 </Text>

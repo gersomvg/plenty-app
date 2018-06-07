@@ -1,14 +1,14 @@
 import React from 'react';
 import RN from 'react-native';
 
-import {Text, BackButton, ErrorMessageWithButton} from 'common';
-import {styling} from 'config';
-import {ProductInfo, DynamicHeaderBar, Classification, Shops} from './components';
-import {getSafeTopHeight, getSafeBottomHeight} from 'utils';
+import { Text, IconButton, ErrorMessageWithButton } from 'common';
+import { styling } from 'config';
+import { ProductInfo, DynamicHeaderBar, Classification, Shops } from './components';
+import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
 
 class Product extends React.PureComponent {
     scrollY = new RN.Animated.Value(0);
-    onScrollEvent = RN.Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}], {
+    onScrollEvent = RN.Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollY } } }], {
         useNativeDriver: true,
     });
 
@@ -22,7 +22,7 @@ class Product extends React.PureComponent {
                     notfound: this.renderNotFound,
                     error: this.renderError,
                 }[this.props.fetchStatus]()}
-                <BackButton style={styles.back} onPress={this.props.onPressBack} />
+                <IconButton style={styles.back} icon="back" onPress={this.props.onPressBack} />
             </RN.View>
         );
     }

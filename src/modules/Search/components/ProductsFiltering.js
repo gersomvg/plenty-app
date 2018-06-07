@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import { BackButton, SearchInput } from 'common';
+import { IconButton, SearchInput } from 'common';
 import { getSafeTopHeight } from 'utils';
 
 class ProductsFiltering extends React.PureComponent {
@@ -18,7 +18,7 @@ class ProductsFiltering extends React.PureComponent {
     render() {
         return (
             <RN.View style={styles.container}>
-                <BackButton onPress={this.props.onPressBack} />
+                <IconButton onPress={this.props.onPressBack} icon="back" />
                 <SearchInput
                     style={styles.input}
                     placeholder="Zoek"

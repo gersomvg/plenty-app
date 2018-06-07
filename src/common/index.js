@@ -1,4 +1,4 @@
-export * from './BackButton';
+export * from './IconButton';
 export * from './ErrorMessageWithButton';
 export * from './SearchInput';
 export * from './Text';
