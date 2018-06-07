@@ -2,9 +2,9 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {styling} from 'config';
+import { styling } from 'config';
 
-const Text = ({font, size, color, align, weight, style, children, ...textProps}) => {
+const Text = ({ font, size, color, align, weight, style, children, ...textProps }) => {
     const fontStyle = styles[`font-${font}`];
     const sizeStyle = styles[`size-${size}`];
     const colorStyle = styles[`color-${color}`];
@@ -42,7 +42,6 @@ export const styles = RN.StyleSheet.create({
     },
     'font-brand': {
         fontFamily: styling.FONT_FAMILY_BRAND,
-        letterSpacing: 0.65,
     },
 
     'size-smaller': {
@@ -88,4 +87,4 @@ export const styles = RN.StyleSheet.create({
     },
 });
 
-export {Text};
+export { Text };

@@ -14,7 +14,7 @@ class SearchAndScan extends React.PureComponent {
     render() {
         return (
             <RN.View style={this.props.style}>
-                <Text size="huge" font="brand" align="center">
+                <Text size="huge" font="brand" align="center" style={styles.brand}>
                     PLENTY
                 </Text>
                 <Text color="lighter" align="center" style={styles.tagline}>
@@ -47,6 +47,9 @@ class SearchAndScan extends React.PureComponent {
 }
 
 const styles = RN.StyleSheet.create({
+    brand: {
+        letterSpacing: 0.65,
+    },
     tagline: {
         marginTop: 8,
         marginBottom: 32,

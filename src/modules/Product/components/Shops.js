@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text} from 'common';
+import { Text } from 'common';
 
 class Shops extends React.PureComponent {
     static propTypes = {
@@ -12,7 +12,7 @@ class Shops extends React.PureComponent {
     render() {
         return (
             <RN.View style={styles.container}>
-                <Text weight="heavier" size="smaller">
+                <Text weight="heavier" size="smaller" font="brand">
                     VERKOOPPUNTEN
                 </Text>
                 {this.renderShops()}
@@ -29,7 +29,7 @@ class Shops extends React.PureComponent {
     renderShop = (shop, index) => {
         return (
             <RN.View style={styles.shopContainer} key={index}>
-                <RN.Image style={styles.shopImage} source={{uri: shop.imageUrl}} />
+                <RN.Image style={styles.shopImage} source={{ uri: shop.imageUrl }} />
             </RN.View>
         );
     };
@@ -63,4 +63,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {Shops};
+export { Shops };
