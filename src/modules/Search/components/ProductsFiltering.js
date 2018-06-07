@@ -8,9 +8,11 @@ import { getSafeTopHeight } from 'utils';
 class ProductsFiltering extends React.PureComponent {
     static propTypes = {
         onPressBack: PT.func.isRequired,
+        onPressFilter: PT.func.isRequired,
         onSearch: PT.func.isRequired,
         searchValue: PT.string,
         autoFocus: PT.bool,
+        isAnyFilterActive: PT.bool,
     };
 
     static HEIGHT = SearchInput.HEIGHT + 16 * 2;
@@ -26,6 +28,11 @@ class ProductsFiltering extends React.PureComponent {
                     onChangeText={this.props.onSearch}
                     value={this.props.searchValue}
                 />
+                <IconButton
+                    onPress={this.props.onPressFilter}
+                    icon="filter"
+                    color={this.props.isAnyFilterActive ? 'brand' : 'default'}
+                />
             </RN.View>
         );
     }
@@ -34,7 +41,6 @@ class ProductsFiltering extends React.PureComponent {
 const styles = RN.StyleSheet.create({
     container: {
         paddingVertical: 16,
-        paddingRight: 16,
         flexDirection: 'row',
         alignItems: 'center',
     },

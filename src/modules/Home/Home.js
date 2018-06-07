@@ -7,21 +7,15 @@ import { SearchAndScan, Categories } from './components';
 
 class Home extends React.Component {
     handleOnPressSearch = () => {
-        const goToSearch = NavigationActions.navigate({
-            routeName: 'Search',
-            params: { autoFocus: true },
-        });
-        this.props.navigation.dispatch(goToSearch);
+        this.props.navigation.push('Search', { autoFocus: true });
     };
 
     handleOnPressScan = () => {
-        const goToScan = NavigationActions.navigate({ routeName: 'Scan' });
-        this.props.navigation.dispatch(goToScan);
+        this.props.navigation.push('Scan');
     };
 
-    handleOnPressCategory = () => {
-        const goToSearch = NavigationActions.navigate({ routeName: 'Search' });
-        this.props.navigation.dispatch(goToSearch);
+    handleOnPressCategory = categoryId => {
+        this.props.navigation.push('Search', { categoryId });
     };
 
     render() {

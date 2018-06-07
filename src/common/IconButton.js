@@ -6,18 +6,8 @@ import { styling } from 'config';
 
 const IconButton = props => {
     const source = {
-        back: require(`assets/ui/back.png`),
-        filter: require(`assets/ui/filter.png`),
-    }[props.icon];
-    const size = {
-        back: {
-            width: 15,
-            height: 24,
-        },
-        filter: {
-            width: 22,
-            height: 17,
-        },
+        back: require('assets/ui/back.png'),
+        filter: require('assets/ui/filter.png'),
     }[props.icon];
     return (
         <RN.TouchableOpacity
@@ -26,7 +16,7 @@ const IconButton = props => {
             onPress={props.onPress}
         >
             <RN.Image
-                style={[styles.icon, size, props.color === 'brand' && styles.colorBrand]}
+                style={[styles.icon, props.color === 'brand' && styles.colorBrand]}
                 source={source}
             />
         </RN.TouchableOpacity>
@@ -52,10 +42,9 @@ const styles = RN.StyleSheet.create({
     },
     icon: {
         resizeMode: 'contain',
-        marginRight: 1,
     },
     colorBrand: {
-        fillColor: styling.COLOR_BRAND_PRIMARY,
+        tintColor: styling.COLOR_BRAND_PRIMARY,
     },
 });
 
