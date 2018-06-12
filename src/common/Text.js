@@ -23,7 +23,7 @@ const Text = ({ font, size, color, align, weight, style, children, ...textProps 
 Text.propTypes = {
     font: PT.oneOf(['default', 'brand']),
     size: PT.oneOf(['smaller', 'default', 'bigger', 'huge']),
-    color: PT.oneOf(['default', 'brand', 'lighter']),
+    color: PT.oneOf(['default', 'brand', 'lighter', 'white']),
     align: PT.oneOf(['left', 'center', 'right']),
     weight: PT.oneOf(['default', 'heavier']),
 };
@@ -69,6 +69,9 @@ export const styles = RN.StyleSheet.create({
     },
     'color-lighter': {
         color: styling.COLOR_TEXT_LIGHTER,
+    },
+    'color-white': {
+        color: 'white',
     },
 
     'align-left': {

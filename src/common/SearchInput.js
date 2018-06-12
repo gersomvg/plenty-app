@@ -2,8 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {styling} from 'config';
-import {styles as textStyles} from 'common/Text';
+import { styling } from 'config';
+import { styles as textStyles } from 'common/Text';
 
 class SearchInput extends React.PureComponent {
     static propTypes = {
@@ -21,17 +21,17 @@ class SearchInput extends React.PureComponent {
 
     static HEIGHT = 48;
 
-    state = {isFocused: false};
+    state = { isFocused: false };
 
     handleInputRef = c => (this.inputRef = c);
 
     handleOnFocus = (...args) => {
-        this.setState({isFocused: true});
+        this.setState({ isFocused: true });
         if (this.props.onFocus) this.props.onFocus(...args);
     };
 
     handleOnBlur = (...args) => {
-        this.setState({isFocused: false});
+        this.setState({ isFocused: false });
         if (this.props.onBlur) this.props.onBlur(...args);
     };
 
@@ -53,7 +53,7 @@ class SearchInput extends React.PureComponent {
     };
 
     renderInput = () => {
-        const {overlayTouchable, onPress, placeholder, primaryColor, ...inputProps} = this.props;
+        const { overlayTouchable, onPress, placeholder, primaryColor, ...inputProps } = this.props;
         const inputStyles = [
             styles.input,
             primaryColor && styles.inputPrimaryColor,
@@ -88,10 +88,7 @@ class SearchInput extends React.PureComponent {
                     activeOpacity={0.5}
                     style={styles.clearButton}
                 >
-                    <RN.Image
-                        style={styles.clearIcon}
-                        source={require('assets/ui/clear-input.png')}
-                    />
+                    <RN.Image style={styles.clearIcon} source={require('assets/ui/clear.png')} />
                 </RN.TouchableOpacity>
             );
         }
@@ -161,4 +158,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {SearchInput};
+export { SearchInput };

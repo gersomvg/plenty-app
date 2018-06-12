@@ -2,9 +2,10 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text, ErrorMessageWithButton} from 'common';
-import {getSafeBottomHeight} from 'utils';
-import {Product} from './Product';
+import { Text, ErrorMessageWithButton } from 'common';
+import { getSafeBottomHeight } from 'utils';
+import { Product } from './Product';
+import { ActiveFiltersAsTags } from './ActiveFiltersAsTags';
 
 class Products extends React.PureComponent {
     static propTypes = {
@@ -14,14 +15,42 @@ class Products extends React.PureComponent {
         onPressProduct: PT.func.isRequired,
         onLoad: PT.func.isRequired,
         onLoadMore: PT.func.isRequired,
+        filters: PT.object.isRequired,
+        onPressFilter: PT.func.isRequired,
+        onRemoveFilter: PT.func.isRequired,
+        isAnyFilterActive: PT.bool.isRequired,
         style: PT.any,
+    };
+
+    state = { extraData: null };
+
+    static getDerivedStateFromProps = (props, state) => {
+        const { extraData } = state;
+        if (
+            extraData === null ||
+            extraData.fetchStatus !== props.fetchStatus ||
+            extraData.fetchMoreStatus !== props.fetchMoreStatus ||
+            extraData.filters !== props.filters
+        ) {
+            return {
+                extraData: {
+                    fetchStatus: props.fetchStatus,
+                    fetchMoreStatus: props.fetchMoreStatus,
+                    filters: props.filters,
+                },
+            };
+        }
+        return null;
     };
 
     keyExtractor = item => item.id.toString();
 
     getItemLayout = (data, index) => ({
         length: Product.height,
-        offset: index * Product.height + 16,
+        offset:
+            index * Product.height +
+            16 +
+            (this.props.isAnyFilterActive ? ActiveFiltersAsTags.height : 0),
         index,
     });
 
@@ -32,20 +61,32 @@ class Products extends React.PureComponent {
                 contentContainerStyle={styles.contentContainer}
                 data={this.props.products}
                 renderItem={this.renderItem}
+                ListHeaderComponent={this.renderHeader}
                 ListEmptyComponent={this.renderEmpty}
                 ListFooterComponent={this.renderFooter}
                 getItemLayout={this.getItemLayout}
                 keyExtractor={this.keyExtractor}
                 windowSize={3}
                 keyboardShouldPersistTaps="handled"
-                extraData={`${this.props.fetchStatus}${this.props.fetchMoreStatus}`}
+                extraData={this.state.extraData}
                 onEndReached={this.props.onLoadMore}
             />
         );
     }
 
-    renderItem = ({item}) => {
-        const onPress = () => this.props.onPressProduct({product: item});
+    renderHeader = () => {
+        if (!this.props.isAnyFilterActive) return null;
+        return (
+            <ActiveFiltersAsTags
+                filters={this.props.filters}
+                onPressFilter={this.props.onPressFilter}
+                onRemoveFilter={this.props.onRemoveFilter}
+            />
+        );
+    };
+
+    renderItem = ({ item }) => {
+        const onPress = () => this.props.onPressProduct({ product: item });
         return <Product product={item} onPress={onPress} />;
     };
 
@@ -75,7 +116,7 @@ class Products extends React.PureComponent {
         const onPress =
             this.props.fetchStatus === 'error'
                 ? this.props.onLoad
-                : () => this.props.onLoadMore({retryAfterError: true});
+                : () => this.props.onLoadMore({ retryAfterError: true });
         const message = 'Laden is niet gelukt';
         const buttonLabel = 'Probeer opnieuw';
         return (
@@ -109,4 +150,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {Products};
+export { Products };

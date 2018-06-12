@@ -18,7 +18,7 @@ const initialState = {
     filters: null,
 };
 
-class Search extends React.Component {
+class Search extends React.PureComponent {
     state = initialState;
 
     constructor() {
@@ -107,6 +107,10 @@ class Search extends React.Component {
         this.setState({ showFilterModal: true });
     };
 
+    handleOnRemoveFilter = filterKey => {
+        this.setState(state => ({ ...state, filters: { ...state.filters, [filterKey]: null } }));
+    };
+
     handleOnSearch = searchValue => {
         this.setState({ searchValue });
         this.loadProductsDebounced();
@@ -134,6 +138,10 @@ class Search extends React.Component {
                     onPressProduct={this.handleOnPressProduct}
                     onLoad={this.loadProducts}
                     onLoadMore={this.loadMoreProducts}
+                    filters={this.state.filters}
+                    onPressFilter={this.handleOnPressFilter}
+                    onRemoveFilter={this.handleOnRemoveFilter}
+                    isAnyFilterActive={isAnyFilterActive}
                 />
             </RN.KeyboardAvoidingView>
         );
