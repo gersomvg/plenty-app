@@ -5,7 +5,7 @@ import PT from 'prop-types';
 import { Text, ErrorMessageWithButton } from 'common';
 import { getSafeBottomHeight } from 'utils';
 import { Product } from './Product';
-import { ActiveFiltersAsTags } from './ActiveFiltersAsTags';
+import { FilterTags } from './FilterTags';
 
 class Products extends React.PureComponent {
     static propTypes = {
@@ -48,9 +48,7 @@ class Products extends React.PureComponent {
     getItemLayout = (data, index) => ({
         length: Product.height,
         offset:
-            index * Product.height +
-            16 +
-            (this.props.isAnyFilterActive ? ActiveFiltersAsTags.height : 0),
+            index * Product.height + 16 + (this.props.isAnyFilterActive ? FilterTags.height : 0),
         index,
     });
 
@@ -77,7 +75,7 @@ class Products extends React.PureComponent {
     renderHeader = () => {
         if (!this.props.isAnyFilterActive) return null;
         return (
-            <ActiveFiltersAsTags
+            <FilterTags
                 filters={this.props.filters}
                 onPressFilter={this.props.onPressFilter}
                 onRemoveFilter={this.props.onRemoveFilter}

@@ -6,7 +6,7 @@ import _ from 'lodash';
 import productsApi from 'api/products';
 import { makeCancelable, getSafeTopHeight } from 'utils';
 import { ElevatedHeader } from 'common';
-import { ProductsFiltering, Products } from './components';
+import { FilterTools, Products, FilterModal } from './components';
 
 const initialState = {
     searchValue: null,
@@ -103,8 +103,17 @@ class Search extends React.PureComponent {
         this.props.navigation.pop();
     };
 
-    handleOnPressFilter = () => {
+    openFilterModal = () => {
         this.setState({ showFilterModal: true });
+    };
+
+    closeFilterModal = () => {
+        this.setState({ showFilterModal: false });
+    };
+
+    handleOnChangeFilters = async filters => {
+        await this.setState({ filters });
+        this.loadProducts();
     };
 
     handleOnRemoveFilter = async filterKey => {
@@ -125,9 +134,9 @@ class Search extends React.PureComponent {
         return (
             <RN.KeyboardAvoidingView behavior="padding" style={styles.screen}>
                 <ElevatedHeader style={styles.header}>
-                    <ProductsFiltering
+                    <FilterTools
                         onPressBack={this.handleOnPressBack}
-                        onPressFilter={this.handleOnPressFilter}
+                        onPressFilter={this.openFilterModal}
                         isAnyFilterActive={isAnyFilterActive}
                         onSearch={this.handleOnSearch}
                         searchValue={this.state.searchValue}
@@ -143,10 +152,17 @@ class Search extends React.PureComponent {
                     onLoad={this.loadProducts}
                     onLoadMore={this.loadMoreProducts}
                     filters={this.state.filters}
-                    onPressFilter={this.handleOnPressFilter}
+                    onPressFilter={this.openFilterModal}
                     onRemoveFilter={this.handleOnRemoveFilter}
                     isAnyFilterActive={isAnyFilterActive}
                 />
+                {this.state.showFilterModal && (
+                    <FilterModal
+                        filters={this.state.filters}
+                        onChange={this.handleOnChangeFilters}
+                        onClose={this.closeFilterModal}
+                    />
+                )}
             </RN.KeyboardAvoidingView>
         );
     }
@@ -162,7 +178,7 @@ const styles = RN.StyleSheet.create({
     },
     products: {
         zIndex: 1,
-        marginTop: ProductsFiltering.HEIGHT + getSafeTopHeight(),
+        marginTop: FilterTools.HEIGHT + getSafeTopHeight(),
     },
 });
 

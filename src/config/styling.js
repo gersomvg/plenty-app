@@ -11,6 +11,7 @@ const styling = {
 
     COLOR_BORDER_LIGHTEST: '#F5F5F5',
     COLOR_BORDER_LIGHT: '#ECECEC',
+    COLOR_BORDER_MEDIUM: '#ABABAB',
 
     FONT_FAMILY_BRAND: 'ClearSans-Bold',
 };

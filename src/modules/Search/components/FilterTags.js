@@ -2,6 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
+import { LinearGradient } from 'expo';
 
 import { Text } from 'common';
 import { styling } from 'config';
@@ -10,7 +11,7 @@ import { styling } from 'config';
     categories: state.categories.items,
     shops: state.shops.items,
 }))
-class ActiveFiltersAsTags extends React.PureComponent {
+class FilterTags extends React.PureComponent {
     static propTypes = {
         filters: PT.object.isRequired,
         onPressFilter: PT.func.isRequired,
@@ -31,15 +32,24 @@ class ActiveFiltersAsTags extends React.PureComponent {
     render() {
         const { filters, onPressFilter, onRemoveFilter } = this.props;
         return (
-            <RN.ScrollView
-                style={[styles.container, this.props.style]}
-                horizontal
-                alwaysBounceHorizontal={false}
-            >
-                {['shopCode', 'categoryId']
-                    .filter(key => filters[key] !== null)
-                    .map(this.renderTag)}
-            </RN.ScrollView>
+            <RN.View>
+                <RN.ScrollView
+                    style={[styles.container, this.props.style]}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                >
+                    {['shopCode', 'categoryId']
+                        .filter(key => filters[key] !== null)
+                        .map(this.renderTag)}
+                </RN.ScrollView>
+                <LinearGradient
+                    start={[0, 0]}
+                    end={[1, 0]}
+                    colors={['rgba(255,255,255,0)', 'white']}
+                    style={styles.fader}
+                    pointerEvents="none"
+                />
+            </RN.View>
         );
     }
 
@@ -76,7 +86,8 @@ class ActiveFiltersAsTags extends React.PureComponent {
 
 const styles = RN.StyleSheet.create({
     container: {
-        paddingVertical: 16,
+        paddingTop: 6,
+        paddingBottom: 16,
         paddingHorizontal: 16,
     },
     tag: {
@@ -85,6 +96,7 @@ const styles = RN.StyleSheet.create({
         overflow: 'hidden',
         flexDirection: 'row',
         alignItems: 'stretch',
+        marginRight: 10,
     },
     pressArea: {
         backgroundColor: styling.COLOR_BRAND_PRIMARY,
@@ -105,6 +117,13 @@ const styles = RN.StyleSheet.create({
         resizeMode: 'contain',
         tintColor: 'white',
     },
+    fader: {
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        width: 48,
+        height: '100%',
+    },
 });
 
-export { ActiveFiltersAsTags };
+export { FilterTags };

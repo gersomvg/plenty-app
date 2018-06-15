@@ -1,2 +1,3 @@
 export * from './Products';
-export * from './ProductsFiltering';
+export * from './FilterTools';
+export * from './FilterModal';

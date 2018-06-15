@@ -5,7 +5,7 @@ import PT from 'prop-types';
 import { IconButton, SearchInput } from 'common';
 import { getSafeTopHeight } from 'utils';
 
-class ProductsFiltering extends React.PureComponent {
+class FilterTools extends React.PureComponent {
     static propTypes = {
         onPressBack: PT.func.isRequired,
         onPressFilter: PT.func.isRequired,
@@ -49,4 +49,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export { ProductsFiltering };
+export { FilterTools };
