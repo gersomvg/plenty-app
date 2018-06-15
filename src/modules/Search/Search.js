@@ -107,8 +107,12 @@ class Search extends React.PureComponent {
         this.setState({ showFilterModal: true });
     };
 
-    handleOnRemoveFilter = filterKey => {
-        this.setState(state => ({ ...state, filters: { ...state.filters, [filterKey]: null } }));
+    handleOnRemoveFilter = async filterKey => {
+        await this.setState(state => ({
+            ...state,
+            filters: { ...state.filters, [filterKey]: null },
+        }));
+        this.loadProducts();
     };
 
     handleOnSearch = searchValue => {
