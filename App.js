@@ -1,4 +1,5 @@
 import React from 'react';
+import RN from 'react-native';
 import { Font, AppLoading } from 'expo';
 import { init } from '@rematch/core';
 import createRematchPersist, { getPersistor } from '@rematch/persist';
@@ -9,7 +10,11 @@ import * as models from './src/models';
 import AppNavigation from './src/AppNavigation';
 import { ErrorMessageWithButton } from 'common';
 
-const persistPlugin = createRematchPersist({ whitelist: ['shops', 'categories'] });
+const persistPlugin = createRematchPersist({
+    whitelist: ['shops', 'categories'],
+    storage: RN.AsyncStorage,
+    version: 1,
+});
 const store = init({ plugins: [persistPlugin], models });
 const persistor = getPersistor();
 
@@ -17,7 +22,10 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <AppEnsureLoading />
+                <React.Fragment>
+                    <AppEnsureLoading />
+                    <RN.StatusBar backgroundColor="white" barStyle="dark-content" />
+                </React.Fragment>
             </Provider>
         );
     }
@@ -28,6 +36,7 @@ export default class App extends React.Component {
         ['initial', 'loading'].includes(state.shops.fetchStatus) ||
         ['initial', 'loading'].includes(state.categories.fetchStatus),
     hasError: [state.shops.fetchStatus, state.categories.fetchStatus].includes('error'),
+    rehydrated: state._persist.rehydrated,
 }))
 class AppEnsureLoading extends React.Component {
     state = { fontLoaded: false };

@@ -2,9 +2,9 @@
     "expo": {
         "name": "Plenty",
         "icon": "./src/assets/branding/app-logo.png",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "slug": "plenty",
-        "sdkVersion": "27.0.0",
+        "sdkVersion": "28.0.0",
         "splash": {
             "image": "./src/assets/branding/splash-screen.png"
         },
@@ -13,6 +13,10 @@
         },
         "android": {
             "package": "nl.plentyapp.plenty"
+        },
+        "privacy": "unlisted",
+        "updates": {
+            "enabled": true
         }
     }
 }

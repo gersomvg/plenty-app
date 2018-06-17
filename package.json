@@ -18,26 +18,26 @@
     "@rematch/core": "^1.0.0-alpha.5",
     "@rematch/immer": "^1.0.2",
     "@rematch/persist": "^1.0.2",
-    "expo": "^27.0.2",
+    "expo": "^28.0.0",
     "immer": "^1.3.1",
     "prop-types": "^15.6.1",
     "qs": "^6.5.2",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.2.tar.gz",
+    "react": "^16.4.1",
+    "react-native": "github:expo/react-native#sdk-28.0.0",
     "react-native-camera": "^1.1.4",
-    "react-navigation": "^2.0.4",
+    "react-navigation": "^2.3.1",
     "react-redux": "^5.0.7",
-    "redux-persist": "^5.9.1"
+    "redux-persist": "^5.10.0"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
     "husky": "^0.14.3",
-    "jest-expo": "~27.0.1",
-    "lint-staged": "^7.1.2",
-    "prettier": "^1.12.1",
+    "jest-expo": "^28.0.0",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.13.5",
     "react-native-debugger-open": "^0.3.17",
     "react-native-scripts": "1.14.0",
-    "react-test-renderer": "16.3.1"
+    "react-test-renderer": "^16.4.1"
   },
   "rnpm": {
     "assets": [
