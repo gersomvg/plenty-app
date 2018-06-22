@@ -1,6 +1,5 @@
 import React from 'react';
 import RN from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
 import { SearchAndScan, Categories } from './components';
@@ -18,12 +17,17 @@ class Home extends React.Component {
         this.props.navigation.push('Search', { categoryId });
     };
 
+    handleOnLongPressTitle = () => {
+        this.props.navigation.push('Login');
+    };
+
     render() {
         return (
             <RN.ScrollView alwaysBounceVertical={false} style={styles.screen}>
                 <SearchAndScan
                     onPressSearch={this.handleOnPressSearch}
                     onPressScan={this.handleOnPressScan}
+                    onLongPressTitle={this.handleOnLongPressTitle}
                     style={styles.searchAndScan}
                 />
                 <Categories onPress={this.handleOnPressCategory} />

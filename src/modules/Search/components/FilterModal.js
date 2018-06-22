@@ -4,7 +4,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
 
-import { Text, IconButton, RadioBox } from 'common';
+import { Text, IconButton, RadioBox, Button } from 'common';
 import { styling } from 'config';
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
 
@@ -108,13 +108,7 @@ class FilterModal extends React.PureComponent {
     renderApplyButton = () => {
         return (
             <RN.View style={styles.applyWrapper}>
-                <RN.TouchableOpacity
-                    activeOpacity={0.5}
-                    style={styles.applyButton}
-                    onPress={this.props.onClose}
-                >
-                    <Text color="white">Bekijk producten</Text>
-                </RN.TouchableOpacity>
+                <Button onPress={this.props.onClose} label="Bekijk producten" />
             </RN.View>
         );
     };
@@ -144,14 +138,6 @@ const styles = RN.StyleSheet.create({
         left: 0,
         width: '100%',
         alignItems: 'center',
-    },
-    applyButton: {
-        height: 44,
-        paddingHorizontal: 20,
-        borderRadius: 6,
-        backgroundColor: styling.COLOR_BRAND_PRIMARY,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     filterGroup: {
         marginTop: 25,

@@ -1,6 +1,7 @@
 import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
+import { GestureHandler } from 'expo';
 
 import { Text, SearchInput } from 'common';
 import { styling } from 'config';
@@ -9,14 +10,28 @@ class SearchAndScan extends React.PureComponent {
     static propTypes = {
         onPressSearch: PT.func.isRequired,
         onPressScan: PT.func.isRequired,
+        onLongPressTitle: PT.func.isRequired,
+    };
+
+    handleOnHandlerStateChange = ({ nativeEvent }) => {
+        if (nativeEvent.state === GestureHandler.State.ACTIVE) {
+            this.props.onLongPressTitle();
+        }
     };
 
     render() {
         return (
             <RN.View style={this.props.style}>
-                <Text size="huge" font="brand" align="center" style={styles.brand}>
-                    PLENTY
-                </Text>
+                <GestureHandler.LongPressGestureHandler
+                    onHandlerStateChange={this.handleOnHandlerStateChange}
+                    minDurationMs={1000}
+                >
+                    <RN.View>
+                        <Text size="huge" font="brand" align="center" style={styles.brand}>
+                            PLENTY
+                        </Text>
+                    </RN.View>
+                </GestureHandler.LongPressGestureHandler>
                 <Text color="lighter" align="center" style={styles.tagline}>
                     Plantaardige weelde
                 </Text>

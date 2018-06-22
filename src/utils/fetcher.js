@@ -19,16 +19,26 @@ class Timeout {
     };
 }
 
-const fetcher = async (...params) => {
+const fetcher = async (url, params = {}) => {
     const timeout = new Timeout();
     try {
-        const fetchPromise = fetch(...params);
+        const fetchPromise = fetch(url, {
+            ...params,
+            headers: ['POST', 'PUT', 'PATCH'].includes(params.method)
+                ? {
+                      'Content-Type': 'application/json',
+                  }
+                : undefined,
+            body: params.body ? JSON.stringify(params.body) : undefined,
+        });
         const timeoutPromise = timeout.set(timeoutMS);
         const response = await Promise.race([fetchPromise, timeoutPromise]);
 
         if (!response.ok) throw response;
 
-        return await response.json();
+        if (response.headers.get('Content-Type').includes('application/json')) {
+            return await response.json();
+        }
     } catch (e) {
         throw e;
     } finally {
@@ -36,4 +46,4 @@ const fetcher = async (...params) => {
     }
 };
 
-export {fetcher};
+export { fetcher };

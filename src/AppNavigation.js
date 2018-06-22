@@ -1,25 +1,40 @@
 import { createStackNavigator } from 'react-navigation';
 
-import { Home, Search, ProductContainer, ScanContainer } from './modules';
+import * as modules from './modules';
 
-export default createStackNavigator(
+const MainStack = createStackNavigator(
     {
         Home: {
-            screen: Home,
+            screen: modules.Home,
         },
         Search: {
-            screen: Search,
+            screen: modules.Search,
         },
         Scan: {
-            screen: ScanContainer,
+            screen: modules.ScanContainer,
         },
         Product: {
-            screen: ProductContainer,
+            screen: modules.ProductContainer,
         },
     },
     {
-        navigationOptions: {
-            header: null,
-        },
+        headerMode: 'none',
     },
 );
+
+const RootStack = createStackNavigator(
+    {
+        Main: {
+            screen: MainStack,
+        },
+        Login: {
+            screen: modules.Login,
+        },
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
+    },
+);
+
+export default RootStack;

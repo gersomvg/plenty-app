@@ -4,3 +4,4 @@ export * from './logger';
 export * from './makeCancelable';
 export * from './fetcher';
 export * from './qs';
+export * from './enumerate';

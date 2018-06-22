@@ -36,7 +36,6 @@ export default class App extends React.Component {
         ['initial', 'loading'].includes(state.shops.fetchStatus) ||
         ['initial', 'loading'].includes(state.categories.fetchStatus),
     hasError: [state.shops.fetchStatus, state.categories.fetchStatus].includes('error'),
-    rehydrated: state._persist.rehydrated,
 }))
 class AppEnsureLoading extends React.Component {
     state = { fontLoaded: false };

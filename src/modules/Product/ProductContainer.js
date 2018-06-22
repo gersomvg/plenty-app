@@ -1,12 +1,10 @@
 import React from 'react';
-import {NavigationActions} from 'react-navigation';
 import _ from 'lodash';
 
 import Product from './Product';
+import { withFetch } from 'hocs';
 
-import productsApi from 'api/products';
-import {makeCancelable} from 'utils';
-
+@withFetch
 class ProductContainer extends React.Component {
     state = {
         fetchStatus: 'initial',
@@ -17,36 +15,31 @@ class ProductContainer extends React.Component {
         this.loadProduct();
     }
 
-    componentWillUnmount() {
-        if (this.fetch) this.fetch.cancel();
-    }
-
     loadProduct = async () => {
         if (this.state.fetchStatus === 'loading') return;
 
         try {
-            this.setState({fetchStatus: 'loading'});
-            let request;
+            this.setState({ fetchStatus: 'loading' });
+            let data;
             if (this.props.navigation.state.params.productId) {
-                request = productsApi.getOne({id: this.props.navigation.state.params.productId});
+                data = await this.props.fetch.products.getOne({
+                    id: this.props.navigation.state.params.productId,
+                }).promise;
             } else {
-                request = productsApi.getOneByBarcode({
+                data = await this.props.fetch.products.getOneByBarcode({
                     barcode: this.props.navigation.state.params.barcode,
-                });
+                }).promise;
             }
-            this.fetch = makeCancelable(request);
-            const data = await this.fetch.promise;
-            this.setState({fetchStatus: 'loaded', product: data});
+            this.setState({ fetchStatus: 'loaded', product: data });
         } catch (e) {
             if (e.isCanceled) return;
             const fetchStatus = e.status === 404 ? 'notfound' : 'error';
-            this.setState({fetchStatus});
+            this.setState({ fetchStatus });
         }
     };
 
     handleOnPressBack = () => {
-        const goBack = NavigationActions.back();
-        this.props.navigation.dispatch(goBack);
+        this.props.navigation.pop();
     };
 
     render() {
@@ -60,4 +53,4 @@ class ProductContainer extends React.Component {
     }
 }
 
-export {ProductContainer};
+export { ProductContainer };

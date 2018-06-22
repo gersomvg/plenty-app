@@ -19,6 +19,7 @@
     "@rematch/immer": "^1.0.2",
     "@rematch/persist": "^1.0.2",
     "expo": "^28.0.0",
+    "hoist-non-react-statics": "^2.5.5",
     "immer": "^1.3.1",
     "prop-types": "^15.6.1",
     "qs": "^6.5.2",

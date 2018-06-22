@@ -3,28 +3,22 @@ import RN from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
 
-import productsApi from 'api/products';
-import { makeCancelable, getSafeTopHeight } from 'utils';
+import { withFetch } from 'hocs';
+import { getSafeTopHeight } from 'utils';
 import { ElevatedHeader } from 'common';
 import { FilterTools, Products, FilterModal } from './components';
 
-const initialState = {
-    searchValue: null,
-    fetchStatus: 'initial',
-    fetchMoreStatus: 'initial',
-    products: [],
-    nextLink: null,
-    showFilterModal: false,
-    filters: null,
-};
-
+@withFetch
 class Search extends React.PureComponent {
-    state = initialState;
-
-    constructor() {
-        super();
-        this.loadProductsDebounced = _.debounce(this.loadProducts, 200);
-    }
+    state = {
+        searchValue: null,
+        fetchStatus: 'initial',
+        fetchMoreStatus: 'initial',
+        products: [],
+        nextLink: null,
+        showFilterModal: false,
+        filters: null,
+    };
 
     static getDerivedStateFromProps(props, state) {
         if (state.filters === null) {
@@ -42,11 +36,6 @@ class Search extends React.PureComponent {
         this.loadProducts();
     }
 
-    componentWillUnmount() {
-        if (this.fetch) this.fetch.cancel();
-        if (this.fetchMore) this.fetchMore.cancel();
-    }
-
     loadProducts = async () => {
         try {
             if (this.fetch) this.fetch.cancel();
@@ -57,20 +46,18 @@ class Search extends React.PureComponent {
                 products: [],
                 nextLink: null,
             });
-            this.fetch = makeCancelable(
-                productsApi.get({
-                    name: this.state.searchValue,
-                    categoryId: this.state.filters.categoryId,
-                    shopCode: this.state.filters.shopCode,
-                }),
-            );
+            this.fetch = this.props.fetch.products.get({
+                name: this.state.searchValue,
+                categoryId: this.state.filters.categoryId,
+                shopCode: this.state.filters.shopCode,
+            });
             const data = await this.fetch.promise;
             this.setState({ fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink });
         } catch (e) {
-            if (e.isCanceled) return;
-            this.setState({ fetchStatus: 'error' });
+            if (!e.isCanceled) this.setState({ fetchStatus: 'error' });
         }
     };
+    loadProductsDebounced = _.debounce(this.loadProducts, 200);
 
     loadMoreProducts = async ({ retryAfterError = false } = {}) => {
         const { fetchStatus, fetchMoreStatus, nextLink } = this.state;
@@ -80,7 +67,7 @@ class Search extends React.PureComponent {
 
         try {
             this.setState({ fetchMoreStatus: 'loading' });
-            this.fetchMore = makeCancelable(productsApi.get({ nextLink: nextLink }));
+            this.fetchMore = this.props.fetch.products.get({ nextLink: nextLink });
             const data = await this.fetchMore.promise;
             this.setState(state => ({
                 ...state,
@@ -89,8 +76,7 @@ class Search extends React.PureComponent {
                 nextLink: data.nextLink,
             }));
         } catch (e) {
-            if (e.isCanceled) return;
-            this.setState({ fetchMoreStatus: 'error' });
+            if (!e.isCanceled) this.setState({ fetchMoreStatus: 'error' });
         }
     };
 

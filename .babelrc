@@ -14,7 +14,8 @@
                     "common": "./src/common",
                     "utils": "./src/utils",
                     "assets": "./src/assets",
-                    "api": "./src/api"
+                    "api": "./src/api",
+                    "hocs": "./src/hocs"
                 }
             }
         ]

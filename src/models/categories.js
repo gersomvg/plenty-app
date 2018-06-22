@@ -1,5 +1,6 @@
-import categoriesApi from 'api/categories';
 import produce from 'immer';
+
+import { categories as categoriesApi } from 'api';
 
 const categories = {
     state: {
@@ -26,8 +27,8 @@ const categories = {
         async load() {
             try {
                 this.loadInitiated();
-                const categories = await categoriesApi.get();
-                this.loaded(categories.items);
+                const categoriesData = await categoriesApi.get();
+                this.loaded(categoriesData.items);
             } catch (e) {
                 this.loadedError();
             }

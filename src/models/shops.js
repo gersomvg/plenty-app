@@ -1,5 +1,6 @@
-import shopsApi from 'api/shops';
 import produce from 'immer';
+
+import { shops as shopsApi } from 'api';
 
 const shops = {
     state: {
@@ -26,8 +27,8 @@ const shops = {
         async load() {
             try {
                 this.loadInitiated();
-                const shops = await shopsApi.get();
-                this.loaded(shops.items);
+                const shopsData = await shopsApi.get();
+                this.loaded(shopsData.items);
             } catch (e) {
                 this.loadedError();
             }
