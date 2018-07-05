@@ -7,3 +7,4 @@ export * from './RadioBox';
 export * from './Text';
 export * from './Emoji';
 export * from './ElevatedHeader';
+export * from './ProductThumb';

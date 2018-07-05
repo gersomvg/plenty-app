@@ -9,13 +9,14 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 import * as models from './src/models';
 import AppNavigation from './src/AppNavigation';
 import { ErrorMessageWithButton } from 'common';
+import { eventBus } from 'utils';
 
 const persistPlugin = createRematchPersist({
-    whitelist: ['shops', 'categories'],
+    whitelist: ['shops', 'categories', 'auth'],
     storage: RN.AsyncStorage,
     version: 1,
 });
-const store = init({ plugins: [persistPlugin], models });
+export const store = init({ plugins: [persistPlugin], models });
 const persistor = getPersistor();
 
 export default class App extends React.Component {
@@ -33,9 +34,9 @@ export default class App extends React.Component {
 
 @connect(state => ({
     stillLoading:
-        ['initial', 'loading'].includes(state.shops.fetchStatus) ||
-        ['initial', 'loading'].includes(state.categories.fetchStatus),
-    hasError: [state.shops.fetchStatus, state.categories.fetchStatus].includes('error'),
+        ['initial', 'loading'].includes(state.shops.status) ||
+        ['initial', 'loading'].includes(state.categories.status),
+    hasError: [state.shops.status, state.categories.status].includes('error'),
 }))
 class AppEnsureLoading extends React.Component {
     state = { fontLoaded: false };
@@ -43,9 +44,14 @@ class AppEnsureLoading extends React.Component {
     componentDidMount() {
         this.loadData();
         this.loadFont();
+        eventBus.subscribe(eventBus.EVENT.HTTP_401, this.props.dispatch.auth.unauthorize);
     }
 
-    loadData = () => {
+    componentWillUnmount() {
+        eventBus.unsubscribe(eventBus.EVENT.HTTP_401, this.props.dispatch.auth.unauthorize);
+    }
+
+    loadData = async () => {
         this.props.dispatch.shops.load();
         this.props.dispatch.categories.load();
     };

@@ -7,7 +7,7 @@ import { makeCancelable } from 'utils';
 
 const withFetch = Component => {
     class WithFetchHOC extends React.Component {
-        promises = [];
+        requests = [];
 
         makeProxyHandler = (path = '') => ({
             get: (target, key) => {
@@ -20,16 +20,16 @@ const withFetch = Component => {
                 return target[key];
             },
             apply: (target, thisArg, args) => {
-                const wrappedPromise = makeCancelable(target(...args));
-                this.promises.push(wrappedPromise);
-                return wrappedPromise;
+                const request = target(...args);
+                this.requests.push(request);
+                return request;
             },
         });
 
         proxiedApi = new Proxy(api, this.makeProxyHandler());
 
         componentWillUnmount() {
-            this.promises.forEach(promise => promise.cancel());
+            this.requests.forEach(request => request.cancel());
         }
 
         render() {

@@ -3,8 +3,8 @@ import { API_ENDPOINT } from 'config';
 
 const categories = {};
 
-categories.get = async () => {
-    return await fetcher(`${API_ENDPOINT}/category`);
+categories.get = () => {
+    return fetcher(`${API_ENDPOINT}/category`);
 };
 
 export { categories };

@@ -9,7 +9,13 @@
             "image": "./src/assets/branding/splash-screen.png"
         },
         "ios": {
-            "bundleIdentifier": "nl.plentyapp.plenty"
+            "bundleIdentifier": "nl.plentyapp.plenty",
+            "infoPlist": {
+                "NSCameraUsageDescription":
+                    "This app uses the camera to scan barcodes of products.",
+                "NSPhotoLibraryUsageDescription":
+                    "This app uses you photo library, so you can change product images."
+            }
         },
         "android": {
             "package": "nl.plentyapp.plenty"

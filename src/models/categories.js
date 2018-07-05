@@ -5,21 +5,21 @@ import { categories as categoriesApi } from 'api';
 const categories = {
     state: {
         items: [],
-        fetchStatus: 'initial', // initial, loading, loaded, error
+        status: 'initial', // initial, loading, loaded, error
     },
     reducers: {
         loadInitiated: produce(state => {
-            if (state.fetchStatus !== 'loaded') {
-                state.fetchStatus = 'loading';
+            if (state.status !== 'loaded') {
+                state.status = 'loading';
             }
         }),
         loaded: produce((state, payload) => {
             state.items = payload;
-            state.fetchStatus = 'loaded';
+            state.status = 'loaded';
         }),
         loadedError: produce(state => {
-            if (state.fetchStatus === 'loading') {
-                state.fetchStatus = 'error';
+            if (state.status === 'loading') {
+                state.status = 'error';
             }
         }),
     },
@@ -27,7 +27,7 @@ const categories = {
         async load() {
             try {
                 this.loadInitiated();
-                const categoriesData = await categoriesApi.get();
+                const categoriesData = await categoriesApi.get().promise;
                 this.loaded(categoriesData.items);
             } catch (e) {
                 this.loadedError();

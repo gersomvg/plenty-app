@@ -5,25 +5,70 @@ import PT from 'prop-types';
 import { Text } from './Text';
 import { styling } from 'config';
 
-const Button = props => (
-    <RN.TouchableOpacity activeOpacity={0.5} style={styles.button} onPress={props.onPress}>
-        <Text color="white">{props.label}</Text>
-    </RN.TouchableOpacity>
-);
+const Button = props => {
+    const activeOpacity = props.disabled ? 1 : 0.5;
+    const onPress = props.disabled ? undefined : props.onPress;
+    const buttonStyles = [
+        styles.button,
+        props.disabled && styles.buttonDisabled,
+        styles[props.tint],
+        props.style,
+    ];
+    const textColor = props.tint === 'primary' ? 'white' : 'default';
+    return (
+        <RN.TouchableOpacity activeOpacity={activeOpacity} style={buttonStyles} onPress={onPress}>
+            <Text color={textColor} numberOfLines={1} overflowMode="ellipsize">
+                {props.label}
+            </Text>
+            {props.iconSource !== undefined && (
+                <RN.View style={styles.iconWrapper}>
+                    <RN.Image source={props.iconSource} />
+                </RN.View>
+            )}
+        </RN.TouchableOpacity>
+    );
+};
 
 Button.propTypes = {
+    tint: PT.oneOf(['primary', 'secondaryLight', 'light']),
     onPress: PT.func.isRequired,
     label: PT.string.isRequired,
+    disabled: PT.bool,
+    iconSource: PT.number,
+};
+
+Button.defaultProps = {
+    tint: 'primary',
 };
 
 const styles = RN.StyleSheet.create({
     button: {
-        height: 44,
+        height: 48,
         paddingHorizontal: 20,
         borderRadius: 6,
-        backgroundColor: styling.COLOR_BRAND_PRIMARY,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    iconWrapper: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 48,
+        height: 48,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonDisabled: {
+        backgroundColor: '#999999',
+    },
+    primary: {
+        backgroundColor: styling.COLOR_BRAND_PRIMARY,
+    },
+    secondaryLight: {
+        backgroundColor: styling.COLOR_BG_LIGHT_SECONDARY,
+    },
+    light: {
+        backgroundColor: styling.COLOR_BG_LIGHT,
     },
 });
 

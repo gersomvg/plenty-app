@@ -3,7 +3,7 @@ import RN from 'react-native';
 import PT from 'prop-types';
 import { GestureHandler } from 'expo';
 
-import { Text, SearchInput } from 'common';
+import { Text, SearchInput, Button } from 'common';
 import { styling } from 'config';
 
 class SearchAndScan extends React.PureComponent {
@@ -49,14 +49,12 @@ class SearchAndScan extends React.PureComponent {
 
     renderScanButton = () => {
         return (
-            <RN.TouchableOpacity
-                activeOpacity={0.5}
-                style={styles.scanWrapper}
+            <Button
+                tint="secondaryLight"
                 onPress={this.props.onPressScan}
-            >
-                <Text>Scan</Text>
-                <RN.Image style={styles.scanIcon} source={require('assets/ui/barcode-icon.png')} />
-            </RN.TouchableOpacity>
+                label="Scan"
+                iconSource={require('assets/ui/barcode-icon.png')}
+            />
         );
     };
 }
@@ -71,20 +69,6 @@ const styles = RN.StyleSheet.create({
     },
     search: {
         marginBottom: 32,
-    },
-    scanWrapper: {
-        height: 48,
-        borderRadius: 6,
-        backgroundColor: styling.COLOR_BG_LIGHT_SECONDARY,
-        overflow: 'hidden',
-        justifyContent: 'center',
-    },
-    scanIcon: {
-        position: 'absolute',
-        top: 16,
-        left: 13,
-        width: 22,
-        height: 16,
     },
 });
 

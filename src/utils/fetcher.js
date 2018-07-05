@@ -1,7 +1,13 @@
+import produce from 'immer';
+
+import { makeCancelable } from './makeCancelable';
+import { tokenStorage } from './tokenStorage';
+import { eventBus } from './eventBus';
+
 const timeoutMS = 20000;
 
 class Timeout {
-    _id = null;
+    id = null;
 
     set = ms => {
         return new Promise((resolve, reject) => {
@@ -10,32 +16,55 @@ class Timeout {
                 status: 408,
             });
             const fn = () => reject(error);
-            this._id = setTimeout(fn, ms);
+            this.id = setTimeout(fn, ms);
         });
     };
 
     clear = () => {
-        clearTimeout(this._id);
+        clearTimeout(this.id);
     };
 }
 
-const fetcher = async (url, params = {}) => {
+const baseFetcher = async (url, params = {}) => {
     const timeout = new Timeout();
     try {
-        const fetchPromise = fetch(url, {
-            ...params,
-            headers: ['POST', 'PUT', 'PATCH'].includes(params.method)
-                ? {
-                      'Content-Type': 'application/json',
-                  }
-                : undefined,
-            body: params.body ? JSON.stringify(params.body) : undefined,
-        });
+        // Get body and headers from params
+        let body = params.body;
+        const headers = typeof headers === 'object' && headers !== null ? params.headers : {};
+
+        // Automatically switch to JSON body if body is an object
+        const hasJSONBody = typeof body === 'object' && body !== null;
+        if (hasJSONBody && !params.isMultipartFormData) {
+            body = JSON.stringify(params.body);
+            headers['Content-Type'] = 'application/json';
+        } else if (params.isMultipartFormData) {
+            headers['Content-Type'] = 'multipart/form-data';
+        }
+
+        // Add Authorization header
+        const token = await tokenStorage.get();
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        // Race the request against a timeout
+        const fetchPromise = fetch(url, { ...params, headers, body });
         const timeoutPromise = timeout.set(timeoutMS);
         const response = await Promise.race([fetchPromise, timeoutPromise]);
 
-        if (!response.ok) throw response;
+        // Handle token renewal or in case of 401 token removal
+        if (response.status === 401) {
+            tokenStorage.clear();
+            eventBus.publish(eventBus.EVENT.HTTP_401);
+        } else {
+            const renewedToken = response.headers.get('Authorization');
+            if (renewedToken && renewedToken.startsWith('Bearer ')) {
+                tokenStorage.set(renewedToken.substring(7));
+            }
+        }
 
+        // Only a response if valid json
+        if (!response.ok) throw response;
         if (response.headers.get('Content-Type').includes('application/json')) {
             return await response.json();
         }
@@ -45,5 +74,7 @@ const fetcher = async (url, params = {}) => {
         timeout.clear();
     }
 };
+
+const fetcher = (url, params) => makeCancelable(baseFetcher(url, params));
 
 export { fetcher };

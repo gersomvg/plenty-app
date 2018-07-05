@@ -1,9 +1,14 @@
 import React from 'react';
 import RN from 'react-native';
+import { connect } from 'react-redux';
 
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
-import { SearchAndScan, Categories } from './components';
+import { SearchAndScan, Categories, AdminTools } from './components';
 
+@connect(({ auth }) => ({
+    isAuthorized: auth.status === 'AUTHORIZED',
+    isSuperAdmin: auth.user && auth.user.superAdmin,
+}))
 class Home extends React.Component {
     handleOnPressSearch = () => {
         this.props.navigation.push('Search', { autoFocus: true });
@@ -17,8 +22,16 @@ class Home extends React.Component {
         this.props.navigation.push('Search', { categoryId });
     };
 
+    handleOnPressCreate = () => {
+        this.props.navigation.push('ProductEditor');
+    };
+
     handleOnLongPressTitle = () => {
-        this.props.navigation.push('Login');
+        if (this.props.isAuthorized) {
+            this.props.dispatch.auth.unauthorize();
+        } else {
+            this.props.navigation.push('Login');
+        }
     };
 
     render() {
@@ -30,7 +43,16 @@ class Home extends React.Component {
                     onLongPressTitle={this.handleOnLongPressTitle}
                     style={styles.searchAndScan}
                 />
-                <Categories onPress={this.handleOnPressCategory} />
+                {this.props.isAuthorized && (
+                    <AdminTools
+                        isSuperAdmin={this.props.isSuperAdmin}
+                        style={styles.adminTools}
+                        onPressCreate={this.handleOnPressCreate}
+                        onPressInbox={() => {}}
+                        onPressSuper={() => {}}
+                    />
+                )}
+                <Categories onPress={this.handleOnPressCategory} style={styles.categories} />
             </RN.ScrollView>
         );
     }
@@ -45,7 +67,13 @@ const styles = RN.StyleSheet.create({
     },
     searchAndScan: {
         paddingHorizontal: 16,
-        marginBottom: 48,
+    },
+    adminTools: {
+        marginTop: 32,
+        paddingHorizontal: 16,
+    },
+    categories: {
+        marginTop: 48,
     },
 });
 
