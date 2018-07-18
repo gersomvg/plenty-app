@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text, ElevatedHeader} from 'common';
+import { Text, ElevatedHeader } from 'common';
 
 class DynamicHeaderBar extends React.PureComponent {
     static propTypes = {
@@ -19,7 +19,7 @@ class DynamicHeaderBar extends React.PureComponent {
             outputRange: [0, 1],
             extrapolate: 'clamp',
         });
-        this.opacityStyle = {opacity};
+        this.opacityStyle = { opacity };
     }
 
     render() {
@@ -44,8 +44,7 @@ const styles = RN.StyleSheet.create({
         height: 48 + 2 * 16,
         lineHeight: 48,
         paddingHorizontal: 48,
-        marginLeft: 8,
     },
 });
 
-export {DynamicHeaderBar};
+export { DynamicHeaderBar };

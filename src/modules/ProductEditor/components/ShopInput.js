@@ -10,15 +10,15 @@ import { CheckBox } from 'common';
 }))
 class ShopInput extends React.PureComponent {
     static propTypes = {
-        value: PT.arrayOf(PT.string).isRequired,
+        value: PT.arrayOf(PT.object).isRequired,
         onChange: PT.func.isRequired,
     };
 
-    handleChange = shopCode => {
-        if (this.props.value.includes(shopCode)) {
-            this.props.onChange(this.props.value.filter(sc => sc !== shopCode));
+    handleChange = shop => {
+        if (this.props.value.some($shop => $shop.code === shop.code)) {
+            this.props.onChange(this.props.value.filter($shop => $shop.code !== shop.code));
         } else {
-            this.props.onChange([...this.props.value, shopCode]);
+            this.props.onChange([...this.props.value, shop]);
         }
     };
 
@@ -30,12 +30,14 @@ class ShopInput extends React.PureComponent {
                         activeOpacity={0.5}
                         style={styles.shop}
                         key={shop.code}
-                        onPress={() => this.handleChange(shop.code)}
+                        onPress={() => this.handleChange(shop)}
                     >
                         <RN.View style={styles.shopContainer}>
                             <RN.Image style={styles.shopImage} source={{ uri: shop.imageUrl }} />
                         </RN.View>
-                        <CheckBox checked={this.props.value.includes(shop.code)} />
+                        <CheckBox
+                            checked={this.props.value.some($shop => $shop.code === shop.code)}
+                        />
                     </RN.TouchableOpacity>
                 ))}
             </RN.View>

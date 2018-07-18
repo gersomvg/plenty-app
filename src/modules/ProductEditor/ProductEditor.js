@@ -17,11 +17,17 @@ class ProductEditor extends React.PureComponent {
         brand: { name: 'Moeder Aarde' },
         classification: 'YES',
         explanation: 'Ies natoer',
-        shops: ['ah'],
-        categories: [3],
+        shops: [],
+        categories: [],
 
         isSaving: false,
     };
+
+    static getDerivedStateFromProps(props, state) {
+        const product = props.navigation.getParam('product');
+        if (!state.id && product) return product;
+        return null;
+    }
 
     save = async () => {
         this.setState({ isSaving: true });
@@ -36,8 +42,20 @@ class ProductEditor extends React.PureComponent {
                 const brand = await this.props.fetch.brands.create(this.state.brand.name).promise;
                 await this.setState({ brand });
             }
-            const product = await this.props.fetch.products.create(this.state).promise;
-            this.props.navigation.replace('Product', { product });
+            const isExisting = !!this.state.id;
+            const action = isExisting ? 'update' : 'create';
+            const product = await this.props.fetch.products[action](this.state).promise;
+
+            const prevRouteKey = this.props.navigation.getParam('prevRouteKey');
+            if (prevRouteKey) {
+                this.props.navigation.navigate({
+                    routeName: 'Product',
+                    key: prevRouteKey,
+                    params: { product },
+                });
+            } else {
+                this.props.navigation.replace('Product', { product });
+            }
         } catch (e) {
             logger.log(e);
             RN.Alert.alert('Er is iets misgegaan bij het opslaan.');
@@ -108,7 +126,7 @@ class ProductEditor extends React.PureComponent {
                     <Button
                         onPress={this.save}
                         label={this.state.id ? 'Sla op' : 'Voeg toe'}
-                        disabled={this.state.fetchStatus === 'fetching'}
+                        disabled={this.state.isSaving}
                     />
                 </RN.View>
             </RN.KeyboardAvoidingView>

@@ -1,10 +1,14 @@
 import React from 'react';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
 import Product from './Product';
 import { withFetch } from 'hocs';
 
 @withFetch
+@connect(({ auth }) => ({
+    isAuthorized: auth.status === 'AUTHORIZED',
+}))
 class ProductContainer extends React.Component {
     state = {
         fetchStatus: 'initial',
@@ -12,7 +16,9 @@ class ProductContainer extends React.Component {
     };
 
     static getDerivedStateFromProps(props, state) {
-        if (!state.product && props.navigation.state.params.product) {
+        const product = props.navigation.getParam('product');
+        console.log(product);
+        if ((!state.product && product) || state.product.updatedAt !== product.updatedAt) {
             return {
                 product: props.navigation.state.params.product,
                 fetchStatus: 'loaded',
@@ -52,12 +58,21 @@ class ProductContainer extends React.Component {
         this.props.navigation.pop();
     };
 
+    handleOnPressEdit = () => {
+        this.props.navigation.push('ProductEditor', {
+            product: this.state.product,
+            prevRouteKey: this.props.navigation.state.key,
+        });
+    };
+
     render() {
         return (
             <Product
                 {...this.state}
                 onPressBack={this.handleOnPressBack}
+                onPressEdit={this.handleOnPressEdit}
                 onReload={this.loadProduct}
+                isAuthorized={this.props.isAuthorized}
             />
         );
     }

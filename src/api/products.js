@@ -28,8 +28,8 @@ products.create = data => {
     formData.append('brandId', data.brand.id);
     formData.append('classification', data.classification);
     formData.append('explanation', data.explanation);
-    data.shops.forEach(shopCode => formData.append('shopCodes[]', shopCode));
-    data.categories.forEach(categoryId => formData.append('categoryIds[]', categoryId));
+    data.shops.forEach(shop => formData.append('shopCodes[]', shop.code));
+    data.categories.forEach(category => formData.append('categoryIds[]', category.id));
     formData.append('image', {
         uri: data.imageUrl,
         name: 'image.jpg',
@@ -39,6 +39,30 @@ products.create = data => {
     const url = `${API_ENDPOINT}/product`;
     return fetcher(url, {
         method: 'POST',
+        body: formData,
+        isMultipartFormData: true,
+    });
+};
+
+products.update = data => {
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('brandId', data.brand.id);
+    formData.append('classification', data.classification);
+    formData.append('explanation', data.explanation);
+    data.shops.forEach(shop => formData.append('shopCodes[]', shop.code));
+    data.categories.forEach(category => formData.append('categoryIds[]', category.id));
+    if (!data.imageUrl.startsWith('http')) {
+        formData.append('image', {
+            uri: data.imageUrl,
+            name: 'image.jpg',
+            type: 'multipart/form-data',
+        });
+    }
+
+    const url = `${API_ENDPOINT}/product/${data.id}`;
+    return fetcher(url, {
+        method: 'PUT',
         body: formData,
         isMultipartFormData: true,
     });

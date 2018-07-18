@@ -31,8 +31,8 @@ class Product extends React.PureComponent {
         return <RN.ActivityIndicator />;
     };
 
-    renderProductInfo = () => {
-        return [
+    renderProductInfo = () => (
+        <React.Fragment>
             <RN.Animated.ScrollView
                 style={styles.scroller}
                 onScroll={this.onScrollEvent}
@@ -42,16 +42,19 @@ class Product extends React.PureComponent {
                 <ProductInfo product={this.props.product} />
                 <Classification product={this.props.product} style={styles.classification} />
                 <Shops product={this.props.product} />
-            </RN.Animated.ScrollView>,
+            </RN.Animated.ScrollView>
             <DynamicHeaderBar
                 product={this.props.product}
                 onPressBack={this.props.onPressBack}
                 scrollY={this.scrollY}
                 appearAfter={120}
                 key="bar"
-            />,
-        ];
-    };
+            />
+            {this.props.isAuthorized && (
+                <IconButton style={styles.edit} icon="edit" onPress={this.props.onPressEdit} />
+            )}
+        </React.Fragment>
+    );
 
     renderNotFound = () => {
         const message = 'Dit product staat (nog) niet in de app';
@@ -95,6 +98,11 @@ const styles = RN.StyleSheet.create({
     back: {
         position: 'absolute',
         left: 0,
+        top: getSafeTopHeight() + 16,
+    },
+    edit: {
+        position: 'absolute',
+        right: 0,
         top: getSafeTopHeight() + 16,
     },
 });

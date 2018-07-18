@@ -11,15 +11,15 @@ import { styling } from 'config';
 }))
 class CategoryInput extends React.PureComponent {
     static propTypes = {
-        value: PT.arrayOf(PT.number).isRequired,
+        value: PT.arrayOf(PT.object).isRequired,
         onChange: PT.func.isRequired,
     };
 
-    handleChange = categoryId => {
-        if (this.props.value.includes(categoryId)) {
-            this.props.onChange(this.props.value.filter(id => id !== categoryId));
+    handleChange = cat => {
+        if (this.props.value.some($cat => $cat.id === cat.id)) {
+            this.props.onChange(this.props.value.filter($cat => $cat.id !== cat.id));
         } else {
-            this.props.onChange([...this.props.value, categoryId]);
+            this.props.onChange([...this.props.value, cat]);
         }
     };
 
@@ -29,19 +29,19 @@ class CategoryInput extends React.PureComponent {
         );
     }
 
-    renderRow = (category, index) => {
+    renderRow = (cat, index) => {
         return (
             <RN.TouchableOpacity
                 activeOpacity={0.5}
                 style={styles.row}
-                key={category.id}
-                onPress={() => this.handleChange(category.id)}
+                key={cat.id}
+                onPress={() => this.handleChange(cat)}
             >
                 {index > 0 && <RN.View style={styles.topBorder} />}
                 <Text style={styles.text} numberOfLines={1} overflowMode="ellipsize">
-                    {category.name}
+                    {cat.name}
                 </Text>
-                <CheckBox checked={this.props.value.includes(category.id)} />
+                <CheckBox checked={this.props.value.some($cat => $cat.id === cat.id)} />
             </RN.TouchableOpacity>
         );
     };
