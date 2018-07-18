@@ -36,8 +36,6 @@ class ImagePicker extends React.PureComponent {
                 mediaTypes: Expo.ImagePicker.MediaTypeOptions.Images,
                 base64: false,
                 exif: false,
-                allowsEditing: true,
-                aspect: [1, 1],
             });
             if (!response.cancelled) {
                 this.props.onChange(response.uri);
@@ -60,8 +58,6 @@ class ImagePicker extends React.PureComponent {
             const response = await Expo.ImagePicker.launchCameraAsync({
                 base64: false,
                 exif: false,
-                allowsEditing: true,
-                aspect: [1, 1],
             });
             if (!response.cancelled) {
                 this.props.onChange(response.uri);
