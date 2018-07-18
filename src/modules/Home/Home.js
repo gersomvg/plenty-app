@@ -36,7 +36,11 @@ class Home extends React.Component {
 
     render() {
         return (
-            <RN.ScrollView alwaysBounceVertical={false} style={styles.screen}>
+            <RN.ScrollView
+                alwaysBounceVertical={false}
+                style={styles.screen}
+                contentContainerStyle={styles.screenInner}
+            >
                 <SearchAndScan
                     onPressSearch={this.handleOnPressSearch}
                     onPressScan={this.handleOnPressScan}
@@ -62,6 +66,8 @@ const styles = RN.StyleSheet.create({
     screen: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    screenInner: {
         paddingTop: 32 + getSafeTopHeight(),
         paddingBottom: 32 + getSafeBottomHeight(),
     },
