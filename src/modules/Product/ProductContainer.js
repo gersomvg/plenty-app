@@ -17,8 +17,10 @@ class ProductContainer extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         const product = props.navigation.getParam('product');
-        console.log(product);
-        if ((!state.product && product) || state.product.updatedAt !== product.updatedAt) {
+        if (
+            (!state.product && product) ||
+            (product && state.product && state.product.updatedAt !== product.updatedAt)
+        ) {
             return {
                 product: props.navigation.state.params.product,
                 fetchStatus: 'loaded',

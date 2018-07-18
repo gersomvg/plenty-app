@@ -17,7 +17,7 @@ class BrandInput extends React.PureComponent {
     state = { searchText: '', isSearching: false, results: [], shouldAutoFocus: false };
 
     search = async searchText => {
-        if (!searchText) return this.setState({ results: [] });
+        if (!searchText) return this.setState({ results: [], isSearching: false });
         try {
             this.setState({ isSearching: true, results: [] });
             const data = await this.props.fetch.brands.get({ name: searchText }).promise;
@@ -61,32 +61,39 @@ class BrandInput extends React.PureComponent {
                     onChangeText={this.handleInputChange}
                     autoFocus={this.state.shouldAutoFocus}
                 />
-                <RN.View>
-                    <RN.ScrollView
-                        style={styles.scroller}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        {this.state.searchText && (
-                            <RN.TouchableOpacity
-                                style={[styles.button, styles.addButton]}
-                                onPress={this.addNewBrand}
-                                activeOpacity={0.5}
-                            >
-                                <Text size="smaller">Maak "{this.state.searchText}" aan</Text>
-                            </RN.TouchableOpacity>
-                        )}
-                        {this.state.results.map(this.renderResultItem)}
-                        {this.state.isSearching && <RN.ActivityIndicator size="small" />}
-                    </RN.ScrollView>
-                    <Expo.LinearGradient
-                        start={[0, 0]}
-                        end={[1, 0]}
-                        colors={['rgba(255,255,255,0)', 'white']}
-                        style={styles.fader}
-                        pointerEvents="none"
-                    />
-                </RN.View>
+                {!!(
+                    this.state.searchText ||
+                    this.state.results.length ||
+                    this.state.isSearching
+                ) && (
+                    <RN.View>
+                        <RN.ScrollView
+                            style={styles.scroller}
+                            contentContainerStyle={styles.scrollerInner}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                        >
+                            {this.state.searchText && (
+                                <RN.TouchableOpacity
+                                    style={[styles.button, styles.addButton]}
+                                    onPress={this.addNewBrand}
+                                    activeOpacity={0.5}
+                                >
+                                    <Text size="smaller">Maak "{this.state.searchText}" aan</Text>
+                                </RN.TouchableOpacity>
+                            )}
+                            {this.state.results.map(this.renderResultItem)}
+                            {this.state.isSearching && <RN.ActivityIndicator size="small" />}
+                        </RN.ScrollView>
+                        <Expo.LinearGradient
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            colors={['rgba(255,255,255,0)', 'white']}
+                            style={styles.fader}
+                            pointerEvents="none"
+                        />
+                    </RN.View>
+                )}
             </RN.View>
         );
     };
@@ -115,8 +122,10 @@ const styles = RN.StyleSheet.create({
         alignItems: 'flex-start',
     },
     scroller: {
-        paddingTop: 6,
         height: 6 + 32,
+    },
+    scrollerInner: {
+        paddingTop: 6,
     },
     fader: {
         position: 'absolute',

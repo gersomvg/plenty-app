@@ -10,8 +10,8 @@ const Button = props => {
     const onPress = props.disabled ? undefined : props.onPress;
     const buttonStyles = [
         styles.button,
-        props.disabled && styles.buttonDisabled,
         styles[props.tint],
+        props.disabled && styles.buttonDisabled,
         props.style,
     ];
     const textColor = props.tint === 'primary' ? 'white' : 'default';

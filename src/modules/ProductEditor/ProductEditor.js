@@ -4,7 +4,7 @@ import Expo from 'expo';
 
 import { getSafeTopHeight, getSafeBottomHeight, logger } from 'utils';
 import { TextInput, Text, Button, IconButton, RadioBox } from 'common';
-import { ImagePicker, BrandInput, ShopInput, CategoryInput } from './components';
+import { ImagePicker, BrandInput, ShopInput, CategoryInput, BarcodeInput } from './components';
 import { styling } from 'config';
 import { withFetch } from 'hocs';
 
@@ -12,11 +12,12 @@ import { withFetch } from 'hocs';
 class ProductEditor extends React.PureComponent {
     state = {
         id: null,
-        name: 'Blaadje',
+        name: '',
+        barcodes: [],
         imageUrl: '',
-        brand: { name: 'Moeder Aarde' },
-        classification: 'YES',
-        explanation: 'Ies natoer',
+        brand: null,
+        classification: null,
+        explanation: '',
         shops: [],
         categories: [],
 
@@ -75,6 +76,7 @@ class ProductEditor extends React.PureComponent {
     changeImageUrl = imageUrl => this.setState({ imageUrl });
     changeName = name => this.setState({ name });
     changeBrand = brand => this.setState({ brand });
+    changeBarcodes = barcodes => this.setState({ barcodes });
     changeExplanation = explanation => this.setState({ explanation });
     changeShops = shops => this.setState({ shops });
     changeCategories = categories => this.setState({ categories });
@@ -100,6 +102,12 @@ class ProductEditor extends React.PureComponent {
                     <BrandInput
                         value={this.state.brand}
                         onChange={this.changeBrand}
+                        style={styles.marginBottom}
+                    />
+                    <BarcodeInput
+                        currentProductId={this.state.id}
+                        value={this.state.barcodes}
+                        onChange={this.changeBarcodes}
                         style={styles.marginBottom}
                     />
                     {this.renderClassification()}

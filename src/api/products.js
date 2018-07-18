@@ -30,6 +30,7 @@ products.create = data => {
     formData.append('explanation', data.explanation);
     data.shops.forEach(shop => formData.append('shopCodes[]', shop.code));
     data.categories.forEach(category => formData.append('categoryIds[]', category.id));
+    data.barcodes.forEach(barcode => formData.append('barcodes[]', barcode));
     formData.append('image', {
         uri: data.imageUrl,
         name: 'image.jpg',
@@ -52,6 +53,7 @@ products.update = data => {
     formData.append('explanation', data.explanation);
     data.shops.forEach(shop => formData.append('shopCodes[]', shop.code));
     data.categories.forEach(category => formData.append('categoryIds[]', category.id));
+    data.barcodes.forEach(barcode => formData.append('barcodes[]', barcode));
     if (!data.imageUrl.startsWith('http')) {
         formData.append('image', {
             uri: data.imageUrl,
