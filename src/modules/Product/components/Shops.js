@@ -15,7 +15,14 @@ class Shops extends React.PureComponent {
                 <Text weight="heavier" size="smaller" font="brand">
                     VERKOOPPUNTEN
                 </Text>
-                {this.renderShops()}
+                {this.props.product.shops.length ? (
+                    this.renderShops()
+                ) : (
+                    <Text style={styles.noShops} size="smaller" color="lighter">
+                        Dit product is niet te koop bij een van de verkooppunten waar Plenty
+                        momenteel kennis van heeft.
+                    </Text>
+                )}
             </RN.View>
         );
     }
@@ -39,6 +46,10 @@ const styles = RN.StyleSheet.create({
     container: {
         paddingTop: 32,
         paddingBottom: 16,
+    },
+    noShops: {
+        marginTop: 16,
+        marginHorizontal: 16,
     },
     shops: {
         paddingHorizontal: 8,
