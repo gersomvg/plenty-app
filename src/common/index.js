@@ -4,6 +4,7 @@ export * from './ErrorMessageWithButton';
 export * from './SearchInput';
 export * from './TextInput';
 export * from './RadioBox';
+export * from './CheckBox';
 export * from './Text';
 export * from './Emoji';
 export * from './ElevatedHeader';

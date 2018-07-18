@@ -11,8 +11,18 @@ class ProductContainer extends React.Component {
         product: null,
     };
 
+    static getDerivedStateFromProps(props, state) {
+        if (!state.product && props.navigation.state.params.product) {
+            return {
+                product: props.navigation.state.params.product,
+                fetchStatus: 'loaded',
+            };
+        }
+        return null;
+    }
+
     componentDidMount() {
-        this.loadProduct();
+        if (!this.state.product) this.loadProduct();
     }
 
     loadProduct = async () => {

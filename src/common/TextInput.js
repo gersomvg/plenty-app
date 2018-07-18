@@ -10,6 +10,7 @@ class TextInput extends React.PureComponent {
         onPress: PT.func,
         value: PT.string,
         placeholder: PT.string,
+        multiline: PT.bool,
     };
 
     static HEIGHT = 48;
@@ -40,6 +41,7 @@ class TextInput extends React.PureComponent {
             textStyles['font-default'],
             textStyles['size-default'],
             textStyles['color-default'],
+            this.props.multiline && styles.inputMulti,
         ];
 
         return (
@@ -95,7 +97,12 @@ const styles = RN.StyleSheet.create({
         backgroundColor: styling.COLOR_BG_LIGHT,
         paddingLeft: 16,
         paddingRight: 48,
+        paddingTop: 10,
+        paddingBottom: 13,
         zIndex: 1,
+    },
+    inputMulti: {
+        height: TextInput.HEIGHT * 3,
     },
     clearButton: {
         position: 'absolute',

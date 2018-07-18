@@ -73,26 +73,32 @@ class ImagePicker extends React.PureComponent {
     render() {
         if (this.state.showChoice) {
             return (
-                <RN.View style={styles.choices}>
-                    <RN.TouchableOpacity
-                        activeOpacity={0.5}
-                        style={styles.choice}
-                        onPress={this.shootImage}
-                    >
-                        <Text size="smaller">Camera</Text>
-                    </RN.TouchableOpacity>
-                    <RN.TouchableOpacity
-                        activeOpacity={0.5}
-                        style={[styles.choice, styles.topLine]}
-                        onPress={this.pickImage}
-                    >
-                        <Text size="smaller">Gallerij</Text>
-                    </RN.TouchableOpacity>
+                <RN.View style={this.props.style}>
+                    <RN.View style={styles.choices}>
+                        <RN.TouchableOpacity
+                            activeOpacity={0.5}
+                            style={styles.choice}
+                            onPress={this.shootImage}
+                        >
+                            <Text size="smaller">Camera</Text>
+                        </RN.TouchableOpacity>
+                        <RN.TouchableOpacity
+                            activeOpacity={0.5}
+                            style={[styles.choice, styles.topLine]}
+                            onPress={this.pickImage}
+                        >
+                            <Text size="smaller">Gallerij</Text>
+                        </RN.TouchableOpacity>
+                    </RN.View>
                 </RN.View>
             );
         }
         return (
-            <RN.TouchableOpacity activeOpacity={0.5} onPress={this.showChoice}>
+            <RN.TouchableOpacity
+                activeOpacity={0.5}
+                onPress={this.showChoice}
+                style={this.props.style}
+            >
                 <ProductThumb source={this.props.value ? { uri: this.props.value } : undefined} />
             </RN.TouchableOpacity>
         );

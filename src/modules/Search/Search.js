@@ -82,7 +82,7 @@ class Search extends React.PureComponent {
 
     handleOnPressProduct = ({ product }) => {
         RN.Keyboard.dismiss();
-        this.props.navigation.push('Product', { productId: product.id });
+        this.props.navigation.push('Product', { product });
     };
 
     handleOnPressBack = () => {

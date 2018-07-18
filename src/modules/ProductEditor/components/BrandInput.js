@@ -77,6 +77,7 @@ class BrandInput extends React.PureComponent {
                             </RN.TouchableOpacity>
                         )}
                         {this.state.results.map(this.renderResultItem)}
+                        {this.state.isSearching && <RN.ActivityIndicator size="small" />}
                     </RN.ScrollView>
                     <Expo.LinearGradient
                         start={[0, 0]}

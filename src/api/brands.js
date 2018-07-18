@@ -12,4 +12,8 @@ brands.get = ({ limit, offset, nextLink, name } = {}) => {
     return fetcher(url);
 };
 
+brands.create = name => {
+    return fetcher(`${API_ENDPOINT}/brand`, { method: 'POST', body: { name } });
+};
+
 export { brands };

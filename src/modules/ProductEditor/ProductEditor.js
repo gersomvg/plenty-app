@@ -2,9 +2,9 @@ import React from 'react';
 import RN from 'react-native';
 import Expo from 'expo';
 
-import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
-import { TextInput, Text, Button, IconButton } from 'common';
-import { ImagePicker, BrandInput } from './components';
+import { getSafeTopHeight, getSafeBottomHeight, logger } from 'utils';
+import { TextInput, Text, Button, IconButton, RadioBox } from 'common';
+import { ImagePicker, BrandInput, ShopInput, CategoryInput } from './components';
 import { styling } from 'config';
 import { withFetch } from 'hocs';
 
@@ -12,41 +12,67 @@ import { withFetch } from 'hocs';
 class ProductEditor extends React.PureComponent {
     state = {
         id: null,
-        name: 'Jasmine Thee IJs',
+        name: 'Blaadje',
         imageUrl: '',
-        brand: null,
+        brand: { name: 'Moeder Aarde' },
+        classification: 'YES',
+        explanation: 'Ies natoer',
+        shops: ['ah'],
+        categories: [3],
 
         isSaving: false,
+    };
+
+    save = async () => {
+        this.setState({ isSaving: true });
+
+        if (!this.isDataComplete()) {
+            RN.Alert.alert('De product afbeelding, naam, merk en classificatie zijn verplicht.');
+            return;
+        }
+
+        try {
+            if (!this.state.brand.id) {
+                const brand = await this.props.fetch.brands.create(this.state.brand.name).promise;
+                await this.setState({ brand });
+            }
+            const product = await this.props.fetch.products.create(this.state).promise;
+            this.props.navigation.replace('Product', { product });
+        } catch (e) {
+            logger.log(e);
+            RN.Alert.alert('Er is iets misgegaan bij het opslaan.');
+            this.setState({ isSaving: false });
+        }
+    };
+
+    isDataComplete = () => {
+        return !!(
+            this.state.name.trim() &&
+            this.state.imageUrl &&
+            this.state.brand &&
+            this.state.classification
+        );
     };
 
     changeImageUrl = imageUrl => this.setState({ imageUrl });
     changeName = name => this.setState({ name });
     changeBrand = brand => this.setState({ brand });
-
-    save = async () => {
-        try {
-            this.setState({ isSaving: true });
-            const data = await this.props.fetch.products.create({
-                name: this.state.name,
-                brand: this.state.brand,
-                imageUrl: this.state.imageUrl,
-            }).promise;
-            console.log(data);
-        } catch (e) {
-            console.log(e);
-            this.setState({ isSaving: false });
-        }
-    };
-
-    goBack = () => {
-        this.props.navigation.pop();
-    };
-
+    changeExplanation = explanation => this.setState({ explanation });
+    changeShops = shops => this.setState({ shops });
+    changeCategories = categories => this.setState({ categories });
     render() {
         return (
             <RN.KeyboardAvoidingView behavior="padding" style={styles.wrapper}>
-                <RN.ScrollView style={styles.scroller} keyboardShouldPersistTaps="never">
-                    <ImagePicker value={this.state.imageUrl} onChange={this.changeImageUrl} />
+                <RN.ScrollView
+                    style={styles.scroller}
+                    contentContainerStyle={styles.scrollerInner}
+                    keyboardShouldPersistTaps="never"
+                >
+                    <ImagePicker
+                        value={this.state.imageUrl}
+                        onChange={this.changeImageUrl}
+                        style={styles.marginBottom}
+                    />
                     <TextInput
                         placeholder="Naam"
                         value={this.state.name}
@@ -58,8 +84,22 @@ class ProductEditor extends React.PureComponent {
                         onChange={this.changeBrand}
                         style={styles.marginBottom}
                     />
+                    {this.renderClassification()}
+                    <TextInput
+                        placeholder="Uitleg"
+                        value={this.state.explanation}
+                        onChangeText={this.changeExplanation}
+                        style={styles.marginBottomDouble}
+                        multiline
+                    />
+                    <ShopInput
+                        value={this.state.shops}
+                        onChange={this.changeShops}
+                        style={styles.marginBottom}
+                    />
+                    <CategoryInput value={this.state.categories} onChange={this.changeCategories} />
                 </RN.ScrollView>
-                <IconButton style={styles.back} icon="back" onPress={this.goBack} />
+                <IconButton style={styles.back} icon="back" onPress={this.props.navigation.pop} />
                 <Expo.LinearGradient
                     colors={['rgba(255,255,255,0)', 'white']}
                     style={styles.gradient}
@@ -74,6 +114,45 @@ class ProductEditor extends React.PureComponent {
             </RN.KeyboardAvoidingView>
         );
     }
+
+    changeClassification = classification => this.setState({ classification });
+    renderClassification = () => (
+        <RN.View style={[styles.classification, styles.marginBottom]}>
+            <Text style={styles.classLabel} weight="heavier">
+                Vegan?
+            </Text>
+            <RN.TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.classItem}
+                onPress={() => this.setState({ classification: 'YES' })}
+            >
+                <RadioBox checked={this.state.classification === 'YES'} />
+                <Text style={styles.classText} size="smaller">
+                    Ja
+                </Text>
+            </RN.TouchableOpacity>
+            <RN.TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.classItem}
+                onPress={() => this.setState({ classification: 'MAYBE' })}
+            >
+                <RadioBox checked={this.state.classification === 'MAYBE'} />
+                <Text style={styles.classText} size="smaller">
+                    Misschien
+                </Text>
+            </RN.TouchableOpacity>
+            <RN.TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.classItem}
+                onPress={() => this.setState({ classification: 'NO' })}
+            >
+                <RadioBox checked={this.state.classification === 'NO'} />
+                <Text style={styles.classText} size="smaller">
+                    Nee
+                </Text>
+            </RN.TouchableOpacity>
+        </RN.View>
+    );
 }
 
 const styles = RN.StyleSheet.create({
@@ -102,8 +181,10 @@ const styles = RN.StyleSheet.create({
     scroller: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    scrollerInner: {
         paddingTop: 32 + getSafeTopHeight(),
-        paddingBottom: 32 + getSafeBottomHeight(),
+        paddingBottom: 96 + getSafeBottomHeight(),
         paddingHorizontal: 16,
     },
     marginBottom: {
@@ -115,6 +196,22 @@ const styles = RN.StyleSheet.create({
     error: {
         marginBottom: 16,
         color: styling.COLOR_TEXT_ERROR,
+    },
+    classification: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    classLabel: {
+        marginRight: 10,
+    },
+    classItem: {
+        height: 48,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    classText: {
+        marginLeft: 5,
+        marginRight: 10,
     },
 });
 

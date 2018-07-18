@@ -22,17 +22,21 @@ products.getOneByBarcode = ({ barcode }) => {
     return fetcher(url);
 };
 
-products.create = ({ imageUrl, name, brand }) => {
-    const url = `${API_ENDPOINT}/product`;
+products.create = data => {
     let formData = new FormData();
-    formData.append('name', name);
-    formData.append('brandId', brand.id);
-    formData.append('classification', 'YES');
+    formData.append('name', data.name);
+    formData.append('brandId', data.brand.id);
+    formData.append('classification', data.classification);
+    formData.append('explanation', data.explanation);
+    data.shops.forEach(shopCode => formData.append('shopCodes[]', shopCode));
+    data.categories.forEach(categoryId => formData.append('categoryIds[]', categoryId));
     formData.append('image', {
-        uri: imageUrl,
+        uri: data.imageUrl,
         name: 'image.jpg',
         type: 'multipart/form-data',
     });
+
+    const url = `${API_ENDPOINT}/product`;
     return fetcher(url, {
         method: 'POST',
         body: formData,

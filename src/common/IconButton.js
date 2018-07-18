@@ -14,7 +14,7 @@ const IconButton = props => {
         <RN.TouchableOpacity
             style={[styles.button, props.style]}
             activeOpacity={0.5}
-            onPress={props.onPress}
+            onPress={() => props.onPress()}
         >
             <RN.Image
                 style={[styles.icon, props.color === 'brand' && styles.colorBrand]}
