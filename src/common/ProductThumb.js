@@ -18,10 +18,10 @@ class ProductThumb extends React.PureComponent {
     render() {
         return (
             <RN.View style={styles.imageContainer}>
-                <RN.Image
+                {/* <RN.Image
                     style={styles.imageShadow}
                     source={require('assets/ui/product-image-shadow.png')}
-                />
+                /> */}
                 <RN.View style={styles.imageClipper}>
                     <RN.Image style={styles.image} source={this.props.source} />
                 </RN.View>

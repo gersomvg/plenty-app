@@ -71,7 +71,7 @@ class ImagePicker extends React.PureComponent {
     };
 
     render() {
-        if (this.state.showChoice) {
+        if (this.state.showChoice || !this.props.value) {
             return (
                 <RN.View style={this.props.style}>
                     <RN.View style={styles.choices}>
@@ -99,7 +99,7 @@ class ImagePicker extends React.PureComponent {
                 onPress={this.showChoice}
                 style={this.props.style}
             >
-                <ProductThumb source={this.props.value ? { uri: this.props.value } : undefined} />
+                <ProductThumb source={{ uri: this.props.value }} />
             </RN.TouchableOpacity>
         );
     }

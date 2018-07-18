@@ -2,8 +2,8 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import {Text} from 'common';
-import {styling} from 'config';
+import { Text } from 'common';
+import { styling } from 'config';
 
 class Product extends React.PureComponent {
     static propTypes = {
@@ -31,7 +31,7 @@ class Product extends React.PureComponent {
 
         return (
             <RN.View style={styles.imageContainer}>
-                {uri && <RN.Image source={{uri}} style={styles.image} />}
+                {uri && <RN.Image source={{ uri }} style={styles.image} />}
             </RN.View>
         );
     };
@@ -66,8 +66,7 @@ const styles = RN.StyleSheet.create({
     imageContainer: {
         borderRadius: 3,
         overflow: 'hidden',
-        borderWidth: 1,
-        borderColor: styling.COLOR_BORDER_LIGHT,
+        borderWidth: 0,
         marginRight: 16,
     },
     image: {
@@ -83,4 +82,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {Product};
+export { Product };
