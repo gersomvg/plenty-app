@@ -129,8 +129,9 @@ class ProductEditor extends React.PureComponent {
                 <Expo.LinearGradient
                     colors={['rgba(255,255,255,0)', 'white']}
                     style={styles.gradient}
+                    pointerEvents="none"
                 />
-                <RN.View style={styles.applyWrapper}>
+                <RN.View style={styles.applyWrapper} pointerEvents="box-none">
                     <Button
                         onPress={this.save}
                         label={this.state.id ? 'Sla op' : 'Voeg toe'}
