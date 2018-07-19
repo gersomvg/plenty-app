@@ -4,7 +4,14 @@ import Expo from 'expo';
 
 import { getSafeTopHeight, getSafeBottomHeight, logger } from 'utils';
 import { TextInput, Text, Button, IconButton, RadioBox } from 'common';
-import { ImagePicker, BrandInput, ShopInput, CategoryInput, BarcodeInput } from './components';
+import {
+    ImagePicker,
+    BrandInput,
+    ShopInput,
+    CategoryInput,
+    BarcodeInput,
+    ExplanationInput,
+} from './components';
 import { styling } from 'config';
 import { withFetch } from 'hocs';
 
@@ -111,12 +118,11 @@ class ProductEditor extends React.PureComponent {
                         style={styles.marginBottom}
                     />
                     {this.renderClassification()}
-                    <TextInput
-                        placeholder="Uitleg"
+                    <ExplanationInput
                         value={this.state.explanation}
-                        onChangeText={this.changeExplanation}
+                        onChange={this.changeExplanation}
+                        classification={this.state.classification}
                         style={styles.marginBottomDouble}
-                        multiline
                     />
                     <ShopInput
                         value={this.state.shops}

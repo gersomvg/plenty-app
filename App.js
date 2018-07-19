@@ -44,11 +44,11 @@ class AppEnsureLoading extends React.Component {
     componentDidMount() {
         this.loadData();
         this.loadFont();
-        eventBus.subscribe(eventBus.EVENT.HTTP_401, this.props.dispatch.auth.unauthorize);
+        eventBus.subscribe(eventBus.EVENT.HTTP_401, this.handleUnauthorized);
     }
 
     componentWillUnmount() {
-        eventBus.unsubscribe(eventBus.EVENT.HTTP_401, this.props.dispatch.auth.unauthorize);
+        eventBus.unsubscribe(eventBus.EVENT.HTTP_401, this.handleUnauthorized);
     }
 
     loadData = async () => {
@@ -61,6 +61,11 @@ class AppEnsureLoading extends React.Component {
             'ClearSans-Bold': require('./src/assets/fonts/clear-sans/ClearSans-Bold.ttf'),
         });
         this.setState({ fontLoaded: true });
+    };
+
+    handleUnauthorized = () => {
+        this.props.dispatch.auth.unauthorize();
+        RN.Alert.alert('Het lijkt erop dat je opnieuw moet inloggen.');
     };
 
     render() {

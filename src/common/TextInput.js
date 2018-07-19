@@ -103,6 +103,7 @@ const styles = RN.StyleSheet.create({
     },
     inputMulti: {
         height: TextInput.HEIGHT * 3,
+        paddingBottom: 48,
     },
     clearButton: {
         position: 'absolute',
