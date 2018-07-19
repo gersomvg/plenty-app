@@ -19,7 +19,7 @@ class ExplanationInput extends React.PureComponent {
                 {
                     label: 'Label',
                     text:
-                        'Er staat expliciet vermeld op de verpakking dat dit product veganistisch is.',
+                        'Op de verpakking staat expliciet vermeld dat dit product veganistisch is.',
                 },
                 {
                     label: 'Fabrikant',
@@ -27,7 +27,7 @@ class ExplanationInput extends React.PureComponent {
                 },
                 {
                     label: 'Ingrediënten',
-                    text: 'Er staan enkel plantaardige ingrediënten op de verpakking vermeld.',
+                    text: 'Op de verpakking staan uitsluitend plantaardige ingrediënten vermeld.',
                 },
             ],
             MAYBE: [
