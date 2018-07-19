@@ -59,7 +59,7 @@ class FilterModal extends React.PureComponent {
         const commaDelimited = { YES: 'YES', MAYBE: 'YES,MAYBE' }[option];
         this.props.onChange({
             ...this.props.filters,
-            classification: commaDelimited === classification ? null : commaDelimited,
+            classifications: commaDelimited === classifications ? null : commaDelimited,
         });
     };
     renderClassification = () => {
@@ -192,7 +192,7 @@ const styles = RN.StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         height: 48,
-        marginRight: 16,
+        marginRight: 24,
     },
     classText: {
         marginLeft: 8,
