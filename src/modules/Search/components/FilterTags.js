@@ -38,7 +38,7 @@ class FilterTags extends React.PureComponent {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                 >
-                    {['shopCode', 'categoryId']
+                    {['shopCode', 'categoryId', 'classifications']
                         .filter(key => filters[key] !== null)
                         .map(this.renderTag)}
                 </RN.ScrollView>
@@ -60,6 +60,11 @@ class FilterTags extends React.PureComponent {
         }
         if (key === 'shopCode') {
             label = this.props.shops.find(shop => shop.code === this.props.filters[key]).name;
+        }
+        if (key === 'classifications') {
+            label = { YES: '100% Vegan', 'YES,MAYBE': '(Misschien) vegan' }[
+                this.props.filters.classifications
+            ];
         }
         return (
             <RN.View style={styles.tag} key={key}>

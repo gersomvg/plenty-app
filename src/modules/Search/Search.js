@@ -26,6 +26,8 @@ class Search extends React.PureComponent {
                 filters: {
                     shopCode: null,
                     categoryId: _.get(props, 'navigation.state.params.categoryId') || null,
+                    classifications:
+                        _.get(props, 'navigation.state.params.classifications') || null,
                 },
             };
         }
@@ -50,6 +52,7 @@ class Search extends React.PureComponent {
                 name: this.state.searchValue,
                 categoryId: this.state.filters.categoryId,
                 shopCode: this.state.filters.shopCode,
+                classifications: this.state.filters.classifications,
             });
             const data = await this.fetch.promise;
             this.setState({ fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink });
@@ -116,7 +119,11 @@ class Search extends React.PureComponent {
     };
 
     render() {
-        const isAnyFilterActive = !!(this.state.filters.categoryId || this.state.filters.shopCode);
+        const isAnyFilterActive = !!(
+            this.state.filters.categoryId ||
+            this.state.filters.shopCode ||
+            this.state.filters.classifications
+        );
         return (
             <RN.KeyboardAvoidingView behavior="padding" style={styles.screen}>
                 <ElevatedHeader style={styles.header}>

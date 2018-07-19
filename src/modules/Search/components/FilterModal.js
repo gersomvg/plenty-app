@@ -21,20 +21,6 @@ class FilterModal extends React.PureComponent {
         onClose: PT.func.isRequired,
     };
 
-    handleShopChange = shopCode => {
-        this.props.onChange({
-            ...this.props.filters,
-            shopCode: this.props.filters.shopCode === shopCode ? null : shopCode,
-        });
-    };
-
-    handleCategoryChange = categoryId => {
-        this.props.onChange({
-            ...this.props.filters,
-            categoryId: this.props.filters.categoryId === categoryId ? null : categoryId,
-        });
-    };
-
     render() {
         const { filters, onPressFilter, onRemoveFilter } = this.props;
         return (
@@ -43,7 +29,11 @@ class FilterModal extends React.PureComponent {
                 onRequestClose={this.props.onClose}
                 animationType="fade"
             >
-                <RN.ScrollView style={styles.container}>
+                <RN.ScrollView contentContainerStyle={styles.container}>
+                    <Text align="left" font="brand">
+                        VEGANISTISCH
+                    </Text>
+                    {this.renderClassification()}
                     <Text align="left" font="brand">
                         VERKOOPPUNT
                     </Text>
@@ -54,12 +44,53 @@ class FilterModal extends React.PureComponent {
                     {this.renderCategories()}
                 </RN.ScrollView>
                 <IconButton onPress={this.props.onClose} icon="close" style={styles.close} />
-                <LinearGradient colors={['rgba(255,255,255,0)', 'white']} style={styles.gradient} />
+                <LinearGradient
+                    colors={['rgba(255,255,255,0)', 'white']}
+                    style={styles.gradient}
+                    pointerEvents="none"
+                />
                 {this.renderApplyButton()}
             </RN.Modal>
         );
     }
 
+    handleClassificationChange = option => {
+        const { classifications } = this.props.filters;
+        const commaDelimited = { YES: 'YES', MAYBE: 'YES,MAYBE' }[option];
+        this.props.onChange({
+            ...this.props.filters,
+            classification: commaDelimited === classification ? null : commaDelimited,
+        });
+    };
+    renderClassification = () => {
+        return (
+            <RN.View style={[styles.filterGroup, styles.classGroup]}>
+                <RN.TouchableOpacity
+                    activeOpacity={0.5}
+                    style={styles.class}
+                    onPress={() => this.handleClassificationChange('YES')}
+                >
+                    <RadioBox checked={this.props.filters.classifications === 'YES'} />
+                    <Text style={styles.classText}>100%</Text>
+                </RN.TouchableOpacity>
+                <RN.TouchableOpacity
+                    activeOpacity={0.5}
+                    style={styles.class}
+                    onPress={() => this.handleClassificationChange('MAYBE')}
+                >
+                    <RadioBox checked={this.props.filters.classifications === 'YES,MAYBE'} />
+                    <Text style={styles.classText}>Inclusief misschien</Text>
+                </RN.TouchableOpacity>
+            </RN.View>
+        );
+    };
+
+    handleShopChange = shopCode => {
+        this.props.onChange({
+            ...this.props.filters,
+            shopCode: this.props.filters.shopCode === shopCode ? null : shopCode,
+        });
+    };
     renderShops = () => {
         return (
             <RN.View style={[styles.filterGroup, styles.shopGroup]}>
@@ -80,6 +111,12 @@ class FilterModal extends React.PureComponent {
         );
     };
 
+    handleCategoryChange = categoryId => {
+        this.props.onChange({
+            ...this.props.filters,
+            categoryId: this.props.filters.categoryId === categoryId ? null : categoryId,
+        });
+    };
     renderCategories = () => {
         return (
             <RN.View style={styles.filterGroup}>
@@ -107,7 +144,7 @@ class FilterModal extends React.PureComponent {
 
     renderApplyButton = () => {
         return (
-            <RN.View style={styles.applyWrapper}>
+            <RN.View style={styles.applyWrapper} pointerEvents="box-none">
                 <Button onPress={this.props.onClose} label="Bekijk producten" />
             </RN.View>
         );
@@ -117,7 +154,7 @@ class FilterModal extends React.PureComponent {
 const styles = RN.StyleSheet.create({
     container: {
         paddingTop: getSafeTopHeight() + 28,
-        paddingBottom: getSafeBottomHeight() + 16,
+        paddingBottom: getSafeBottomHeight() + 48,
         paddingHorizontal: 16,
     },
     close: {
@@ -141,12 +178,24 @@ const styles = RN.StyleSheet.create({
     },
     filterGroup: {
         marginTop: 25,
-        marginBottom: 50,
+        marginBottom: 40,
     },
     shopGroup: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginBottom: 40,
+    },
+    classGroup: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    class: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 48,
+        marginRight: 16,
+    },
+    classText: {
+        marginLeft: 8,
     },
     shop: {
         alignItems: 'center',

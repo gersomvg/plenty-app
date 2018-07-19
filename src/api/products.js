@@ -3,10 +3,10 @@ import { API_ENDPOINT } from 'config';
 
 const products = {};
 
-products.get = ({ limit, offset, nextLink, name, categoryId, shopCode } = {}) => {
+products.get = ({ limit, offset, nextLink, name, categoryId, shopCode, classifications } = {}) => {
     let url = nextLink;
     if (!url) {
-        const params = qs.stringify({ limit, offset, name, categoryId, shopCode });
+        const params = qs.stringify({ limit, offset, name, categoryId, shopCode, classifications });
         url = `${API_ENDPOINT}/product${params}`;
     }
     return fetcher(url);
