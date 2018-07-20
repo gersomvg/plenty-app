@@ -38,12 +38,12 @@ class ProductEditor extends React.PureComponent {
     }
 
     save = async () => {
-        this.setState({ isSaving: true });
-
         if (!this.isDataComplete()) {
             RN.Alert.alert('De product afbeelding, naam, merk en classificatie zijn verplicht.');
             return;
         }
+
+        this.setState({ isSaving: true });
 
         try {
             if (!this.state.brand.id) {
