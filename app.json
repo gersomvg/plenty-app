@@ -8,6 +8,7 @@
         "splash": {
             "image": "./src/assets/branding/splash-screen.png"
         },
+        "orientation": "portrait",
         "ios": {
             "bundleIdentifier": "nl.plentyapp.plenty",
             "infoPlist": {
