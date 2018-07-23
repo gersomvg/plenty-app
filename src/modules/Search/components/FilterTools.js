@@ -3,7 +3,6 @@ import RN from 'react-native';
 import PT from 'prop-types';
 
 import { IconButton, SearchInput } from 'common';
-import { getSafeTopHeight } from 'utils';
 
 class FilterTools extends React.PureComponent {
     static propTypes = {

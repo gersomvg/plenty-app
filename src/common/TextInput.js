@@ -52,6 +52,7 @@ class TextInput extends React.PureComponent {
                     ref={this.handleInputRef}
                     onFocus={this.handleOnFocus}
                     onBlur={this.handleOnBlur}
+                    underlineColorAndroid="transparent"
                 />
                 {this.renderClearButton()}
                 {this.renderPlaceholder()}
@@ -82,9 +83,11 @@ class TextInput extends React.PureComponent {
                 styles.placeholder,
             ];
             return (
-                <RN.Text style={placeholderStyles} numberOfLines={1} pointerEvents="none">
-                    {this.props.placeholder}
-                </RN.Text>
+                <RN.View style={styles.placeholderContainer} pointerEvents="none">
+                    <RN.Text style={placeholderStyles} numberOfLines={1}>
+                        {this.props.placeholder}
+                    </RN.Text>
+                </RN.View>
             );
         }
     };
@@ -100,6 +103,7 @@ const styles = RN.StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 13,
         zIndex: 1,
+        textAlignVertical: 'top',
     },
     inputMulti: {
         height: TextInput.HEIGHT * 3,
@@ -120,15 +124,17 @@ const styles = RN.StyleSheet.create({
         height: 14,
         resizeMode: 'contain',
     },
-    placeholder: {
+    placeholderContainer: {
         position: 'absolute',
         height: 48,
-        lineHeight: 48,
         top: 0,
         left: 16,
         right: 48,
-        textAlign: 'left',
         zIndex: 2,
+    },
+    placeholder: {
+        lineHeight: 48,
+        textAlign: 'left',
     },
 });
 

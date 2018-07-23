@@ -20,7 +20,7 @@ class BrandInput extends React.PureComponent {
         if (!searchText) return this.setState({ results: [], isSearching: false });
         try {
             this.setState({ isSearching: true, results: [] });
-            const data = await this.props.fetch.brands.get({ name: searchText }).promise;
+            const data = await this.props.fetch('brands.get')({ name: searchText }).promise;
             this.setState({ isSearching: false, results: data.items });
         } catch (e) {}
     };

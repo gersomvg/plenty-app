@@ -21,6 +21,10 @@
         "android": {
             "package": "nl.plentyapp.plenty"
         },
+        "androidStatusBar": {
+            "barStyle": "dark-content",
+            "backgroundColor": "#FFFFFF"
+        },
         "privacy": "unlisted",
         "updates": {
             "enabled": true

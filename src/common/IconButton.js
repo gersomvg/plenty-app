@@ -10,6 +10,8 @@ const IconButton = props => {
         filter: require('assets/ui/filter.png'),
         close: require('assets/ui/close.png'),
         edit: require('assets/ui/edit.png'),
+        archive: require('assets/ui/archive.png'),
+        unarchive: require('assets/ui/unarchive.png'),
     }[props.icon];
     return (
         <RN.TouchableOpacity
@@ -27,7 +29,7 @@ const IconButton = props => {
 
 IconButton.propTypes = {
     onPress: PT.func.isRequired,
-    icon: PT.oneOf(['back', 'filter', 'close', 'edit']).isRequired,
+    icon: PT.oneOf(['back', 'filter', 'close', 'edit', 'archive', 'unarchive']).isRequired,
     color: PT.oneOf(['default', 'brand']).isRequired,
 };
 

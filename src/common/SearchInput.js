@@ -72,6 +72,7 @@ class SearchInput extends React.PureComponent {
                     ref={this.handleInputRef}
                     onFocus={this.handleOnFocus}
                     onBlur={this.handleOnBlur}
+                    underlineColorAndroid="transparent"
                 />
                 <RN.Image style={styles.icon} source={require('assets/ui/search-icon.png')} />
                 {this.renderClearButton()}

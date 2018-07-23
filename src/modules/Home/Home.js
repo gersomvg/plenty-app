@@ -26,6 +26,10 @@ class Home extends React.Component {
         this.props.navigation.push('ProductEditor');
     };
 
+    handleOnPressInbox = () => {
+        this.props.navigation.push('Inbox');
+    };
+
     handleOnLongPressTitle = () => {
         if (this.props.isAuthorized) {
             this.props.dispatch.auth.unauthorize();
@@ -52,7 +56,7 @@ class Home extends React.Component {
                         isSuperAdmin={this.props.isSuperAdmin}
                         style={styles.adminTools}
                         onPressCreate={this.handleOnPressCreate}
-                        onPressInbox={() => {}}
+                        onPressInbox={this.handleOnPressInbox}
                         onPressSuper={() => {}}
                     />
                 )}

@@ -40,11 +40,11 @@ class ProductContainer extends React.Component {
             this.setState({ fetchStatus: 'loading' });
             let data;
             if (this.props.navigation.state.params.productId) {
-                data = await this.props.fetch.products.getOne({
+                data = await this.props.fetch('products.getOne')({
                     id: this.props.navigation.state.params.productId,
                 }).promise;
             } else {
-                data = await this.props.fetch.products.getOneByBarcode({
+                data = await this.props.fetch('products.getOneByBarcode')({
                     barcode: this.props.navigation.state.params.barcode,
                 }).promise;
             }
@@ -63,7 +63,7 @@ class ProductContainer extends React.Component {
     handleOnPressEdit = () => {
         this.props.navigation.push('ProductEditor', {
             product: this.state.product,
-            prevRouteKey: this.props.navigation.state.key,
+            prevProductRouteKey: this.props.navigation.state.key,
         });
     };
 

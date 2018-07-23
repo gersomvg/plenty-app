@@ -5,3 +5,4 @@ export * from './Scan/ScanContainer';
 
 export * from './Login/Login';
 export * from './ProductEditor/ProductEditor';
+export * from './Inbox/Inbox';

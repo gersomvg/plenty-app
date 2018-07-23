@@ -7,12 +7,10 @@ proxyHandler = {
     },
 };
 
-const enumerate = (...keys) => {
-    const enumObj = keys.reduce((prev, key) => {
+const enumerate = (...keys) =>
+    keys.reduce((prev, key) => {
         prev[key] = key;
         return prev;
     }, {});
-    return new Proxy(enumObj, proxyHandler);
-};
 
 export { enumerate };

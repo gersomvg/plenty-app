@@ -60,7 +60,7 @@ class Scan extends React.PureComponent {
     handleBarCodeRead = ({ data }) => {
         if (this.state.didRead) return;
         this.setState({ didRead: true });
-        Haptic.notification(Haptic.NotificationTypes.Success);
+        if (RN.Platform.OS === 'ios') Haptic.notification(Haptic.NotificationTypes.Success);
 
         // If callback is supplied: send barcode to callback and navigate back
         const callback = this.props.navigation.getParam('callback');

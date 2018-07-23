@@ -26,7 +26,7 @@ class Login extends React.PureComponent {
         this.setState({ status: STATUS.SENDING });
         try {
             const { email, password } = this.state;
-            const user = await this.props.fetch.auth.signIn({ email, password }).promise;
+            const user = await this.props.fetch('auth.signIn')({ email, password }).promise;
             this.props.dispatch.auth.authorize(user);
             this.goBack();
         } catch (e) {
@@ -40,7 +40,10 @@ class Login extends React.PureComponent {
 
     render() {
         return (
-            <RN.KeyboardAvoidingView behavior="padding" style={styles.wrapper}>
+            <RN.KeyboardAvoidingView
+                behavior={RN.Platform.OS === 'ios' ? 'padding' : undefined}
+                style={styles.wrapper}
+            >
                 <RN.ScrollView style={styles.scroller} keyboardShouldPersistTaps="never">
                     <Text font="brand" size="bigger" style={styles.marginBottomDouble}>
                         INLOGGEN

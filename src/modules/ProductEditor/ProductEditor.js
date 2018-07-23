@@ -47,18 +47,19 @@ class ProductEditor extends React.PureComponent {
 
         try {
             if (!this.state.brand.id) {
-                const brand = await this.props.fetch.brands.create(this.state.brand.name).promise;
+                const brand = await this.props.fetch('brands.create')(this.state.brand.name)
+                    .promise;
                 await this.setState({ brand });
             }
             const isExisting = !!this.state.id;
             const action = isExisting ? 'update' : 'create';
-            const product = await this.props.fetch.products[action](this.state).promise;
+            const product = await this.props.fetch(`products.${action}`)(this.state).promise;
 
-            const prevRouteKey = this.props.navigation.getParam('prevRouteKey');
-            if (prevRouteKey) {
+            const prevProductRouteKey = this.props.navigation.getParam('prevProductRouteKey');
+            if (prevProductRouteKey) {
                 this.props.navigation.navigate({
                     routeName: 'Product',
-                    key: prevRouteKey,
+                    key: prevProductRouteKey,
                     params: { product },
                 });
             } else {
@@ -89,7 +90,10 @@ class ProductEditor extends React.PureComponent {
     changeCategories = categories => this.setState({ categories });
     render() {
         return (
-            <RN.KeyboardAvoidingView behavior="padding" style={styles.wrapper}>
+            <RN.KeyboardAvoidingView
+                behavior={RN.Platform.OS === 'ios' ? 'padding' : undefined}
+                style={styles.wrapper}
+            >
                 <RN.ScrollView
                     style={styles.scroller}
                     contentContainerStyle={styles.scrollerInner}
@@ -105,6 +109,7 @@ class ProductEditor extends React.PureComponent {
                         value={this.state.name}
                         onChangeText={this.changeName}
                         style={styles.marginBottom}
+                        maxLength={255}
                     />
                     <BrandInput
                         value={this.state.brand}

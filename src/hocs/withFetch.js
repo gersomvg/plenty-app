@@ -9,32 +9,20 @@ const withFetch = Component => {
     class WithFetchHOC extends React.Component {
         requests = [];
 
-        makeProxyHandler = (path = '') => ({
-            get: (target, key) => {
-                const newPath = `${path}${path ? '.' : ''}${key}`;
-                if (typeof target[key] === 'object' && target[key] !== null) {
-                    return new Proxy(target[key], this.makeProxyHandler(newPath));
-                } else if (typeof target[key] === 'function') {
-                    return new Proxy(target[key], this.makeProxyHandler(newPath));
-                }
-                return target[key];
-            },
-            apply: (target, thisArg, args) => {
-                const request = target(...args);
-                this.requests.push(request);
-                return request;
-            },
-        });
-
-        proxiedApi = new Proxy(api, this.makeProxyHandler());
-
         componentWillUnmount() {
             this.requests.forEach(request => request.cancel());
         }
 
+        doFetch = entityRequest => (...args) => {
+            const [entityName, requestType] = entityRequest.split('.');
+            const request = api[entityName][requestType](...args);
+            this.requests.push(request);
+            return request;
+        };
+
         render() {
             const { wrappedComponentRef, ...otherProps } = this.props;
-            return <Component ref={wrappedComponentRef} {...otherProps} fetch={this.proxiedApi} />;
+            return <Component ref={wrappedComponentRef} {...otherProps} fetch={this.doFetch} />;
         }
     }
 

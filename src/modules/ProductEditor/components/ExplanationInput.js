@@ -66,6 +66,7 @@ class ExplanationInput extends React.PureComponent {
                     onChangeText={this.props.onChange}
                     multiline
                     style={styles.input}
+                    maxLength={1000}
                 />
                 <RN.ScrollView
                     style={styles.scroller}
@@ -90,14 +91,19 @@ class ExplanationInput extends React.PureComponent {
 }
 
 const styles = RN.StyleSheet.create({
+    input: {
+        zIndex: 1,
+    },
     scroller: {
         position: 'absolute',
+        zIndex: 2,
         bottom: 0,
         left: 0,
         right: 0,
         backgroundColor: styling.COLOR_BG_LIGHT_PRIMARY,
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6,
+        height: 36,
     },
     scrollerContent: {
         paddingHorizontal: 8,

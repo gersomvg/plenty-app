@@ -38,7 +38,7 @@ class BarcodeInput extends React.PureComponent {
 
         let product;
         try {
-            product = await this.props.fetch.products.getOneByBarcode({
+            product = await this.props.fetch('products.getOneByBarcode')({
                 barcode: newCode,
             }).promise;
         } catch (e) {

@@ -48,7 +48,7 @@ class Search extends React.PureComponent {
                 products: [],
                 nextLink: null,
             });
-            this.fetch = this.props.fetch.products.get({
+            this.fetch = this.props.fetch('products.get')({
                 name: this.state.searchValue,
                 categoryId: this.state.filters.categoryId,
                 shopCode: this.state.filters.shopCode,
@@ -70,7 +70,7 @@ class Search extends React.PureComponent {
 
         try {
             this.setState({ fetchMoreStatus: 'loading' });
-            this.fetchMore = this.props.fetch.products.get({ nextLink: nextLink });
+            this.fetchMore = this.props.fetch('products.get')({ nextLink: nextLink });
             const data = await this.fetchMore.promise;
             this.setState(state => ({
                 ...state,
@@ -125,7 +125,10 @@ class Search extends React.PureComponent {
             this.state.filters.classifications
         );
         return (
-            <RN.KeyboardAvoidingView behavior="padding" style={styles.screen}>
+            <RN.KeyboardAvoidingView
+                behavior={RN.Platform.OS === 'ios' ? 'padding' : undefined}
+                style={styles.screen}
+            >
                 <ElevatedHeader style={styles.header}>
                     <FilterTools
                         onPressBack={this.handleOnPressBack}
