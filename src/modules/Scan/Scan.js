@@ -10,6 +10,7 @@ class Scan extends React.PureComponent {
     state = {
         didRead: false,
         lineAnimation: new RN.Animated.Value(1),
+        flashMode: 'off',
     };
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -93,6 +94,7 @@ class Scan extends React.PureComponent {
                             'Om barcodes te kunnen scannen is toegang tot de camera nodig'
                         }
                         onBarCodeRead={this.handleBarCodeRead}
+                        flashMode={this.state.flashMode}
                     />
                 )}
                 {this.renderHeader()}
@@ -101,6 +103,8 @@ class Scan extends React.PureComponent {
         );
     }
 
+    toggleTorch = () =>
+        this.setState(state => ({ flashMode: state.flashMode === 'off' ? 'torch' : 'off' }));
     renderHeader = () => (
         <ElevatedHeader>
             <RN.View style={styles.bar}>
@@ -108,6 +112,10 @@ class Scan extends React.PureComponent {
                 <Text style={styles.title} size="bigger" weight="heavier">
                     Scan een barcode
                 </Text>
+                <IconButton
+                    onPress={this.toggleTorch}
+                    icon={this.state.flashMode === 'off' ? 'flashOn' : 'flashOff'}
+                />
             </RN.View>
         </ElevatedHeader>
     );
@@ -132,7 +140,6 @@ const styles = RN.StyleSheet.create({
         paddingVertical: 16,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingRight: 48,
     },
     title: {
         flex: 1,
