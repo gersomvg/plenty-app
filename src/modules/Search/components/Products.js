@@ -2,8 +2,9 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import { Text, ErrorMessageWithButton } from 'common';
+import { Text, ErrorMessageWithButton, FeedbackForm } from 'common';
 import { getSafeBottomHeight } from 'utils';
+import { styling } from 'config';
 import { Product } from './Product';
 import { FilterTags } from './FilterTags';
 
@@ -99,6 +100,22 @@ class Products extends React.PureComponent {
         if (isAnyError) {
             return this.renderRetry();
         }
+        if (this.props.reachedBottom) {
+            const title = 'Staat jouw favoriet er niet bij?';
+            const subtitle =
+                'We zijn druk bezig om zo veel mogelijk producten toe te voegen. Zou je ons willen tippen welk product je mist?';
+            const placeholder = 'Omschrijving van product';
+            const buttonLabel = 'Verstuur';
+            return (
+                <FeedbackForm
+                    title={title}
+                    subtitle={subtitle}
+                    placeholder={placeholder}
+                    buttonLabel={buttonLabel}
+                    style={styles.feedback}
+                />
+            );
+        }
         return null;
     };
 
@@ -144,7 +161,14 @@ const styles = RN.StyleSheet.create({
         paddingBottom: 16 + getSafeBottomHeight(),
     },
     row: {
-        padding: 16,
+        padding: 32,
+    },
+    feedback: {
+        marginHorizontal: 16,
+        paddingVertical: 32,
+        marginTop: 16,
+        borderTopWidth: 1,
+        borderColor: styling.COLOR_BORDER_LIGHT,
     },
 });
 

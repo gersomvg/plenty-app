@@ -147,6 +147,7 @@ class Search extends React.PureComponent {
                     onPressProduct={this.handleOnPressProduct}
                     onLoad={this.loadProducts}
                     onLoadMore={this.loadMoreProducts}
+                    reachedBottom={!this.state.nextLink}
                     filters={this.state.filters}
                     onPressFilter={this.openFilterModal}
                     onRemoveFilter={this.handleOnRemoveFilter}

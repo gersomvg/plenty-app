@@ -71,6 +71,7 @@ class ProductContainer extends React.Component {
         return (
             <Product
                 {...this.state}
+                requestedBarcode={this.props.navigation.getParam('barcode')}
                 onPressBack={this.handleOnPressBack}
                 onPressEdit={this.handleOnPressEdit}
                 onReload={this.loadProduct}

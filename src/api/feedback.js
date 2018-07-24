@@ -13,9 +13,12 @@ feedback.get = ({ limit, offset, nextLink, archived = false } = {}) => {
 };
 
 feedback.create = ({ message, barcode, productId }) => {
+    const body = { message };
+    if (barcode) body.barcode = barcode.toString();
+    if (productId) body.productId = productId;
     return fetcher(`${API_ENDPOINT}/feedback`, {
         method: 'POST',
-        body: { message, barcode, productId },
+        body,
     });
 };
 

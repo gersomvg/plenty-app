@@ -9,3 +9,4 @@ export * from './Text';
 export * from './Emoji';
 export * from './ElevatedHeader';
 export * from './ProductThumb';
+export * from './FeedbackForm';

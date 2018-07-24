@@ -67,6 +67,7 @@ class ExplanationInput extends React.PureComponent {
                     multiline
                     style={styles.input}
                     maxLength={1000}
+                    hasBottomBar
                 />
                 <RN.ScrollView
                     style={styles.scroller}
