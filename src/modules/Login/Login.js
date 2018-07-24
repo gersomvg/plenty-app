@@ -14,8 +14,8 @@ const STATUS = enumerate('INITIAL', 'INPUT_INVALID', 'SENDING', 'WRONG_CREDENTIA
 class Login extends React.PureComponent {
     state = {
         status: STATUS.INITIAL,
-        email: 'gersomvg@gmail.com',
-        password: 'cashewsftw',
+        email: '',
+        password: '',
     };
 
     changeEmail = email => this.setState({ email });
