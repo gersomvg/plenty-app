@@ -165,8 +165,9 @@ const styles = RN.StyleSheet.create({
     },
     feedback: {
         marginHorizontal: 16,
-        paddingVertical: 32,
-        marginTop: 16,
+        paddingTop: 48,
+        paddingBottom: 24,
+        marginTop: 32,
         borderTopWidth: 1,
         borderColor: styling.COLOR_BORDER_LIGHT,
     },

@@ -63,7 +63,7 @@ class Product extends React.PureComponent {
     renderFeedback = () => {
         const title = 'Heb je aanvullende informatie?';
         const subtitle =
-            'Het kan zijn dat een product veranderd is, of dat er verkooppunten zijn bijgekomen of afgevallen. Zou je ons willen tippen hoe we de informatie kunnen verbeteren?';
+            'Het kan zijn dat dit product veranderd is, of dat er verkooppunten zijn bijgekomen of afgevallen. Zou je ons willen tippen hoe we de informatie kunnen verbeteren?';
         const placeholder = 'Verbeterpunt';
         const buttonLabel = 'Verstuur';
         return (
