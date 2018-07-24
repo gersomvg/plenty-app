@@ -10,10 +10,6 @@ import { SearchAndScan, Categories, AdminTools } from './components';
     isSuperAdmin: auth.user && auth.user.superAdmin,
 }))
 class Home extends React.Component {
-    componentDidMount() {
-        this.props.navigation.push('Product', { barcode: 123 });
-    }
-
     handleOnPressSearch = () => {
         this.props.navigation.push('Search', { autoFocus: true });
     };
