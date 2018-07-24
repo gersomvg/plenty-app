@@ -82,7 +82,18 @@ class Inbox extends React.PureComponent {
         this.props.navigation.pop();
     };
 
-    archiveMessage = id => {};
+    archiveMessage = async id => {
+        try {
+            await this.props.fetch('feedback.update')({ id, archived: !this.state.showArchived })
+                .promise;
+            this.setState(state => ({
+                ...state,
+                messages: state.messages.filter(message => message.id !== id),
+            }));
+        } catch (e) {
+            RN.Alert.alert('Er is iets misgegaan bij het (de)archiveren van dit product');
+        }
+    };
 
     render() {
         return (
