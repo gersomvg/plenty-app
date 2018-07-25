@@ -12,7 +12,12 @@ class MagnifiedImage extends React.PureComponent {
         return (
             <RN.TouchableWithoutFeedback onPress={this.props.onDismiss}>
                 <RN.View style={styles.container}>
-                    <RN.Image source={{ uri: this.props.product.imageUrl }} style={styles.image} />
+                    <RN.View style={styles.imageBackground}>
+                        <RN.Image
+                            source={{ uri: this.props.product.imageUrl }}
+                            style={styles.image}
+                        />
+                    </RN.View>
                 </RN.View>
             </RN.TouchableWithoutFeedback>
         );
@@ -31,10 +36,13 @@ const styles = RN.StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    image: {
+    imageBackground: {
         width: '90%',
         maxWidth: 300,
-        paddingBottom: '90%',
+        backgroundColor: 'white',
+    },
+    image: {
+        paddingBottom: '100%',
         resizeMode: 'contain',
     },
 });
