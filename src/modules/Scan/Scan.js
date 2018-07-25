@@ -1,6 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
-import { Camera, Haptic, Permissions } from 'expo';
+import { Camera, Haptic, Permissions, BarCodeScanner } from 'expo';
 
 import { IconButton, ElevatedHeader, Text } from 'common';
 import { getSafeTopHeight } from 'utils';
@@ -10,7 +10,7 @@ class Scan extends React.PureComponent {
     state = {
         didRead: false,
         lineAnimation: new RN.Animated.Value(1),
-        flashMode: 'off',
+        torchMode: 'off',
         permissionStatus: 'initial',
     };
 
@@ -92,21 +92,14 @@ class Scan extends React.PureComponent {
         return (
             <RN.View style={styles.wrapper}>
                 {this.props.isFocused && (
-                    <Camera
+                    <BarCodeScanner
                         ref={ref => {
                             this.camera = ref;
                         }}
                         style={styles.preview}
-                        type={Camera.Constants.Type.back}
-                        permissionDialogTitle={'Scannen van barcodes'}
-                        permissionDialogMessage={
-                            'Om barcodes te kunnen scannen is toegang tot de camera nodig'
-                        }
                         onBarCodeRead={this.handleBarCodeRead}
-                        flashMode={this.state.flashMode}
+                        torchMode={this.state.torchMode}
                         key={this.state.permissionStatus}
-                        focusDepth={1}
-                        useCamera2Api
                     />
                 )}
                 {this.renderHeader()}
@@ -116,7 +109,7 @@ class Scan extends React.PureComponent {
     }
 
     toggleTorch = () =>
-        this.setState(state => ({ flashMode: state.flashMode === 'off' ? 'torch' : 'off' }));
+        this.setState(state => ({ torchMode: state.torchMode === 'off' ? 'on' : 'off' }));
     renderHeader = () => (
         <ElevatedHeader>
             <RN.View style={styles.bar}>
@@ -126,7 +119,7 @@ class Scan extends React.PureComponent {
                 </Text>
                 <IconButton
                     onPress={this.toggleTorch}
-                    icon={this.state.flashMode === 'off' ? 'flashOn' : 'flashOff'}
+                    icon={this.state.torchMode === 'off' ? 'flashOn' : 'flashOff'}
                 />
             </RN.View>
         </ElevatedHeader>
