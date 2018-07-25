@@ -9,7 +9,7 @@ const Emoji = props => {
         NO: require('assets/emoji/NO.png'),
         POO: require('assets/emoji/POO.png'),
     };
-    return <RN.Image style={styles.emoji} source={emojis[props.type]} />;
+    return <RN.Image style={[styles.emoji, props.style]} source={emojis[props.type]} />;
 };
 
 Emoji.propTypes = {
@@ -25,4 +25,4 @@ const styles = RN.StyleSheet.create({
     },
 });
 
-export {Emoji};
+export { Emoji };

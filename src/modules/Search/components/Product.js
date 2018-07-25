@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 
-import { Text } from 'common';
+import { Text, Emoji } from 'common';
 import { styling } from 'config';
 
 class Product extends React.PureComponent {
@@ -32,6 +32,7 @@ class Product extends React.PureComponent {
         return (
             <RN.View style={styles.imageContainer}>
                 {uri && <RN.Image source={{ uri }} style={styles.image} />}
+                <Emoji style={styles.emoji} type={this.props.product.classification} />
             </RN.View>
         );
     };
@@ -67,12 +68,19 @@ const styles = RN.StyleSheet.create({
         borderRadius: 3,
         overflow: 'hidden',
         borderWidth: 0,
-        marginRight: 16,
+        paddingRight: 16,
+        paddingVertical: 4,
     },
     image: {
         width: 60,
         height: 60,
         resizeMode: 'contain',
+    },
+    emoji: {
+        position: 'absolute',
+        bottom: 0,
+        right: 12,
+        marginHorizontal: 0,
     },
     textContainer: {
         flex: 1,
