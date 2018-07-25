@@ -105,6 +105,8 @@ class Scan extends React.PureComponent {
                         onBarCodeRead={this.handleBarCodeRead}
                         flashMode={this.state.flashMode}
                         key={this.state.permissionStatus}
+                        focusDepth={1}
+                        useCamera2Api
                     />
                 )}
                 {this.renderHeader()}
