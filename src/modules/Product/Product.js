@@ -3,7 +3,7 @@ import RN from 'react-native';
 
 import { Text, IconButton, ErrorMessageWithButton, FeedbackForm } from 'common';
 import { styling } from 'config';
-import { ProductInfo, DynamicHeaderBar, Classification, Shops } from './components';
+import { ProductInfo, DynamicHeaderBar, Classification, Shops, MagnifiedImage } from './components';
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
 
 class Product extends React.PureComponent {
@@ -11,6 +11,11 @@ class Product extends React.PureComponent {
     onScrollEvent = RN.Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollY } } }], {
         useNativeDriver: true,
     });
+
+    state = { showMagnifiedImage: false };
+
+    showMagnifiedImage = () => this.setState({ showMagnifiedImage: true });
+    hideMagnifiedImage = () => this.setState({ showMagnifiedImage: false });
 
     render() {
         return (
@@ -25,7 +30,9 @@ class Product extends React.PureComponent {
                     notfound: this.renderNotFound,
                     error: this.renderError,
                 }[this.props.fetchStatus]()}
-                <IconButton style={styles.back} icon="back" onPress={this.props.onPressBack} />
+                {!this.state.showMagnifiedImage && (
+                    <IconButton style={styles.back} icon="back" onPress={this.props.onPressBack} />
+                )}
             </RN.KeyboardAvoidingView>
         );
     }
@@ -43,7 +50,7 @@ class Product extends React.PureComponent {
                 scrollEventThrottle={16}
                 keyboardShouldPersistTaps="never"
             >
-                <ProductInfo product={this.props.product} />
+                <ProductInfo product={this.props.product} onPressImage={this.showMagnifiedImage} />
                 <Classification product={this.props.product} style={styles.classification} />
                 <Shops product={this.props.product} />
                 {this.renderFeedback()}
@@ -56,6 +63,9 @@ class Product extends React.PureComponent {
             />
             {this.props.isAuthorized && (
                 <IconButton style={styles.edit} icon="edit" onPress={this.props.onPressEdit} />
+            )}
+            {this.state.showMagnifiedImage && (
+                <MagnifiedImage product={this.props.product} onDismiss={this.hideMagnifiedImage} />
             )}
         </React.Fragment>
     );

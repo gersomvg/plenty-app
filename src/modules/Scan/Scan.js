@@ -1,6 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
-import { Camera, Haptic } from 'expo';
+import { Camera, Haptic, Permissions } from 'expo';
 
 import { IconButton, ElevatedHeader, Text } from 'common';
 import { getSafeTopHeight } from 'utils';
@@ -11,6 +11,7 @@ class Scan extends React.PureComponent {
         didRead: false,
         lineAnimation: new RN.Animated.Value(1),
         flashMode: 'off',
+        permissionStatus: 'initial',
     };
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -22,6 +23,7 @@ class Scan extends React.PureComponent {
 
     componentDidMount() {
         this.startAnimation();
+        this.askPermission();
     }
 
     componentDidUpdate(prevProps) {
@@ -33,6 +35,13 @@ class Scan extends React.PureComponent {
             this.stopAnimation();
         }
     }
+
+    askPermission = async () => {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+        if (status !== 'granted')
+            RN.Alert.alert('Er is toegang tot de camera nodig om barcodes te kunnen scannen.');
+        else this.setState({ permissionStatus: 'granted' });
+    };
 
     startAnimation = () => {
         this.animationLoop = RN.Animated.loop(
@@ -95,6 +104,7 @@ class Scan extends React.PureComponent {
                         }
                         onBarCodeRead={this.handleBarCodeRead}
                         flashMode={this.state.flashMode}
+                        key={this.state.permissionStatus}
                     />
                 )}
                 {this.renderHeader()}

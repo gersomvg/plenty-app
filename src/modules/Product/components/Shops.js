@@ -50,6 +50,7 @@ const styles = RN.StyleSheet.create({
     noShops: {
         marginTop: 16,
         marginHorizontal: 16,
+        marginBottom: 32,
     },
     shops: {
         paddingHorizontal: 8,

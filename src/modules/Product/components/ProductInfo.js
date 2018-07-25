@@ -7,12 +7,15 @@ import { Text, ProductThumb } from 'common';
 class ProductInfo extends React.PureComponent {
     static propTypes = {
         product: PT.object.isRequired,
+        onPressImage: PT.func.isRequired,
     };
 
     render() {
         return (
             <RN.View style={styles.container}>
-                <ProductThumb source={{ uri: this.props.product.imageUrl }} />
+                <RN.TouchableOpacity activeOpacity={0.5} onPress={this.props.onPressImage}>
+                    <ProductThumb source={{ uri: this.props.product.imageUrl }} />
+                </RN.TouchableOpacity>
                 <Text style={styles.productName} size="bigger">
                     {this.props.product.name}
                 </Text>
