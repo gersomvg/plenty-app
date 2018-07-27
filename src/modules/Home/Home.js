@@ -19,7 +19,7 @@ class Home extends React.Component {
     };
 
     handleOnPressCategory = categoryId => {
-        this.props.navigation.push('Search', { categoryId, classifications: 'YES' });
+        this.props.navigation.push('Search', { categoryId, classifications: 'YES,MAYBE' });
     };
 
     handleOnPressCreate = () => {
