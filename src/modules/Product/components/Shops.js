@@ -1,9 +1,13 @@
 import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
+import { connect } from 'react-redux';
 
 import { Text } from 'common';
 
+@connect(state => ({
+    shops: state.shops.items,
+}))
 class Shops extends React.PureComponent {
     static propTypes = {
         product: PT.object.isRequired,
@@ -29,7 +33,16 @@ class Shops extends React.PureComponent {
 
     renderShops = () => {
         return (
-            <RN.View style={styles.shops}>{this.props.product.shops.map(this.renderShop)}</RN.View>
+            <React.Fragment>
+                <RN.View style={styles.shops}>
+                    {this.props.product.shops.map(this.renderShop)}
+                </RN.View>
+                <Text size="smaller" color="lighter" style={styles.subtitle}>
+                    Informatie is beschikbaar van{' '}
+                    {this.props.shops.map(shop => shop.name).join(', ')}. Binnenkort zullen andere
+                    supermarkten volgen.
+                </Text>
+            </React.Fragment>
         );
     };
 
@@ -59,6 +72,10 @@ const styles = RN.StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
+    },
+    subtitle: {
+        marginBottom: 32,
+        paddingHorizontal: 16,
     },
     shopContainer: {
         marginHorizontal: 8,
