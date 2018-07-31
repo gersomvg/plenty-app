@@ -15,8 +15,7 @@ class FilterHint extends React.PureComponent {
                 <RN.Image style={styles.arrow} source={require('assets/ui/tooltip-arrow.png')} />
                 <RN.View style={styles.tooltip}>
                     <Text color="white" size="bigger" style={styles.text}>
-                        Met deze knop kan je filteren op supermarkt, categorie en
-                        veganclassificatie.
+                        Met deze knop kan je filteren op supermarkt, categorie en wel/niet vegan.
                     </Text>
                     <Button label="Got it!" onPress={this.props.onPress} tint="white" />
                 </RN.View>
