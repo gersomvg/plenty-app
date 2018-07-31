@@ -30,7 +30,7 @@ const Button = props => {
 };
 
 Button.propTypes = {
-    tint: PT.oneOf(['primary', 'secondaryLight', 'light']),
+    tint: PT.oneOf(['primary', 'secondaryLight', 'light', 'white']),
     onPress: PT.func.isRequired,
     label: PT.string.isRequired,
     disabled: PT.bool,
@@ -69,6 +69,9 @@ const styles = RN.StyleSheet.create({
     },
     light: {
         backgroundColor: styling.COLOR_BG_LIGHT,
+    },
+    white: {
+        backgroundColor: 'white',
     },
 });
 

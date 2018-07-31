@@ -33,7 +33,7 @@ class SearchAndScan extends React.PureComponent {
                     </RN.View>
                 </GestureHandler.LongPressGestureHandler>
                 <Text color="lighter" align="center" style={styles.tagline}>
-                    Plantaardige weelde
+                    Vegan Boodschappenhulp
                 </Text>
                 <SearchInput
                     placeholder="Zoek"

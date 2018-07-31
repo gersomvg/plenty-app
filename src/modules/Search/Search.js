@@ -2,12 +2,16 @@ import React from 'react';
 import RN from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
 import { withFetch } from 'hocs';
 import { getSafeTopHeight } from 'utils';
 import { ElevatedHeader } from 'common';
-import { FilterTools, Products, FilterModal } from './components';
+import { FilterTools, Products, FilterModal, FilterHint } from './components';
 
+@connect(state => ({
+    showFilterHint: state.onboarding.showFilterHint,
+}))
 @withFetch
 class Search extends React.PureComponent {
     state = {
@@ -93,6 +97,7 @@ class Search extends React.PureComponent {
     };
 
     openFilterModal = () => {
+        if (this.props.showFilterHint) this.props.dispatch.onboarding.hideFilterHint();
         this.setState({ showFilterModal: true });
     };
 
@@ -160,6 +165,12 @@ class Search extends React.PureComponent {
                         onClose={this.closeFilterModal}
                     />
                 )}
+                {this.props.showFilterHint && (
+                    <FilterHint
+                        style={styles.filterHint}
+                        onPress={this.props.dispatch.onboarding.hideFilterHint}
+                    />
+                )}
             </RN.KeyboardAvoidingView>
         );
     }
@@ -176,6 +187,12 @@ const styles = RN.StyleSheet.create({
     products: {
         zIndex: 1,
         marginTop: FilterTools.HEIGHT + getSafeTopHeight(),
+    },
+    filterHint: {
+        zIndex: 3,
+        position: 'absolute',
+        top: FilterTools.HEIGHT + getSafeTopHeight() - 16,
+        right: 5,
     },
 });
 
