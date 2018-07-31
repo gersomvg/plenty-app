@@ -36,6 +36,9 @@ const RootStack = createStackNavigator(
         Login: {
             screen: modules.Login,
         },
+        Onboarding: {
+            screen: modules.Onboarding,
+        },
     },
     {
         mode: 'modal',

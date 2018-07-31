@@ -12,7 +12,7 @@ import { ErrorMessageWithButton } from 'common';
 import { eventBus } from 'utils';
 
 const persistPlugin = createRematchPersist({
-    whitelist: ['shops', 'categories', 'auth'],
+    whitelist: ['shops', 'categories', 'auth', 'onboarding'],
     storage: RN.AsyncStorage,
     version: 1,
 });

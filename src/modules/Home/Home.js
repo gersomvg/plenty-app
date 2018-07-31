@@ -5,11 +5,18 @@ import { connect } from 'react-redux';
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
 import { SearchAndScan, Categories, AdminTools } from './components';
 
-@connect(({ auth }) => ({
+@connect(({ auth, onboarding }) => ({
     isAuthorized: auth.status === 'AUTHORIZED',
     isSuperAdmin: auth.user && auth.user.superAdmin,
+    isOnboarded: onboarding.finished,
 }))
 class Home extends React.Component {
+    componentDidMount = () => {
+        if (!this.props.isOnboarded) {
+            this.props.navigation.push('Onboarding');
+        }
+    };
+
     handleOnPressSearch = () => {
         this.props.navigation.push('Search', { autoFocus: true });
     };
