@@ -31,7 +31,9 @@ class Product extends React.PureComponent {
 
         return (
             <RN.View style={styles.imageContainer}>
-                {uri && <RN.Image source={{ uri }} style={styles.image} />}
+                <RN.View style={styles.imageContainerInner}>
+                    {uri && <RN.Image source={{ uri }} style={styles.image} />}
+                </RN.View>
                 <Emoji style={styles.emoji} type={this.props.product.classification} />
             </RN.View>
         );
@@ -65,11 +67,14 @@ const styles = RN.StyleSheet.create({
         paddingHorizontal: 16,
     },
     imageContainer: {
-        borderRadius: 3,
-        overflow: 'hidden',
-        borderWidth: 0,
         paddingRight: 16,
         paddingVertical: 4,
+    },
+    imageContainerInner: {
+        width: 60,
+        height: 60,
+        borderRadius: 3,
+        overflow: 'hidden',
     },
     image: {
         width: 60,
