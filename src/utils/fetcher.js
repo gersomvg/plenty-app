@@ -4,7 +4,7 @@ import { makeCancelable } from './makeCancelable';
 import { tokenStorage } from './tokenStorage';
 import { eventBus } from './eventBus';
 
-const timeoutMS = 20000;
+const timeoutMS = 60000;
 
 class Timeout {
     id = null;
