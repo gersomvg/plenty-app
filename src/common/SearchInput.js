@@ -104,7 +104,10 @@ class SearchInput extends React.PureComponent {
                 styles.placeholder,
             ];
             return (
-                <RN.View style={styles.placeholderContainer} pointerEvents="none">
+                <RN.View
+                    style={styles.placeholderContainer}
+                    pointerEvents={this.props.overlayTouchable ? 'auto' : 'none'}
+                >
                     <RN.Text style={placeholderStyles} numberOfLines={1}>
                         {this.props.placeholder}
                     </RN.Text>
@@ -153,8 +156,9 @@ const styles = RN.StyleSheet.create({
         position: 'absolute',
         height: 48,
         top: 0,
-        left: 48,
-        right: 48,
+        paddingHorizontal: 48,
+        left: 0,
+        right: 0,
         zIndex: 2,
     },
     placeholder: {
