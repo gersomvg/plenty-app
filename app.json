@@ -2,7 +2,7 @@
     "expo": {
         "name": "Plenty",
         "icon": "./src/assets/branding/app-logo.png",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "slug": "plenty",
         "sdkVersion": "28.0.0",
         "splash": {
@@ -12,7 +12,7 @@
         "primaryColor": "#FB5758",
         "ios": {
             "bundleIdentifier": "nl.plentyapp.plenty",
-            "buildNumber": "1.0.3",
+            "buildNumber": "1.0.4",
             "infoPlist": {
                 "NSCameraUsageDescription":
                     "This app uses the camera to scan barcodes of products.",
@@ -22,7 +22,7 @@
         },
         "android": {
             "package": "nl.plentyapp.plenty",
-            "versionCode": 103,
+            "versionCode": 104,
             "permissions": [
                 "CAMERA",
                 "MANAGE_DOCUMENTS",
