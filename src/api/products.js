@@ -58,7 +58,7 @@ products.update = data => {
         formData.append('image', {
             uri: data.imageUrl,
             name: 'image.jpg',
-            type: 'multipart/form-data',
+            type: 'image/jpeg',
         });
     }
 
