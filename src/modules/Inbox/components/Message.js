@@ -76,7 +76,7 @@ class Message extends React.PureComponent {
         return (
             <RN.View style={styles.barcodeContainer}>
                 <Text size="smaller" style={styles.barcode} selectable>
-                    Barcode: {barcode}
+                    {barcode}
                 </Text>
                 <Button
                     label={`Maak product met barcode`}
