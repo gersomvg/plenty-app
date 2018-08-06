@@ -75,7 +75,7 @@ class Message extends React.PureComponent {
         if (!barcode) return null;
         return (
             <RN.View style={styles.barcodeContainer}>
-                <Text size="smaller" style={styles.barcode}>
+                <Text size="smaller" style={styles.barcode} selectable>
                     Barcode: {barcode}
                 </Text>
                 <Button
