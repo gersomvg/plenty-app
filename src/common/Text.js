@@ -65,7 +65,7 @@ export const styles = RN.StyleSheet.create({
         color: styling.COLOR_TEXT_DEFAULT,
     },
     'color-brand': {
-        color: styling.COLOR_BRAND_PRIMARY,
+        color: styling.COLOR_PRIMARY,
     },
     'color-lighter': {
         color: styling.COLOR_TEXT_LIGHTER,

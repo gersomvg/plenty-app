@@ -29,7 +29,7 @@ const styles = RN.StyleSheet.create({
         height: 10,
         margin: 2,
         borderRadius: 7,
-        backgroundColor: styling.COLOR_BRAND_PRIMARY,
+        backgroundColor: styling.COLOR_PRIMARY,
     },
 });
 

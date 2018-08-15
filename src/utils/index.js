@@ -7,3 +7,5 @@ export * from './qs';
 export * from './enumerate';
 export * from './tokenStorage';
 export * from './eventBus';
+export * from './findTagInTree';
+export * from './xor';

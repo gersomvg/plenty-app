@@ -157,7 +157,7 @@ const styles = RN.StyleSheet.create({
         left: '6%',
         top: '50%',
         borderWidth: 2,
-        borderColor: styling.COLOR_BRAND_PRIMARY,
+        borderColor: styling.COLOR_PRIMARY,
         borderRadius: 12,
     },
 });

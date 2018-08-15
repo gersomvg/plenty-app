@@ -139,7 +139,7 @@ const styles = RN.StyleSheet.create({
         borderRadius: 4,
         overflow: 'hidden',
         marginRight: 10,
-        backgroundColor: styling.COLOR_BRAND_PRIMARY,
+        backgroundColor: styling.COLOR_PRIMARY,
         paddingHorizontal: 12,
         paddingBottom: 1,
         justifyContent: 'center',

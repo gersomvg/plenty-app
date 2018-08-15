@@ -1,8 +1,8 @@
 import produce from 'immer';
 
-import { categories as categoriesApi } from 'api';
+import { tags as tagsApi } from 'api';
 
-const categories = {
+const tags = {
     state: {
         items: [],
         status: 'initial', // initial, loading, loaded, error
@@ -27,13 +27,14 @@ const categories = {
         async load() {
             try {
                 this.loadInitiated();
-                const categoriesData = await categoriesApi.get().promise;
-                this.loaded(categoriesData.items);
+                const tagsData = await tagsApi.get().promise;
+                this.loaded(tagsData.items);
             } catch (e) {
+                console.log(e);
                 this.loadedError();
             }
         },
     },
 };
 
-export { categories };
+export { tags };

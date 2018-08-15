@@ -3,10 +3,10 @@ import { API_ENDPOINT } from 'config';
 
 const products = {};
 
-products.get = ({ limit, offset, nextLink, name, categoryId, shopCode, classifications } = {}) => {
+products.get = ({ nextLink, ...other } = {}) => {
     let url = nextLink;
     if (!url) {
-        const params = qs.stringify({ limit, offset, name, categoryId, shopCode, classifications });
+        const params = qs.stringify(other);
         url = `${API_ENDPOINT}/product${params}`;
     }
     return fetcher(url);
@@ -29,6 +29,7 @@ products.create = data => {
     formData.append('classification', data.classification);
     formData.append('explanation', data.explanation);
     data.shops.forEach(shop => formData.append('shopCodes[]', shop.code));
+    data.tags.forEach(tag => formData.append('tagIds[]', tag.id));
     data.categories.forEach(category => formData.append('categoryIds[]', category.id));
     data.barcodes.forEach(barcode => formData.append('barcodes[]', barcode));
     formData.append('image', {
@@ -52,6 +53,7 @@ products.update = data => {
     formData.append('classification', data.classification);
     formData.append('explanation', data.explanation);
     data.shops.forEach(shop => formData.append('shopCodes[]', shop.code));
+    data.tags.forEach(tag => formData.append('tagIds[]', tag.id));
     data.categories.forEach(category => formData.append('categoryIds[]', category.id));
     data.barcodes.forEach(barcode => formData.append('barcodes[]', barcode));
     if (!data.imageUrl.startsWith('http')) {

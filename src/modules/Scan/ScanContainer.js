@@ -1,9 +1,9 @@
 import React from 'react';
 import RN from 'react-native';
-import {withNavigationFocus} from 'react-navigation';
+import { withNavigationFocus } from 'react-navigation';
 
-import {Scan} from './Scan';
+import { Scan } from './Scan';
 
-const ScanContainer = withNavigationFocus(Scan);
+const ScanContainer = Scan;
 
-export {ScanContainer};
+export { ScanContainer };

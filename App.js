@@ -12,9 +12,9 @@ import { ErrorMessageWithButton } from 'common';
 import { eventBus } from 'utils';
 
 const persistPlugin = createRematchPersist({
-    whitelist: ['shops', 'categories', 'auth', 'onboarding'],
+    whitelist: ['shops', 'tags', 'auth', 'onboarding'],
     storage: RN.AsyncStorage,
-    version: 1,
+    version: 2,
 });
 export const store = init({ plugins: [persistPlugin], models });
 const persistor = getPersistor();
@@ -35,8 +35,8 @@ export default class App extends React.Component {
 @connect(state => ({
     stillLoading:
         ['initial', 'loading'].includes(state.shops.status) ||
-        ['initial', 'loading'].includes(state.categories.status),
-    hasError: [state.shops.status, state.categories.status].includes('error'),
+        ['initial', 'loading'].includes(state.tags.status),
+    hasError: [state.shops.status, state.tags.status].includes('error'),
 }))
 class AppEnsureLoading extends React.Component {
     state = { fontLoaded: false };
@@ -53,7 +53,7 @@ class AppEnsureLoading extends React.Component {
 
     loadData = async () => {
         this.props.dispatch.shops.load();
-        this.props.dispatch.categories.load();
+        this.props.dispatch.tags.load();
     };
 
     loadFont = async () => {

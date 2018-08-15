@@ -62,7 +62,7 @@ const styles = RN.StyleSheet.create({
         backgroundColor: '#999999',
     },
     primary: {
-        backgroundColor: styling.COLOR_BRAND_PRIMARY,
+        backgroundColor: styling.COLOR_PRIMARY,
     },
     secondaryLight: {
         backgroundColor: styling.COLOR_BG_LIGHT_SECONDARY,

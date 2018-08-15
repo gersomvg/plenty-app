@@ -7,7 +7,6 @@ import { styling } from 'config';
 const IconButton = props => {
     const source = {
         back: require('assets/ui/back.png'),
-        filter: require('assets/ui/filter.png'),
         close: require('assets/ui/close.png'),
         edit: require('assets/ui/edit.png'),
         archive: require('assets/ui/archive.png'),
@@ -22,7 +21,11 @@ const IconButton = props => {
             onPress={() => props.onPress()}
         >
             <RN.Image
-                style={[styles.icon, props.color === 'brand' && styles.colorBrand]}
+                style={[
+                    styles.icon,
+                    props.color === 'brand' && styles.colorBrand,
+                    props.color === 'white' && styles.colorWhite,
+                ]}
                 source={source}
             />
         </RN.TouchableOpacity>
@@ -31,17 +34,9 @@ const IconButton = props => {
 
 IconButton.propTypes = {
     onPress: PT.func.isRequired,
-    icon: PT.oneOf([
-        'back',
-        'filter',
-        'close',
-        'edit',
-        'archive',
-        'unarchive',
-        'flashOn',
-        'flashOff',
-    ]).isRequired,
-    color: PT.oneOf(['default', 'brand']).isRequired,
+    icon: PT.oneOf(['back', 'close', 'edit', 'archive', 'unarchive', 'flashOn', 'flashOff'])
+        .isRequired,
+    color: PT.oneOf(['default', 'brand', 'white']).isRequired,
 };
 
 IconButton.defaultProps = {
@@ -59,7 +54,10 @@ const styles = RN.StyleSheet.create({
         resizeMode: 'contain',
     },
     colorBrand: {
-        tintColor: styling.COLOR_BRAND_PRIMARY,
+        tintColor: styling.COLOR_PRIMARY,
+    },
+    colorWhite: {
+        tintColor: 'white',
     },
 });
 

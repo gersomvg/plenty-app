@@ -1,4 +1,3 @@
 export * from './Products';
-export * from './FilterTools';
-export * from './FilterModal';
-export * from './FilterHint';
+export * from './Header';
+export * from './FilterDropdown';

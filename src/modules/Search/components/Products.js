@@ -6,7 +6,7 @@ import { Text, ErrorMessageWithButton, FeedbackForm } from 'common';
 import { getSafeBottomHeight } from 'utils';
 import { styling } from 'config';
 import { Product } from './Product';
-import { FilterTags } from './FilterTags';
+import { SubTags } from './SubTags';
 
 class Products extends React.PureComponent {
     static propTypes = {
@@ -16,42 +16,15 @@ class Products extends React.PureComponent {
         onPressProduct: PT.func.isRequired,
         onLoad: PT.func.isRequired,
         onLoadMore: PT.func.isRequired,
-        filters: PT.object.isRequired,
-        onPressFilter: PT.func.isRequired,
-        onRemoveFilter: PT.func.isRequired,
-        isAnyFilterActive: PT.bool.isRequired,
+        tagId: PT.number,
+        onPressTag: PT.func.isRequired,
+        reachedBottom: PT.bool.isRequired,
+        collapseSubTags: PT.bool.isRequired,
+        onToggleCollapse: PT.func.isRequired,
         style: PT.any,
     };
 
-    state = { extraData: null };
-
-    static getDerivedStateFromProps = (props, state) => {
-        const { extraData } = state;
-        if (
-            extraData === null ||
-            extraData.fetchStatus !== props.fetchStatus ||
-            extraData.fetchMoreStatus !== props.fetchMoreStatus ||
-            extraData.filters !== props.filters
-        ) {
-            return {
-                extraData: {
-                    fetchStatus: props.fetchStatus,
-                    fetchMoreStatus: props.fetchMoreStatus,
-                    filters: props.filters,
-                },
-            };
-        }
-        return null;
-    };
-
     keyExtractor = item => item.id.toString();
-
-    getItemLayout = (data, index) => ({
-        length: Product.height,
-        offset:
-            index * Product.height + 16 + (this.props.isAnyFilterActive ? FilterTags.height : 0),
-        index,
-    });
 
     render() {
         return (
@@ -63,23 +36,23 @@ class Products extends React.PureComponent {
                 ListHeaderComponent={this.renderHeader}
                 ListEmptyComponent={this.renderEmpty}
                 ListFooterComponent={this.renderFooter}
-                getItemLayout={this.getItemLayout}
                 keyExtractor={this.keyExtractor}
                 windowSize={3}
                 keyboardShouldPersistTaps="handled"
-                extraData={this.state.extraData}
+                extraData={this.props}
                 onEndReached={this.props.onLoadMore}
             />
         );
     }
 
     renderHeader = () => {
-        if (!this.props.isAnyFilterActive) return null;
         return (
-            <FilterTags
-                filters={this.props.filters}
-                onPressFilter={this.props.onPressFilter}
-                onRemoveFilter={this.props.onRemoveFilter}
+            <SubTags
+                tagId={this.props.tagId}
+                style={styles.subTags}
+                onPress={this.props.onPressTag}
+                collapseSubTags={this.props.collapseSubTags}
+                onToggleCollapse={this.props.onToggleCollapse}
             />
         );
     };
@@ -157,8 +130,10 @@ class Products extends React.PureComponent {
 
 const styles = RN.StyleSheet.create({
     contentContainer: {
-        paddingTop: 16,
         paddingBottom: 16 + getSafeBottomHeight(),
+    },
+    subTags: {
+        marginBottom: 16,
     },
     row: {
         padding: 32,

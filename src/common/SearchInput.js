@@ -7,76 +7,29 @@ import { styles as textStyles } from 'common/Text';
 
 class SearchInput extends React.PureComponent {
     static propTypes = {
-        primaryColor: PT.bool.isRequired,
-        overlayTouchable: PT.bool.isRequired,
-        onPress: PT.func,
         value: PT.string,
-        placeholder: PT.string,
-    };
-
-    static defaultProps = {
-        primaryColor: false,
-        overlayTouchable: false,
+        onChange: PT.func.isRequired,
     };
 
     static HEIGHT = 48;
 
-    state = { isFocused: false };
-
-    handleInputRef = c => (this.inputRef = c);
-
-    handleOnFocus = (...args) => {
-        this.setState({ isFocused: true });
-        if (this.props.onFocus) this.props.onFocus(...args);
-    };
-
-    handleOnBlur = (...args) => {
-        this.setState({ isFocused: false });
-        if (this.props.onBlur) this.props.onBlur(...args);
-    };
-
     handleClear = () => {
-        if (this.inputRef) this.inputRef.clear();
-        if (this.props.onChangeText) this.props.onChangeText('');
+        if (this.props.onChange) this.props.onChange('');
     };
 
-    render() {
-        return this.props.overlayTouchable ? this.renderOverlayedInput() : this.renderInput();
-    }
-
-    renderOverlayedInput = () => {
-        return (
-            <RN.TouchableOpacity onPress={this.props.onPress} activeOpacity={0.5}>
-                {this.renderInput()}
-            </RN.TouchableOpacity>
-        );
-    };
-
-    renderInput = () => {
-        const { overlayTouchable, onPress, placeholder, primaryColor, ...inputProps } = this.props;
-        const inputStyles = [
-            styles.input,
-            primaryColor && styles.inputPrimaryColor,
-            textStyles['font-default'],
-            textStyles['size-default'],
-            textStyles['color-default'],
-        ];
-        const inputPointerEvents = overlayTouchable ? 'none' : 'auto';
+    render = () => {
+        const { onChange, ...inputProps } = this.props;
 
         return (
             <RN.View style={this.props.style}>
                 <RN.TextInput
                     {...inputProps}
-                    style={inputStyles}
-                    pointerEvents={inputPointerEvents}
-                    ref={this.handleInputRef}
-                    onFocus={this.handleOnFocus}
-                    onBlur={this.handleOnBlur}
+                    onChangeText={onChange}
+                    style={styles.input}
                     underlineColorAndroid="transparent"
                 />
-                <RN.Image style={styles.icon} source={require('assets/ui/search-icon.png')} />
+                <RN.Image style={styles.icon} source={require('assets/ui/input-search.png')} />
                 {this.renderClearButton()}
-                {this.renderPlaceholder()}
             </RN.View>
         );
     };
@@ -94,39 +47,18 @@ class SearchInput extends React.PureComponent {
             );
         }
     };
-
-    renderPlaceholder = () => {
-        if (!this.state.isFocused && !this.props.value) {
-            const placeholderStyles = [
-                textStyles['font-default'],
-                textStyles['size-default'],
-                textStyles['color-default'],
-                styles.placeholder,
-            ];
-            return (
-                <RN.View
-                    style={styles.placeholderContainer}
-                    pointerEvents={this.props.overlayTouchable ? 'auto' : 'none'}
-                >
-                    <RN.Text style={placeholderStyles} numberOfLines={1}>
-                        {this.props.placeholder}
-                    </RN.Text>
-                </RN.View>
-            );
-        }
-    };
 }
 
 const styles = RN.StyleSheet.create({
     input: {
         height: SearchInput.HEIGHT,
         borderRadius: 6,
-        backgroundColor: styling.COLOR_BG_LIGHT,
+        backgroundColor: 'white',
         paddingHorizontal: 48,
         zIndex: 1,
-    },
-    inputPrimaryColor: {
-        backgroundColor: styling.COLOR_BG_LIGHT_PRIMARY,
+        fontFamily: 'System',
+        fontSize: 18,
+        color: styling.COLOR_PRIMARY_DARK,
     },
     icon: {
         position: 'absolute',
@@ -151,6 +83,7 @@ const styles = RN.StyleSheet.create({
         width: 14,
         height: 14,
         resizeMode: 'contain',
+        tintColor: styling.COLOR_PRIMARY_DARK,
     },
     placeholderContainer: {
         position: 'absolute',

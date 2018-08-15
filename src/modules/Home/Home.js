@@ -3,7 +3,7 @@ import RN from 'react-native';
 import { connect } from 'react-redux';
 
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
-import { SearchAndScan, Categories, AdminTools } from './components';
+import { SearchAndScan, Tags, AdminTools } from './components';
 
 @connect(({ auth, onboarding }) => ({
     isAuthorized: auth.status === 'AUTHORIZED',
@@ -18,15 +18,15 @@ class Home extends React.Component {
     };
 
     handleOnPressSearch = () => {
-        this.props.navigation.push('Search', { autoFocus: true });
+        this.props.navigation.push('Search', { autoFocus: true, collapseSubTags: true });
     };
 
     handleOnPressScan = () => {
         this.props.navigation.push('Scan');
     };
 
-    handleOnPressCategory = categoryId => {
-        this.props.navigation.push('Search', { categoryId, classifications: 'YES,MAYBE' });
+    handleOnPressTag = tagId => {
+        this.props.navigation.push('Search', { tagId, classifications: 'YES,MAYBE' });
     };
 
     handleOnPressCreate = () => {
@@ -67,7 +67,7 @@ class Home extends React.Component {
                         onPressSuper={() => {}}
                     />
                 )}
-                <Categories onPress={this.handleOnPressCategory} style={styles.categories} />
+                <Tags onPress={this.handleOnPressTag} style={styles.tags} />
             </RN.ScrollView>
         );
     }
@@ -89,7 +89,7 @@ const styles = RN.StyleSheet.create({
         marginTop: 32,
         paddingHorizontal: 16,
     },
-    categories: {
+    tags: {
         marginTop: 48,
     },
 });

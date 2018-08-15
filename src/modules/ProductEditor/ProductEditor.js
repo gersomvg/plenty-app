@@ -8,7 +8,7 @@ import {
     ImagePicker,
     BrandInput,
     ShopInput,
-    CategoryInput,
+    TagInput,
     BarcodeInput,
     ExplanationInput,
 } from './components';
@@ -26,6 +26,7 @@ class ProductEditor extends React.PureComponent {
         classification: null,
         explanation: '',
         shops: [],
+        tags: [],
         categories: [],
 
         isSaving: false,
@@ -87,7 +88,7 @@ class ProductEditor extends React.PureComponent {
     changeBarcodes = barcodes => this.setState({ barcodes });
     changeExplanation = explanation => this.setState({ explanation });
     changeShops = shops => this.setState({ shops });
-    changeCategories = categories => this.setState({ categories });
+    changeTags = tags => this.setState({ tags });
     render() {
         return (
             <RN.KeyboardAvoidingView
@@ -134,7 +135,7 @@ class ProductEditor extends React.PureComponent {
                         onChange={this.changeShops}
                         style={styles.marginBottom}
                     />
-                    <CategoryInput value={this.state.categories} onChange={this.changeCategories} />
+                    <TagInput value={this.state.tags} onChange={this.changeTags} />
                 </RN.ScrollView>
                 <IconButton style={styles.back} icon="back" onPress={this.props.navigation.pop} />
                 <Expo.LinearGradient

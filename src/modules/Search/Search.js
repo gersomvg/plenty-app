@@ -2,37 +2,51 @@ import React from 'react';
 import RN from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
-import { connect } from 'react-redux';
+import { withNavigationFocus } from 'react-navigation';
 
 import { withFetch } from 'hocs';
-import { getSafeTopHeight } from 'utils';
+import { getSafeTopHeight, logger } from 'utils';
 import { ElevatedHeader } from 'common';
-import { FilterTools, Products, FilterModal, FilterHint } from './components';
+import { Header, Products, FilterDropdown } from './components';
+import { styling } from 'config';
 
-@connect(state => ({
-    showFilterHint: state.onboarding.showFilterHint,
-}))
+@withNavigationFocus
 @withFetch
 class Search extends React.PureComponent {
     state = {
-        searchValue: null,
         fetchStatus: 'initial',
         fetchMoreStatus: 'initial',
         products: [],
         nextLink: null,
-        showFilterModal: false,
-        filters: null,
+
+        // One of null, 'shop', 'classification', 'admin'
+        activeFilterDropdown: null,
+
+        collapseSubTags: false,
+
+        // Filters
+        name: '',
+        shopCode: null,
+        classifications: null,
+        withoutTag: false,
+        withoutBarcode: false,
+
+        copiedParams: false,
     };
 
+    get tagId() {
+        return _.get(this.props, 'navigation.state.params.tagId');
+    }
+
     static getDerivedStateFromProps(props, state) {
-        if (state.filters === null) {
+        if (!state.copiedParams) {
+            const { params } = props.navigation.state;
             return {
-                filters: {
-                    shopCode: null,
-                    categoryId: _.get(props, 'navigation.state.params.categoryId') || null,
-                    classifications:
-                        _.get(props, 'navigation.state.params.classifications') || null,
-                },
+                name: _.get(params, 'name') || '',
+                shopCode: _.get(params, 'shopCode') || null,
+                classifications: _.get(params, 'classifications') || null,
+                collapseSubTags: _.get(params, 'collapseSubTags') || false,
+                copiedParams: true,
             };
         }
         return null;
@@ -53,15 +67,20 @@ class Search extends React.PureComponent {
                 nextLink: null,
             });
             this.fetch = this.props.fetch('products.get')({
-                name: this.state.searchValue,
-                categoryId: this.state.filters.categoryId,
-                shopCode: this.state.filters.shopCode,
-                classifications: this.state.filters.classifications,
+                name: this.state.name,
+                tagId: this.tagId,
+                shopCode: this.state.shopCode,
+                classifications: this.state.classifications,
+                withoutTag: this.state.withoutTag,
+                withoutBarcode: this.state.withoutBarcode,
             });
             const data = await this.fetch.promise;
             this.setState({ fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink });
         } catch (e) {
-            if (!e.isCanceled) this.setState({ fetchStatus: 'error' });
+            if (!e.isCanceled) {
+                logger.error(e);
+                this.setState({ fetchStatus: 'error' });
+            }
         }
     };
     loadProductsDebounced = _.debounce(this.loadProducts, 200);
@@ -92,56 +111,74 @@ class Search extends React.PureComponent {
         this.props.navigation.push('Product', { product });
     };
 
+    handleOnPressSubTag = tagId => {
+        RN.Keyboard.dismiss();
+        this.props.navigation.push('Search', {
+            tagId,
+            name: this.state.name,
+            shopCode: this.state.shopCode,
+            classifications: this.state.classifications,
+        });
+    };
+
     handleOnPressBack = () => {
         this.props.navigation.pop();
     };
 
-    openFilterModal = () => {
-        if (this.props.showFilterHint) this.props.dispatch.onboarding.hideFilterHint();
-        this.setState({ showFilterModal: true });
-    };
-
-    closeFilterModal = () => {
-        this.setState({ showFilterModal: false });
-    };
-
-    handleOnChangeFilters = async filters => {
-        await this.setState({ filters });
-        this.loadProducts();
-    };
-
-    handleOnRemoveFilter = async filterKey => {
-        await this.setState(state => ({
-            ...state,
-            filters: { ...state.filters, [filterKey]: null },
+    openFilterDropdown = type => {
+        this.setState(state => ({
+            activeFilterDropdown: state.activeFilterDropdown === type ? null : type,
         }));
-        this.loadProducts();
     };
 
-    handleOnSearch = searchValue => {
-        this.setState({ searchValue });
+    closeFilterDropdown = () => {
+        this.setState({ activeFilterDropdown: null });
+    };
+
+    handleOnSearch = name => {
+        this.setState({ name, collapseSubTags: true });
         this.loadProductsDebounced();
     };
 
+    handleChangeShop = shopCode => {
+        this.setState({ shopCode }, this.loadProducts);
+    };
+    handleChangeClassifications = classifications => {
+        this.setState({ classifications }, this.loadProducts);
+    };
+    handleChangeWithoutTag = withoutTag => {
+        this.setState({ withoutTag }, this.loadProducts);
+    };
+    handleChangeWithoutBarcode = withoutBarcode => {
+        this.setState({ withoutBarcode }, this.loadProducts);
+    };
+    toggleCollapseSubTags = () => {
+        this.setState(state => ({ collapseSubTags: !state.collapseSubTags }));
+    };
     render() {
-        const isAnyFilterActive = !!(
-            this.state.filters.categoryId ||
-            this.state.filters.shopCode ||
-            this.state.filters.classifications
-        );
         return (
             <RN.KeyboardAvoidingView
                 behavior={RN.Platform.OS === 'ios' ? 'padding' : undefined}
                 style={styles.screen}
             >
-                <ElevatedHeader style={styles.header}>
-                    <FilterTools
+                {this.props.isFocused && (
+                    <RN.StatusBar
+                        backgroundColor={styling.COLOR_PRIMARY}
+                        barStyle="light-content"
+                    />
+                )}
+                <ElevatedHeader style={styles.header} contentContainerStyle={styles.headerContent}>
+                    <Header
                         onPressBack={this.handleOnPressBack}
-                        onPressFilter={this.openFilterModal}
-                        isAnyFilterActive={isAnyFilterActive}
+                        onPressFilter={this.openFilterDropdown}
+                        onPressSearch={this.closeFilterDropdown}
                         onSearch={this.handleOnSearch}
-                        searchValue={this.state.searchValue}
                         autoFocus={!!_.get(this.props.navigation.state, 'params.autoFocus')}
+                        name={this.state.name}
+                        classifications={this.state.classifications}
+                        shopCode={this.state.shopCode}
+                        withoutTag={this.state.withoutTag}
+                        withoutBarcode={this.state.withoutBarcode}
                     />
                 </ElevatedHeader>
                 <Products
@@ -153,22 +190,24 @@ class Search extends React.PureComponent {
                     onLoad={this.loadProducts}
                     onLoadMore={this.loadMoreProducts}
                     reachedBottom={!this.state.nextLink}
-                    filters={this.state.filters}
-                    onPressFilter={this.openFilterModal}
-                    onRemoveFilter={this.handleOnRemoveFilter}
-                    isAnyFilterActive={isAnyFilterActive}
+                    collapseSubTags={this.state.collapseSubTags}
+                    onToggleCollapse={this.toggleCollapseSubTags}
+                    tagId={this.tagId}
+                    onPressTag={this.handleOnPressSubTag}
                 />
-                {this.state.showFilterModal && (
-                    <FilterModal
-                        filters={this.state.filters}
-                        onChange={this.handleOnChangeFilters}
-                        onClose={this.closeFilterModal}
-                    />
-                )}
-                {this.props.showFilterHint && (
-                    <FilterHint
-                        style={styles.filterHint}
-                        onPress={this.props.dispatch.onboarding.hideFilterHint}
+                {this.state.activeFilterDropdown && (
+                    <FilterDropdown
+                        style={styles.filterDropdown}
+                        activeFilter={this.state.activeFilterDropdown}
+                        onClose={this.closeFilterDropdown}
+                        shopCode={this.state.shopCode}
+                        onChangeShop={this.handleChangeShop}
+                        classifications={this.state.classifications}
+                        onChangeClassifications={this.handleChangeClassifications}
+                        withoutTag={this.state.withoutTag}
+                        onChangeWithoutTag={this.handleChangeWithoutTag}
+                        withoutBarcode={this.state.withoutBarcode}
+                        onChangeWithoutBarcode={this.handleChangeWithoutBarcode}
                     />
                 )}
             </RN.KeyboardAvoidingView>
@@ -182,17 +221,23 @@ const styles = RN.StyleSheet.create({
         backgroundColor: 'white',
     },
     header: {
-        zIndex: 2,
+        zIndex: 3,
+    },
+    headerContent: {
+        backgroundColor: styling.COLOR_PRIMARY,
+        borderColor: styling.COLOR_PRIMARY,
     },
     products: {
         zIndex: 1,
-        marginTop: FilterTools.HEIGHT + getSafeTopHeight(),
+        marginTop: Header.HEIGHT + getSafeTopHeight(),
     },
-    filterHint: {
-        zIndex: 3,
+    filterDropdown: {
+        zIndex: 2,
         position: 'absolute',
-        top: FilterTools.HEIGHT + getSafeTopHeight() - 16,
-        right: 5,
+        top: Header.HEIGHT + getSafeTopHeight(),
+        bottom: 0,
+        left: 0,
+        right: 0,
     },
 });
 

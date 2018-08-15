@@ -104,14 +104,14 @@ const styles = RN.StyleSheet.create({
         marginRight: 10,
     },
     pressArea: {
-        backgroundColor: styling.COLOR_BRAND_PRIMARY,
+        backgroundColor: styling.COLOR_PRIMARY,
         paddingLeft: 12,
         paddingRight: 6,
         paddingBottom: 1,
         justifyContent: 'center',
     },
     removeArea: {
-        backgroundColor: styling.COLOR_BRAND_PRIMARY,
+        backgroundColor: styling.COLOR_PRIMARY,
         width: 32,
         justifyContent: 'center',
         alignItems: 'center',

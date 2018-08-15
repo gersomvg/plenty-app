@@ -7,7 +7,7 @@ import { styling } from 'config';
 
 class ExplanationInput extends React.PureComponent {
     static propTypes = {
-        value: PT.string.isRequired,
+        value: PT.string,
         onChange: PT.func.isRequired,
         classification: PT.oneOf(['YES', 'MAYBE', 'NO']),
     };

@@ -1,4 +1,4 @@
-export * from './categories';
+export * from './tags';
 export * from './shops';
 export * from './brands';
 export * from './products';
