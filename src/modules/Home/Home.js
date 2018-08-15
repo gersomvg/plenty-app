@@ -3,7 +3,7 @@ import RN from 'react-native';
 import { connect } from 'react-redux';
 
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
-import { SearchAndScan, Tags, AdminTools } from './components';
+import { SearchAndScan, Tags, AdminTools, RecentProducts } from './components';
 
 @connect(({ auth, onboarding }) => ({
     isAuthorized: auth.status === 'AUTHORIZED',
@@ -19,6 +19,14 @@ class Home extends React.Component {
 
     handleOnPressSearch = () => {
         this.props.navigation.push('Search', { autoFocus: true, collapseSubTags: true });
+    };
+
+    handleOnPressRecentTitle = () => {
+        this.props.navigation.push('Search', { collapseSubTags: true });
+    };
+
+    handleOnPressRecentProduct = product => {
+        this.props.navigation.push('Product', { product });
     };
 
     handleOnPressScan = () => {
@@ -67,6 +75,11 @@ class Home extends React.Component {
                         onPressSuper={() => {}}
                     />
                 )}
+                <RecentProducts
+                    onPressTitle={this.handleOnPressRecentTitle}
+                    onPressProduct={this.handleOnPressRecentProduct}
+                    style={styles.recentProducts}
+                />
                 <Tags onPress={this.handleOnPressTag} style={styles.tags} />
             </RN.ScrollView>
         );
@@ -89,8 +102,12 @@ const styles = RN.StyleSheet.create({
         marginTop: 32,
         paddingHorizontal: 16,
     },
+    recentProducts: {
+        marginTop: 32,
+        marginHorizontal: 16,
+    },
     tags: {
-        marginTop: 48,
+        marginTop: 36,
     },
 });
 
