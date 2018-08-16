@@ -4,6 +4,7 @@ import { Font, AppLoading } from 'expo';
 import { init } from '@rematch/core';
 import createRematchPersist, { getPersistor } from '@rematch/persist';
 import { Provider, connect } from 'react-redux';
+import { createMigrate } from 'redux-persist';
 import { PersistGate } from 'redux-persist/es/integration/react';
 
 import * as models from './src/models';
@@ -15,6 +16,18 @@ const persistPlugin = createRematchPersist({
     whitelist: ['shops', 'tags', 'auth', 'onboarding'],
     storage: RN.AsyncStorage,
     version: 2,
+    migrate: createMigrate({
+        2: state => {
+            return {
+                ...state,
+                onboarding: {
+                    ...(state.onboarding || {}),
+                    showFilterHint: undefined,
+                },
+                categories: undefined,
+            };
+        },
+    }),
 });
 export const store = init({ plugins: [persistPlugin], models });
 const persistor = getPersistor();
