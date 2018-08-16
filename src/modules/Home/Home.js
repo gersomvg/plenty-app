@@ -22,7 +22,10 @@ class Home extends React.Component {
     };
 
     handleOnPressRecentTitle = () => {
-        this.props.navigation.push('Search', { collapseSubTags: true });
+        this.props.navigation.push('Search', {
+            collapseSubTags: true,
+            classifications: 'YES,MAYBE',
+        });
     };
 
     handleOnPressRecentProduct = product => {

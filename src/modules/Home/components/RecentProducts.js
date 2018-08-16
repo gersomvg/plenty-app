@@ -4,6 +4,7 @@ import PT from 'prop-types';
 
 import { styling } from 'config';
 import { withFetch } from 'hocs';
+import { logger } from 'utils';
 
 @withFetch
 class RecentProducts extends React.PureComponent {
@@ -12,12 +13,32 @@ class RecentProducts extends React.PureComponent {
         onPressProduct: PT.func.isRequired,
     };
 
-    state = { products: [], isLoading: false };
+    state = {
+        products: [],
+        isLoading: false,
+        appState: RN.AppState.currentState,
+    };
 
-    async componentDidMount() {
+    componentDidMount() {
+        RN.AppState.addEventListener('change', this.handleAppStateChange);
+        this.loadProducts();
+    }
+
+    componentWillUnmount() {
+        RN.AppState.removeEventListener('change', this.handleAppStateChange);
+    }
+
+    handleAppStateChange = nextAppState => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            this.loadProducts();
+        }
+        this.setState({ appState: nextAppState });
+    };
+
+    loadProducts = async () => {
         this.setState({ isLoading: true });
         try {
-            this.fetch = this.props.fetch('products.get')({ limit: 3 });
+            this.fetch = this.props.fetch('products.get')({ limit: 3, classifications: 'YES' });
             const data = await this.fetch.promise;
             this.setState({ isLoading: false, products: data.items });
         } catch (e) {
@@ -25,7 +46,7 @@ class RecentProducts extends React.PureComponent {
                 logger.error(e);
             }
         }
-    }
+    };
 
     render() {
         return (
