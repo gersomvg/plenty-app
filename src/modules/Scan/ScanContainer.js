@@ -4,6 +4,6 @@ import { withNavigationFocus } from 'react-navigation';
 
 import { Scan } from './Scan';
 
-const ScanContainer = Scan;
+const ScanContainer = withNavigationFocus(Scan);
 
 export { ScanContainer };
