@@ -1,5 +1,5 @@
 export * from './getSafeHeight';
-export * from './isIphoneX';
+export * from './isIphoneWithNotch';
 export * from './logger';
 export * from './makeCancelable';
 export * from './fetcher';

@@ -1,9 +1,9 @@
 import RN from 'react-native';
-import {isIphoneX} from './isIphoneX';
+import { isIphoneWithNotch } from './isIphoneWithNotch';
 
-const getSafeTopHeight = ({skipAndroid = true} = {}) => {
+const getSafeTopHeight = ({ skipAndroid = true } = {}) => {
     if (RN.Platform.OS === 'ios') {
-        return isIphoneX() ? 44 : 20;
+        return isIphoneWithNotch() ? 44 : 20;
     }
 
     if (skipAndroid) {
@@ -14,7 +14,7 @@ const getSafeTopHeight = ({skipAndroid = true} = {}) => {
 };
 
 const getSafeBottomHeight = () => {
-    return isIphoneX() ? 16 : 0;
+    return isIphoneWithNotch() ? 16 : 0;
 };
 
-export {getSafeTopHeight, getSafeBottomHeight};
+export { getSafeTopHeight, getSafeBottomHeight };
