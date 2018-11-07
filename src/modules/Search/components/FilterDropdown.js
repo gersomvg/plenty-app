@@ -27,6 +27,9 @@ class FilterDropdown extends React.PureComponent {
 
         withoutBarcode: PT.bool,
         onChangeWithoutBarcode: PT.func.isRequired,
+
+        archived: PT.bool,
+        onChangeArchived: PT.func.isRequired,
     };
 
     render() {
@@ -145,6 +148,16 @@ class FilterDropdown extends React.PureComponent {
                     <CheckBox checked={this.props.withoutBarcode} />
                     <Text style={styles.classificationText} size="smaller">
                         Zonder barcode
+                    </Text>
+                </RN.TouchableOpacity>
+                <RN.TouchableOpacity
+                    activeOpacity={0.5}
+                    style={styles.classification}
+                    onPress={() => this.props.onChangeArchived(!this.props.archived)}
+                >
+                    <CheckBox checked={this.props.archived} />
+                    <Text style={styles.classificationText} size="smaller">
+                        Gearchiveerd
                     </Text>
                 </RN.TouchableOpacity>
             </RN.View>

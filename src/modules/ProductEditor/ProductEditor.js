@@ -82,6 +82,26 @@ class ProductEditor extends React.PureComponent {
         );
     };
 
+    archive = async () => {
+        try {
+            const product = await this.props.fetch('products.patch')({
+                id: this.state.id,
+                archived: !this.state.archived,
+            }).promise;
+
+            const prevProductRouteKey = this.props.navigation.getParam('prevProductRouteKey');
+            if (prevProductRouteKey) {
+                this.props.navigation.navigate({
+                    routeName: 'Product',
+                    key: prevProductRouteKey,
+                    params: { product },
+                });
+            }
+        } catch (e) {
+            RN.Alert.alert('Er is iets misgegaan bij het (de)archiveren van dit product');
+        }
+    };
+
     changeImageUrl = imageUrl => this.setState({ imageUrl });
     changeName = name => this.setState({ name });
     changeBrand = brand => this.setState({ brand });
@@ -90,6 +110,7 @@ class ProductEditor extends React.PureComponent {
     changeShops = shops => this.setState({ shops });
     changeTags = tags => this.setState({ tags });
     render() {
+        const isExisting = !!this.state.id;
         return (
             <RN.KeyboardAvoidingView
                 behavior={RN.Platform.OS === 'ios' ? 'padding' : undefined}
@@ -138,6 +159,13 @@ class ProductEditor extends React.PureComponent {
                     <TagInput value={this.state.tags} onChange={this.changeTags} />
                 </RN.ScrollView>
                 <IconButton style={styles.back} icon="back" onPress={this.props.navigation.pop} />
+                {isExisting && (
+                    <IconButton
+                        style={styles.archive}
+                        icon={this.state.archived ? 'unarchive' : 'archive'}
+                        onPress={this.archive}
+                    />
+                )}
                 <Expo.LinearGradient
                     colors={['rgba(255,255,255,0)', 'white']}
                     style={styles.gradient}
@@ -201,6 +229,11 @@ const styles = RN.StyleSheet.create({
     back: {
         position: 'absolute',
         left: 0,
+        top: getSafeTopHeight() + 16,
+    },
+    archive: {
+        position: 'absolute',
+        right: 0,
         top: getSafeTopHeight() + 16,
     },
     gradient: {
