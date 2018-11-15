@@ -100,11 +100,20 @@ class ProductEditor extends React.PureComponent {
                     contentContainerStyle={styles.scrollerInner}
                     keyboardShouldPersistTaps="never"
                 >
-                    <ImagePicker
-                        value={this.state.imageUrl}
-                        onChange={this.changeImageUrl}
-                        style={styles.marginBottom}
-                    />
+                    <RN.View style={styles.imagePickers}>
+                        <ImagePicker
+                            value={this.state.imageUrl}
+                            onChange={this.changeImageUrl}
+                            style={styles.marginBottom}
+                            type="handmade"
+                        />
+                        <ImagePicker
+                            value={this.state.imageUrl}
+                            onChange={this.changeImageUrl}
+                            style={styles.marginBottom}
+                            type="official"
+                        />
+                    </RN.View>
                     <TextInput
                         placeholder="Naam"
                         value={this.state.name}
@@ -232,9 +241,9 @@ const styles = RN.StyleSheet.create({
     marginBottomDouble: {
         marginBottom: 48,
     },
-    error: {
-        marginBottom: 16,
-        color: styling.COLOR_TEXT_ERROR,
+    imagePickers: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     classification: {
         flexDirection: 'row',

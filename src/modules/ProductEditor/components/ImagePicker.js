@@ -10,6 +10,7 @@ class ImagePicker extends React.PureComponent {
     static propTypes = {
         value: PT.string.isRequired,
         onChange: PT.func.isRequired,
+        type: PT.oneOf(['handmade', 'official']),
     };
 
     state = { showChoice: false };
@@ -90,6 +91,7 @@ class ImagePicker extends React.PureComponent {
                             <Text size="smaller">Gallerij</Text>
                         </RN.TouchableOpacity>
                     </RN.View>
+                    {this.renderLabel()}
                 </RN.View>
             );
         }
@@ -100,9 +102,16 @@ class ImagePicker extends React.PureComponent {
                 style={this.props.style}
             >
                 <ProductThumb source={{ uri: this.props.value }} />
+                {this.renderLabel()}
             </RN.TouchableOpacity>
         );
     }
+
+    renderLabel = () => (
+        <Text size="smaller">
+            {this.props.type === 'handmade' ? 'Eigen foto' : 'Officiële foto'}
+        </Text>
+    );
 }
 
 const styles = RN.StyleSheet.create({
