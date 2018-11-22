@@ -23,6 +23,7 @@ class Header extends React.PureComponent {
         classifications: PT.string,
         withoutTag: PT.bool,
         withoutBarcode: PT.bool,
+        archived: PT.bool,
     };
 
     static HEIGHT = SearchInput.HEIGHT + 16 * 2;
@@ -132,7 +133,7 @@ class Header extends React.PureComponent {
         return (
             <FilterItem
                 onPress={() => this.props.onPressFilter('admin')}
-                active={this.props.withoutTag || this.props.withoutBarcode}
+                active={this.props.withoutTag || this.props.withoutBarcode || this.props.archived}
             >
                 Admin
             </FilterItem>

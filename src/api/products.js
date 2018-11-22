@@ -72,4 +72,11 @@ products.update = data => {
     });
 };
 
+products.patch = ({ id, archived }) => {
+    return fetcher(`${API_ENDPOINT}/product/${id}`, {
+        method: 'PATCH',
+        body: { archived },
+    });
+};
+
 export { products };
