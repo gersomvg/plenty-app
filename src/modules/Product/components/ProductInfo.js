@@ -31,11 +31,11 @@ const shadowSize = 10;
 const styles = RN.StyleSheet.create({
     container: {
         paddingHorizontal: 16,
-        paddingTop: 32 - ProductThumb.shadowSize,
+        paddingTop: 32,
         paddingBottom: 32,
     },
     productName: {
-        marginTop: 16,
+        marginTop: 26,
     },
     brandName: {
         marginTop: 8,

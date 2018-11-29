@@ -32,11 +32,23 @@ products.create = data => {
     data.tags.forEach(tag => formData.append('tagIds[]', tag.id));
     data.categories.forEach(category => formData.append('categoryIds[]', category.id));
     data.barcodes.forEach(barcode => formData.append('barcodes[]', barcode));
-    formData.append('image', {
-        uri: data.imageUrl,
-        name: 'image.jpg',
-        type: 'image/jpeg',
-    });
+    if (data.customImageUrl) {
+        formData.append('customImage', {
+            uri: data.customImageUrl,
+            name: 'image.jpg',
+            type: 'image/jpeg',
+        });
+    }
+    if (data.officialImageUrl) {
+        formData.append('officialImage', {
+            uri: data.officialImageUrl,
+            name: 'image.jpg',
+            type: 'image/jpeg',
+        });
+    }
+    if (data.externalImageUrl) {
+        formData.append('externalImage', data.externalImageUrl);
+    }
 
     const url = `${API_ENDPOINT}/product`;
     return fetcher(url, {
@@ -56,12 +68,22 @@ products.update = data => {
     data.tags.forEach(tag => formData.append('tagIds[]', tag.id));
     data.categories.forEach(category => formData.append('categoryIds[]', category.id));
     data.barcodes.forEach(barcode => formData.append('barcodes[]', barcode));
-    if (!data.imageUrl.startsWith('http')) {
-        formData.append('image', {
-            uri: data.imageUrl,
+    if (data.customImageUrl !== '' && !data.customImageUrl.startsWith('http')) {
+        formData.append('customImage', {
+            uri: data.customImageUrl,
             name: 'image.jpg',
             type: 'image/jpeg',
         });
+    }
+    if (data.officialImageUrl !== '' && !data.officialImageUrl.startsWith('http')) {
+        formData.append('officialImage', {
+            uri: data.officialImageUrl,
+            name: 'image.jpg',
+            type: 'image/jpeg',
+        });
+    }
+    if (data.externalImageUrl) {
+        formData.append('externalImage', data.externalImageUrl);
     }
 
     const url = `${API_ENDPOINT}/product/${data.id}`;

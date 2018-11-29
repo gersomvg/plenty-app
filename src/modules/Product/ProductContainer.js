@@ -10,27 +10,19 @@ import { withFetch } from 'hocs';
     isAuthorized: auth.status === 'AUTHORIZED',
 }))
 class ProductContainer extends React.Component {
-    state = {
-        fetchStatus: 'initial',
-        product: null,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            fetchStatus: this.product ? 'loaded' : 'initial',
+        };
+    }
 
-    static getDerivedStateFromProps(props, state) {
-        const product = props.navigation.getParam('product');
-        if (
-            (!state.product && product) ||
-            (product && state.product && state.product.updatedAt !== product.updatedAt)
-        ) {
-            return {
-                product: props.navigation.state.params.product,
-                fetchStatus: 'loaded',
-            };
-        }
-        return null;
+    get product() {
+        return this.props.navigation.getParam('product');
     }
 
     componentDidMount() {
-        if (!this.state.product) this.loadProduct();
+        if (!this.product) this.loadProduct();
     }
 
     loadProduct = async () => {
@@ -39,16 +31,15 @@ class ProductContainer extends React.Component {
         try {
             this.setState({ fetchStatus: 'loading' });
             let data;
-            if (this.props.navigation.state.params.productId) {
-                data = await this.props.fetch('products.getOne')({
-                    id: this.props.navigation.state.params.productId,
-                }).promise;
+            const id = this.props.navigation.getParam('productId');
+            if (id) {
+                data = await this.props.fetch('products.getOne')({ id }).promise;
             } else {
-                data = await this.props.fetch('products.getOneByBarcode')({
-                    barcode: this.props.navigation.state.params.barcode,
-                }).promise;
+                const barcode = this.props.navigation.getParam('barcode');
+                data = await this.props.fetch('products.getOneByBarcode')({ barcode }).promise;
             }
-            this.setState({ fetchStatus: 'loaded', product: data });
+            this.props.navigation.setParams({ product });
+            this.setState({ fetchStatus: 'loaded' });
         } catch (e) {
             if (e.isCanceled) return;
             const fetchStatus = e.status === 404 ? 'notfound' : 'error';
@@ -62,15 +53,16 @@ class ProductContainer extends React.Component {
 
     handleOnPressEdit = () => {
         this.props.navigation.push('ProductEditor', {
-            product: this.state.product,
-            prevProductRouteKey: this.props.navigation.state.key,
+            product: this.product,
+            onUpdate: product => this.props.navigation.setParams({ product }),
         });
     };
 
     render() {
         return (
             <Product
-                {...this.state}
+                fetchStatus={this.state.fetchStatus}
+                product={this.product}
                 requestedBarcode={this.props.navigation.getParam('barcode')}
                 onPressBack={this.handleOnPressBack}
                 onPressEdit={this.handleOnPressEdit}

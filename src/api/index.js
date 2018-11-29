@@ -4,3 +4,4 @@ export * from './brands';
 export * from './products';
 export * from './auth';
 export * from './feedback';
+export * from './scrape';

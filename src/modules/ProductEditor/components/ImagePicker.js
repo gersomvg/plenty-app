@@ -3,14 +3,14 @@ import RN from 'react-native';
 import PT from 'prop-types';
 import Expo from 'expo';
 
-import { ProductThumb, Text } from 'common';
+import { Text, ProductThumb } from 'common';
 import { styling } from 'config';
 
 class ImagePicker extends React.PureComponent {
     static propTypes = {
-        value: PT.string.isRequired,
+        value: PT.string,
         onChange: PT.func.isRequired,
-        type: PT.oneOf(['handmade', 'official']),
+        type: PT.oneOf(['custom', 'official']),
     };
 
     state = { showChoice: false };
@@ -73,15 +73,18 @@ class ImagePicker extends React.PureComponent {
 
     render() {
         if (this.state.showChoice || !this.props.value) {
+            const topText = this.props.type === 'custom' ? 'Camera' : 'Search';
+            const topAction =
+                this.props.type === 'custom' ? this.shootImage : this.props.onPressOpenScraper;
             return (
                 <RN.View style={this.props.style}>
                     <RN.View style={styles.choices}>
                         <RN.TouchableOpacity
                             activeOpacity={0.5}
                             style={styles.choice}
-                            onPress={this.shootImage}
+                            onPress={topAction}
                         >
-                            <Text size="smaller">Camera</Text>
+                            <Text size="smaller">{topText}</Text>
                         </RN.TouchableOpacity>
                         <RN.TouchableOpacity
                             activeOpacity={0.5}
@@ -108,15 +111,14 @@ class ImagePicker extends React.PureComponent {
     }
 
     renderLabel = () => (
-        <Text size="smaller">
-            {this.props.type === 'handmade' ? 'Eigen foto' : 'Officiële foto'}
+        <Text size="smaller" style={styles.label}>
+            {this.props.type === 'custom' ? 'Eigen foto' : 'Officiële foto'}
         </Text>
     );
 }
 
 const styles = RN.StyleSheet.create({
     choices: {
-        margin: ProductThumb.shadowSize,
         width: ProductThumb.imageSize,
         height: ProductThumb.imageSize,
         borderRadius: 6,
@@ -131,6 +133,9 @@ const styles = RN.StyleSheet.create({
     topLine: {
         borderTopWidth: 1,
         borderColor: styling.COLOR_BORDER_MEDIUM,
+    },
+    label: {
+        marginVertical: 5,
     },
 });
 

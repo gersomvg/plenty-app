@@ -19,6 +19,9 @@ const MainStack = createStackNavigator(
         ProductEditor: {
             screen: modules.ProductEditor,
         },
+        Scraper: {
+            screen: modules.Scraper,
+        },
         Inbox: {
             screen: modules.Inbox,
         },

@@ -17,30 +17,39 @@ import { withFetch } from 'hocs';
 
 @withFetch
 class ProductEditor extends React.PureComponent {
-    state = {
-        id: null,
-        name: '',
-        barcodes: [],
-        imageUrl: '',
-        brand: null,
-        classification: null,
-        explanation: '',
-        shops: [],
-        tags: [],
-        categories: [],
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: null,
+            name: '',
+            barcodes: [],
+            customImageUrl: '',
+            officialImageUrl: '',
+            externalImageUrl: '',
+            brand: null,
+            classification: null,
+            explanation: '',
+            shops: [],
+            tags: [],
+            categories: [],
 
-        isSaving: false,
-    };
+            ingredients: null,
 
-    static getDerivedStateFromProps(props, state) {
+            isSaving: false,
+        };
         const product = props.navigation.getParam('product');
-        if (!state.id && product) return product;
-        return null;
+        if (product) Object.assign(this.state, product);
     }
+
+    goBackWithUpdatedProduct = product => {
+        const onUpdate = this.props.navigation.getParam('onUpdate');
+        if (onUpdate) onUpdate(product);
+        this.props.navigation.pop();
+    };
 
     save = async () => {
         if (!this.isDataComplete()) {
-            RN.Alert.alert('De product afbeelding, naam, merk en classificatie zijn verplicht.');
+            RN.Alert.alert('De product naam, merk en classificatie zijn verplicht.');
             return;
         }
 
@@ -56,13 +65,9 @@ class ProductEditor extends React.PureComponent {
             const action = isExisting ? 'update' : 'create';
             const product = await this.props.fetch(`products.${action}`)(this.state).promise;
 
-            const prevProductRouteKey = this.props.navigation.getParam('prevProductRouteKey');
-            if (prevProductRouteKey) {
-                this.props.navigation.navigate({
-                    routeName: 'Product',
-                    key: prevProductRouteKey,
-                    params: { product },
-                });
+            const canGoBack = this.props.navigation.getParam('onUpdate');
+            if (canGoBack) {
+                this.goBackWithUpdatedProduct(product);
             } else {
                 this.props.navigation.replace('Product', { product });
             }
@@ -74,15 +79,16 @@ class ProductEditor extends React.PureComponent {
     };
 
     isDataComplete = () => {
-        return !!(
-            this.state.name.trim() &&
-            this.state.imageUrl &&
-            this.state.brand &&
-            this.state.classification
-        );
+        return !!(this.state.name.trim() && this.state.brand && this.state.classification);
     };
 
-    archive = async () => {
+    confirmToggleArchive = () => {
+        RN.Alert.alert('Weet je zeker dat je dit product wil (de)archiveren?', undefined, [
+            { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+            { text: 'OK', onPress: this.toggleArchive },
+        ]);
+    };
+    toggleArchive = async () => {
         try {
             const product = await this.props.fetch('products.patch')({
                 id: this.state.id,
@@ -102,7 +108,25 @@ class ProductEditor extends React.PureComponent {
         }
     };
 
-    changeImageUrl = imageUrl => this.setState({ imageUrl });
+    openScraper = () => {
+        const concatNameAndBrand = `${this.state.name}${
+            this.state.brand ? ` ${this.state.brand.name}` : ''
+        }`;
+        this.props.navigation.push('Scraper', {
+            search: concatNameAndBrand,
+            onSelect: ({ imageUrl, ingredients }) => {
+                this.setState({
+                    externalImageUrl: imageUrl,
+                    officialImageUrl: '',
+                    ingredients,
+                });
+            },
+        });
+    };
+
+    changeCustomImageUrl = customImageUrl => this.setState({ customImageUrl });
+    changeOfficialImageUrl = officialImageUrl =>
+        this.setState({ officialImageUrl, externalImageUrl: '' });
     changeName = name => this.setState({ name });
     changeBrand = brand => this.setState({ brand });
     changeBarcodes = barcodes => this.setState({ barcodes });
@@ -123,16 +147,17 @@ class ProductEditor extends React.PureComponent {
                 >
                     <RN.View style={styles.imagePickers}>
                         <ImagePicker
-                            value={this.state.imageUrl}
-                            onChange={this.changeImageUrl}
-                            style={styles.marginBottom}
-                            type="handmade"
+                            value={this.state.customImageUrl}
+                            onChange={this.changeCustomImageUrl}
+                            style={styles.imagePicker}
+                            type="custom"
                         />
                         <ImagePicker
-                            value={this.state.imageUrl}
-                            onChange={this.changeImageUrl}
-                            style={styles.marginBottom}
+                            value={this.state.externalImageUrl || this.state.officialImageUrl}
+                            onChange={this.changeOfficialImageUrl}
+                            style={styles.imagePicker}
                             type="official"
+                            onPressOpenScraper={this.openScraper}
                         />
                     </RN.View>
                     <TextInput
@@ -154,6 +179,12 @@ class ProductEditor extends React.PureComponent {
                         style={styles.marginBottom}
                     />
                     {this.renderClassification()}
+                    {this.state.ingredients !== '' && (
+                        <Text size="smaller" style={styles.marginBottom} color="lighter">
+                            {'Ingrediënten: '}
+                            {this.state.ingredients}
+                        </Text>
+                    )}
                     <ExplanationInput
                         value={this.state.explanation}
                         onChange={this.changeExplanation}
@@ -172,7 +203,7 @@ class ProductEditor extends React.PureComponent {
                     <IconButton
                         style={styles.archive}
                         icon={this.state.archived ? 'unarchive' : 'archive'}
-                        onPress={this.archive}
+                        onPress={this.confirmToggleArchive}
                     />
                 )}
                 <Expo.LinearGradient
@@ -276,7 +307,11 @@ const styles = RN.StyleSheet.create({
     },
     imagePickers: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
+    },
+    imagePicker: {
+        marginBottom: 16,
+        marginHorizontal: 5,
     },
     classification: {
         flexDirection: 'row',

@@ -53,6 +53,15 @@ class BrandInput extends React.PureComponent {
     };
     addNewBrand = () => this.props.onChange({ name: this.state.searchText });
     renderInputState = () => {
+        const showItemsUnder =
+            this.state.searchText !== '' || this.state.results.length > 0 || this.state.isSearching;
+        // Only show the create button if the entered text doesn't match an already existing brand
+        const showCreateButton =
+            this.state.searchText !== '' &&
+            (this.state.results.length === 0 ||
+                !this.state.results.find(
+                    brand => brand.name.toLowerCase() === this.state.searchText.toLowerCase(),
+                ));
         return (
             <RN.View style={this.props.style}>
                 <TextInput
@@ -61,11 +70,7 @@ class BrandInput extends React.PureComponent {
                     onChangeText={this.handleInputChange}
                     autoFocus={this.state.shouldAutoFocus}
                 />
-                {!!(
-                    this.state.searchText ||
-                    this.state.results.length ||
-                    this.state.isSearching
-                ) && (
+                {showItemsUnder && (
                     <RN.View>
                         <RN.ScrollView
                             style={styles.scroller}
@@ -73,7 +78,7 @@ class BrandInput extends React.PureComponent {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                         >
-                            {this.state.searchText && (
+                            {showCreateButton && (
                                 <RN.TouchableOpacity
                                     style={[styles.button, styles.addButton]}
                                     onPress={this.addNewBrand}
