@@ -30,6 +30,7 @@ class Search extends React.PureComponent {
         classifications: null,
         withoutTag: false,
         withoutBarcode: false,
+        archived: false,
 
         copiedParams: false,
     };
@@ -73,6 +74,7 @@ class Search extends React.PureComponent {
                 classifications: this.state.classifications,
                 withoutTag: this.state.withoutTag,
                 withoutBarcode: this.state.withoutBarcode,
+                archived: this.state.archived,
             });
             const data = await this.fetch.promise;
             this.setState({ fetchStatus: 'loaded', products: data.items, nextLink: data.nextLink });
@@ -152,6 +154,9 @@ class Search extends React.PureComponent {
     handleChangeWithoutBarcode = withoutBarcode => {
         this.setState({ withoutBarcode }, this.loadProducts);
     };
+    handleChangeArchived = archived => {
+        this.setState({ archived }, this.loadProducts);
+    };
     toggleCollapseSubTags = () => {
         this.setState(state => ({ collapseSubTags: !state.collapseSubTags }));
     };
@@ -179,6 +184,7 @@ class Search extends React.PureComponent {
                         shopCode={this.state.shopCode}
                         withoutTag={this.state.withoutTag}
                         withoutBarcode={this.state.withoutBarcode}
+                        archived={this.state.archived}
                     />
                 </ElevatedHeader>
                 <Products
@@ -208,6 +214,8 @@ class Search extends React.PureComponent {
                         onChangeWithoutTag={this.handleChangeWithoutTag}
                         withoutBarcode={this.state.withoutBarcode}
                         onChangeWithoutBarcode={this.handleChangeWithoutBarcode}
+                        archived={this.state.archived}
+                        onChangeArchived={this.handleChangeArchived}
                     />
                 )}
             </RN.KeyboardAvoidingView>
