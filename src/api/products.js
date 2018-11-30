@@ -68,14 +68,14 @@ products.update = data => {
     data.tags.forEach(tag => formData.append('tagIds[]', tag.id));
     data.categories.forEach(category => formData.append('categoryIds[]', category.id));
     data.barcodes.forEach(barcode => formData.append('barcodes[]', barcode));
-    if (data.customImageUrl !== '' && !data.customImageUrl.startsWith('http')) {
+    if (data.customImageUrl && !data.customImageUrl.startsWith('http')) {
         formData.append('customImage', {
             uri: data.customImageUrl,
             name: 'image.jpg',
             type: 'image/jpeg',
         });
     }
-    if (data.officialImageUrl !== '' && !data.officialImageUrl.startsWith('http')) {
+    if (data.officialImageUrl && !data.officialImageUrl.startsWith('http')) {
         formData.append('officialImage', {
             uri: data.officialImageUrl,
             name: 'image.jpg',
