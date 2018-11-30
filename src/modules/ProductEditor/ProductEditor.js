@@ -95,13 +95,9 @@ class ProductEditor extends React.PureComponent {
                 archived: !this.state.archived,
             }).promise;
 
-            const prevProductRouteKey = this.props.navigation.getParam('prevProductRouteKey');
-            if (prevProductRouteKey) {
-                this.props.navigation.navigate({
-                    routeName: 'Product',
-                    key: prevProductRouteKey,
-                    params: { product },
-                });
+            const canGoBack = this.props.navigation.getParam('onUpdate');
+            if (canGoBack) {
+                this.goBackWithUpdatedProduct(product);
             }
         } catch (e) {
             RN.Alert.alert('Er is iets misgegaan bij het (de)archiveren van dit product');
