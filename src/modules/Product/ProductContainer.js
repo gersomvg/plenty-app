@@ -38,7 +38,7 @@ class ProductContainer extends React.Component {
                 const barcode = this.props.navigation.getParam('barcode');
                 data = await this.props.fetch('products.getOneByBarcode')({ barcode }).promise;
             }
-            this.props.navigation.setParams({ product });
+            this.props.navigation.setParams({ product: data });
             this.setState({ fetchStatus: 'loaded' });
         } catch (e) {
             if (e.isCanceled) return;
