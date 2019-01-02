@@ -49,6 +49,10 @@ class ExplanationInput extends React.PureComponent {
                     text:
                         'Van de volgende ingrediënten is het niet waarschijnlijk dat ze plantaardig zijn: ',
                 },
+                {
+                    label: 'Fabrikant',
+                    text: 'De fabrikant heeft bevestigd dat dit product niet veganistisch is.',
+                },
             ],
         }[this.props.classification];
     }
