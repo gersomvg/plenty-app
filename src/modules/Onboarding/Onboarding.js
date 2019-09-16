@@ -1,5 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 
 import { getSafeTopHeight, getSafeBottomHeight } from 'utils';
@@ -106,7 +107,7 @@ class Onboarding extends React.Component {
                         })}
                     </RN.View>
                 </RN.ScrollView>
-                <Expo.LinearGradient
+                <LinearGradient
                     colors={['rgba(255,255,255,0)', 'white']}
                     style={styles.gradient}
                     pointerEvents="none"

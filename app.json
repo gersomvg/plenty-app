@@ -4,7 +4,7 @@
         "icon": "./src/assets/branding/app-logo.png",
         "version": "1.4.1",
         "slug": "plenty",
-        "sdkVersion": "28.0.0",
+        "sdkVersion": "34.0.0",
         "splash": {
             "image": "./src/assets/branding/splash-screen.png"
         },
@@ -14,10 +14,8 @@
             "bundleIdentifier": "nl.plentyapp.plenty",
             "buildNumber": "1.4.1",
             "infoPlist": {
-                "NSCameraUsageDescription":
-                    "This app uses the camera to scan barcodes of products.",
-                "NSPhotoLibraryUsageDescription":
-                    "This app uses your photo library, so admins can change product images."
+                "NSCameraUsageDescription": "This app uses the camera to scan barcodes of products.",
+                "NSPhotoLibraryUsageDescription": "This app uses your photo library, so admins can change product images."
             }
         },
         "android": {

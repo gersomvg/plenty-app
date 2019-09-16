@@ -1,6 +1,7 @@
 import React from 'react';
 import RN from 'react-native';
-import { Font, AppLoading } from 'expo';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 import { init } from '@rematch/core';
 import createRematchPersist, { getPersistor } from '@rematch/persist';
 import { Provider, connect } from 'react-redux';

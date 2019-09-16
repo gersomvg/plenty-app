@@ -1,7 +1,8 @@
 import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
-import { GestureHandler, LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as GestureHandler from 'react-native-gesture-handler';
 
 import { Text, SearchInput, Button } from 'common';
 import { styling } from 'config';

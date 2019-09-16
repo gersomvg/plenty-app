@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text } from 'common';
 import { styling } from 'config';

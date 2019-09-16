@@ -1,6 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
-import Expo from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { getSafeTopHeight, getSafeBottomHeight, logger } from 'utils';
 import { TextInput, Text, Button, IconButton, RadioBox } from 'common';
@@ -202,7 +202,7 @@ class ProductEditor extends React.PureComponent {
                         onPress={this.confirmToggleArchive}
                     />
                 )}
-                <Expo.LinearGradient
+                <LinearGradient
                     colors={['rgba(255,255,255,0)', 'white']}
                     style={styles.gradient}
                     pointerEvents="none"

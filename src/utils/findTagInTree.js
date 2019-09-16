@@ -1,4 +1,4 @@
-findTagInTree = ({ tagTree, currentTag, tagId }) => {
+const findTagInTree = ({ tagTree, currentTag, tagId }) => {
     const tagObj = currentTag || { children: tagTree };
 
     // Return root if no tagId is provided
@@ -14,7 +14,7 @@ findTagInTree = ({ tagTree, currentTag, tagId }) => {
     return match;
 };
 
-isAncestorOfTag = ({ tag, tagId }) => {
+const isAncestorOfTag = ({ tag, tagId }) => {
     // Return root if no tagId is provided
     if (!tagId) return false;
 

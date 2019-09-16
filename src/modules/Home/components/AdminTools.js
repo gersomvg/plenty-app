@@ -1,7 +1,7 @@
 import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
-import { GestureHandler } from 'expo';
+import * as GestureHandler from 'react-native-gesture-handler';
 
 import { Text, SearchInput, Button } from 'common';
 import { styling } from 'config';

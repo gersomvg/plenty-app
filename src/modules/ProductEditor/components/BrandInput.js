@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
 import _ from 'lodash';
-import Expo from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { TextInput, Text } from 'common';
 import { styling } from 'config';
@@ -90,7 +90,7 @@ class BrandInput extends React.PureComponent {
                             {this.state.results.map(this.renderResultItem)}
                             {this.state.isSearching && <RN.ActivityIndicator size="small" />}
                         </RN.ScrollView>
-                        <Expo.LinearGradient
+                        <LinearGradient
                             start={[0, 0]}
                             end={[1, 0]}
                             colors={['rgba(255,255,255,0)', 'white']}

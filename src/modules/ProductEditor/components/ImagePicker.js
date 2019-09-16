@@ -1,7 +1,8 @@
 import React from 'react';
 import RN from 'react-native';
 import PT from 'prop-types';
-import Expo from 'expo';
+import * as ExpoImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 import { Text, ProductThumb } from 'common';
 import { styling } from 'config';
@@ -31,10 +32,10 @@ class ImagePicker extends React.PureComponent {
 
     pickImage = async () => {
         this.hideChoice();
-        const perm = await Expo.Permissions.askAsync(Expo.Permissions.CAMERA_ROLL);
+        const perm = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         if (perm.status === 'granted') {
-            const response = await Expo.ImagePicker.launchImageLibraryAsync({
-                mediaTypes: Expo.ImagePicker.MediaTypeOptions.Images,
+            const response = await ExpoImagePicker.launchImageLibraryAsync({
+                mediaTypes: ExpoImagePicker.MediaTypeOptions.Images,
                 base64: false,
                 exif: false,
             });
@@ -52,11 +53,11 @@ class ImagePicker extends React.PureComponent {
     shootImage = async () => {
         this.hideChoice();
         const [per1, per2] = await Promise.all([
-            Expo.Permissions.askAsync(Expo.Permissions.CAMERA),
-            Expo.Permissions.askAsync(Expo.Permissions.CAMERA_ROLL),
+            Permissions.askAsync(Permissions.CAMERA),
+            Permissions.askAsync(Permissions.CAMERA_ROLL),
         ]);
         if (per1.status === 'granted' && per2.status === 'granted') {
-            const response = await Expo.ImagePicker.launchCameraAsync({
+            const response = await ExpoImagePicker.launchCameraAsync({
                 base64: false,
                 exif: false,
             });

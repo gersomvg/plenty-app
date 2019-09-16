@@ -1,6 +1,8 @@
 import React from 'react';
 import RN from 'react-native';
-import { Camera, Haptic, Permissions, BarCodeScanner } from 'expo';
+import { Camera } from 'expo-camera';
+import * as Permissions from 'expo-permissions';
+import * as Haptic from 'expo-haptics';
 
 import { IconButton, ElevatedHeader, Text } from 'common';
 import { getSafeTopHeight } from 'utils';
@@ -10,7 +12,7 @@ class Scan extends React.PureComponent {
     state = {
         didRead: false,
         lineAnimation: new RN.Animated.Value(1),
-        torchMode: 'off',
+        flashMode: Camera.Constants.FlashMode.off,
         permissionStatus: 'initial',
     };
 
@@ -70,7 +72,8 @@ class Scan extends React.PureComponent {
     handleBarCodeRead = ({ data }) => {
         if (this.state.didRead) return;
         this.setState({ didRead: true });
-        if (RN.Platform.OS === 'ios') Haptic.notification(Haptic.NotificationTypes.Success);
+
+        if (RN.Platform.OS === 'ios') Haptic.notification(Haptic.NotificationFeedbackType.Success);
 
         // If callback is supplied: send barcode to callback and navigate back
         const callback = this.props.navigation.getParam('callback');
@@ -92,13 +95,10 @@ class Scan extends React.PureComponent {
         return (
             <RN.View style={styles.wrapper}>
                 {this.props.isFocused && (
-                    <BarCodeScanner
-                        ref={ref => {
-                            this.camera = ref;
-                        }}
+                    <Camera
                         style={styles.preview}
-                        onBarCodeRead={this.handleBarCodeRead}
-                        torchMode={this.state.torchMode}
+                        onBarCodeScanned={this.handleBarCodeRead}
+                        flashMode={this.state.flashMode}
                         key={this.state.permissionStatus}
                     />
                 )}
@@ -108,8 +108,13 @@ class Scan extends React.PureComponent {
         );
     }
 
-    toggleTorch = () =>
-        this.setState(state => ({ torchMode: state.torchMode === 'off' ? 'on' : 'off' }));
+    toggleFlash = () =>
+        this.setState(state => ({
+            flashMode:
+                state.flashMode === Camera.Constants.FlashMode.off
+                    ? Camera.Constants.FlashMode.torch
+                    : Camera.Constants.FlashMode.off,
+        }));
     renderHeader = () => (
         <ElevatedHeader>
             <RN.View style={styles.bar}>
@@ -118,8 +123,12 @@ class Scan extends React.PureComponent {
                     Scan een barcode
                 </Text>
                 <IconButton
-                    onPress={this.toggleTorch}
-                    icon={this.state.torchMode === 'off' ? 'flashOn' : 'flashOff'}
+                    onPress={this.toggleFlash}
+                    icon={
+                        this.state.flashMode === Camera.Constants.FlashMode.off
+                            ? 'flashOn'
+                            : 'flashOff'
+                    }
                 />
             </RN.View>
         </ElevatedHeader>
